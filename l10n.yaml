@@ -1,0 +1,10 @@
+arb-dir: lib/src/common/localization/l10n
+template-arb-file: app_en.arb
+output-localization-file: app_localizations.dart
+output-class: AppLocalization
+nullable-getter: false
+synthetic-package: false
+output-dir: lib/src/common/localization/flutter_gen
+supported-languages:
+  - en
+  - tr
