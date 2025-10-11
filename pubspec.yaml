@@ -44,8 +44,8 @@ flutter:
 
   assets:
     # - .env
-    - assets/images/
-    - assets/vectors/
+    # - assets/images/
+    # - assets/vectors/
 
   fonts:
     - family: Montserrat
