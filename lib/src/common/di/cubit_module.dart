@@ -2,6 +2,7 @@ import 'package:t_rent/src/common/di/injector.dart';
 import 'package:t_rent/src/common/shared_cubits/app_locale_cubit/app_locale_cubit.dart';
 import 'package:t_rent/src/common/shared_cubits/app_theme_cubit/app_theme_cubit.dart';
 import 'package:t_rent/src/features/app/cubit/app_cubit.dart';
+import 'package:t_rent/src/features/auth_page/cubit/auth_cubit.dart';
 import 'package:t_rent/src/features/test_page/cubit/test_cubit.dart';
 
 void initSharedCubits() {
@@ -21,6 +22,9 @@ void initCubits() {
         i.get(),
         i.get(),
       ),
+    )
+    ..registerFactory<AuthCubit>(
+      AuthCubit.new,
     )
     ..registerFactory<TestCubit>(
       TestCubit.new,

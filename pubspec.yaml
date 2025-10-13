@@ -20,6 +20,7 @@ dependencies:
   auto_route: ^10.1.2
   flutter_bloc: ^9.1.1
   logger: ^2.6.2
+  email_validator: ^3.0.0
   
 dev_dependencies:
   flutter_test:
@@ -69,3 +70,6 @@ flutter:
         - asset: assets/fonts/Roboto/Roboto-Bold.ttf
         - asset: assets/fonts/Roboto/Roboto-ExtraBold.ttf
         - asset: assets/fonts/Roboto/Roboto-Black.ttf
+    - family: Carme
+      fonts:
+        - asset: assets/fonts/Carme/Carme-Regular.ttf

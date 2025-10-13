@@ -8,7 +8,7 @@ class AppThemeCubit extends Cubit<AppThemeState> {
   AppThemeCubit()
       : super(
           const AppThemeState(
-            themeType: ThemeType.dark,
+            themeType: ThemeType.light,
           ),
         );
 

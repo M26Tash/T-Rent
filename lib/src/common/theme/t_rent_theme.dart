@@ -6,9 +6,10 @@ final class TRentTheme extends Equatable {
 
   final Color backgroundColor;
   final Color surfaceColor;
+  final Color overlayBackgroundColor;
 
   final Color primaryColor;
-  final Color secondaryColor;
+  final Color accentColor;
 
   final Color errorColor;
   final Color successColor;
@@ -23,6 +24,9 @@ final class TRentTheme extends Equatable {
 
   final Color primaryTextColor;
   final Color secondaryTextColor;
+  final Color accentTextColor;
+  final Color hintTextColor;
+  final Color buttonTextColor;
 
   final String fontFamily;
 
@@ -34,8 +38,9 @@ final class TRentTheme extends Equatable {
         isDark,
         backgroundColor,
         surfaceColor,
+        overlayBackgroundColor,
         primaryColor,
-        secondaryColor,
+        accentColor,
         errorColor,
         successColor,
         warningColor,
@@ -45,6 +50,9 @@ final class TRentTheme extends Equatable {
         transparent,
         primaryTextColor,
         secondaryTextColor,
+        accentTextColor,
+        hintTextColor,
+        buttonTextColor,
         fontFamily,
         statusBarTheme,
         navigationBarBrightness,
@@ -54,8 +62,9 @@ final class TRentTheme extends Equatable {
     required this.isDark,
     required this.backgroundColor,
     required this.surfaceColor,
+    required this.overlayBackgroundColor,
     required this.primaryColor,
-    required this.secondaryColor,
+    required this.accentColor,
     required this.errorColor,
     required this.successColor,
     required this.warningColor,
@@ -65,6 +74,9 @@ final class TRentTheme extends Equatable {
     required this.transparent,
     required this.primaryTextColor,
     required this.secondaryTextColor,
+    required this.accentTextColor,
+    required this.hintTextColor,
+    required this.buttonTextColor,
     required this.fontFamily,
     required this.statusBarTheme,
     required this.navigationBarBrightness,
