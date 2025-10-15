@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
+import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/validators/auth_validators.dart';
 import 'package:t_rent/src/common/widgets/custom_button/custom_button.dart';
@@ -21,6 +22,8 @@ class RegisterBody extends StatefulWidget {
 }
 
 class _RegisterBodyState extends State<RegisterBody> {
+  late final AuthValidators _authValidators;
+
   late final GlobalKey<FormState> _nameFormKey;
   late final GlobalKey<FormState> _emailFormKey;
   late final GlobalKey<FormState> _passwordFormKey;
@@ -32,6 +35,8 @@ class _RegisterBodyState extends State<RegisterBody> {
   @override
   void initState() {
     super.initState();
+
+    _authValidators = AuthValidators(context);
 
     _nameFormKey = GlobalKey<FormState>();
     _emailFormKey = GlobalKey<FormState>();
@@ -60,7 +65,7 @@ class _RegisterBodyState extends State<RegisterBody> {
       ),
       children: [
         Text(
-          'Sign up',
+          context.locale.signUp,
           style: context.themeData.textTheme.displayLarge?.copyWith(
             fontSize: AppFonts.sizeDisplayPreLarge,
             color: context.theme.primaryTextColor,
@@ -68,7 +73,7 @@ class _RegisterBodyState extends State<RegisterBody> {
           ),
         ),
         Text(
-          'Please login to your account.',
+          context.locale.createYourAccountToStartYourRide,
           style: context.themeData.textTheme.headlineSmall?.copyWith(
             color: context.theme.secondaryTextColor,
             fontWeight: AppFonts.weightRegular,
@@ -78,29 +83,29 @@ class _RegisterBodyState extends State<RegisterBody> {
         InputField(
           formKey: _nameFormKey,
           controller: _nameController,
-          fieldTitle: 'Name',
+          fieldTitle: context.locale.name,
           hintText: 'John Due',
-          validator: (name) => AuthValidators.validateName(name!),
+          validator: (name) => _authValidators.validateName(name!),
         ),
         const SizedBox(height: AppDimensions.large),
         InputField(
           formKey: _emailFormKey,
           controller: _emailController,
-          fieldTitle: 'Email Address',
+          fieldTitle: context.locale.emailAddress,
           hintText: 'abc@test.com',
-          validator: (email) => AuthValidators.validateEmail(email!),
+          validator: (email) => _authValidators.validateEmail(email!),
         ),
         const SizedBox(height: AppDimensions.large),
         InputField(
           formKey: _passwordFormKey,
           controller: _passwordController,
-          fieldTitle: 'Password',
+          fieldTitle: context.locale.password,
           hintText: '********',
-          validator: (passwd) => AuthValidators.validatePassword(passwd!),
+          validator: (passwd) => _authValidators.validatePassword(passwd!),
         ),
         const SizedBox(height: AppDimensions.large),
         CustomButton(
-          buttonText: 'Register',
+          buttonText: context.locale.register,
           onTap: () {
             final nameValidate = _nameFormKey.currentState?.validate();
             final emailValidate = _emailFormKey.currentState?.validate();
@@ -115,7 +120,7 @@ class _RegisterBodyState extends State<RegisterBody> {
           text: TextSpan(
             children: [
               TextSpan(
-                text: 'Already have an account?',
+                text: context.locale.alreadyHaveAnAccount,
                 style: context.themeData.textTheme.headlineSmall?.copyWith(
                   color: context.theme.secondaryTextColor,
                   fontWeight: AppFonts.weightRegular,
@@ -127,7 +132,7 @@ class _RegisterBodyState extends State<RegisterBody> {
                 ),
               ),
               TextSpan(
-                text: 'Login',
+                text: context.locale.login,
                 style: context.themeData.textTheme.headlineSmall?.copyWith(
                   color: context.theme.accentTextColor,
                   fontWeight: AppFonts.weightRegular,

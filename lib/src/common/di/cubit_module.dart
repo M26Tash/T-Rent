@@ -3,6 +3,7 @@ import 'package:t_rent/src/common/shared_cubits/app_locale_cubit/app_locale_cubi
 import 'package:t_rent/src/common/shared_cubits/app_theme_cubit/app_theme_cubit.dart';
 import 'package:t_rent/src/features/app/cubit/app_cubit.dart';
 import 'package:t_rent/src/features/auth_page/cubit/auth_cubit.dart';
+import 'package:t_rent/src/features/forgot_password_page/cubit/forgot_password_cubit.dart';
 import 'package:t_rent/src/features/test_page/cubit/test_cubit.dart';
 
 void initSharedCubits() {
@@ -25,6 +26,9 @@ void initCubits() {
     )
     ..registerFactory<AuthCubit>(
       AuthCubit.new,
+    )
+    ..registerFactory<ForgotPasswordCubit>(
+      ForgotPasswordCubit.new,
     )
     ..registerFactory<TestCubit>(
       TestCubit.new,

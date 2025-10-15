@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
+import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/validators/auth_validators.dart';
 import 'package:t_rent/src/common/widgets/custom_button/custom_button.dart';
@@ -21,15 +22,19 @@ class LoginBody extends StatefulWidget {
 }
 
 class _LoginBodyState extends State<LoginBody> {
+  late final AuthValidators _authValidators;
+
   late final GlobalKey<FormState> _emailFormKey;
   late final GlobalKey<FormState> _passwordFormKey;
-  
+
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
 
   @override
   void initState() {
     super.initState();
+
+    _authValidators = AuthValidators(context);
 
     _emailFormKey = GlobalKey<FormState>();
     _passwordFormKey = GlobalKey<FormState>();
@@ -55,7 +60,7 @@ class _LoginBodyState extends State<LoginBody> {
       ),
       children: [
         Text(
-          'Welcome Back',
+          context.locale.welcomeBack,
           style: context.themeData.textTheme.displayLarge?.copyWith(
             fontSize: AppFonts.sizeDisplayPreLarge,
             color: context.theme.primaryTextColor,
@@ -63,7 +68,7 @@ class _LoginBodyState extends State<LoginBody> {
           ),
         ),
         Text(
-          'Please login to your account.',
+          context.locale.pleaseLoginToYourAccount,
           style: context.themeData.textTheme.headlineSmall?.copyWith(
             color: context.theme.secondaryTextColor,
             fontWeight: AppFonts.weightRegular,
@@ -73,29 +78,32 @@ class _LoginBodyState extends State<LoginBody> {
         InputField(
           formKey: _emailFormKey,
           controller: _emailController,
-          fieldTitle: 'Email Address',
+          fieldTitle: context.locale.emailAddress,
           hintText: 'abc@test.com',
-          validator: (email) => AuthValidators.validateEmail(email!),
+          validator: (email) => _authValidators.validateEmail(email!),
         ),
         const SizedBox(height: AppDimensions.large),
         InputField(
           formKey: _passwordFormKey,
           controller: _passwordController,
-          fieldTitle: 'Password',
+          fieldTitle: context.locale.password,
           hintText: '********',
-          validator: (passwd) => AuthValidators.validatePassword(passwd!),
+          validator: (passwd) => _authValidators.validatePassword(passwd!),
         ),
         const SizedBox(height: AppDimensions.large),
-        Text(
-          'Forget Password?',
-          style: context.themeData.textTheme.headlineSmall?.copyWith(
-            fontWeight: AppFonts.weightRegular,
-            color: context.theme.accentTextColor,
+        InkWell(
+          onTap: widget.authCubit.navigateToForgotPassword,
+          child: Text(
+            context.locale.forgotPasswordQ,
+            style: context.themeData.textTheme.headlineSmall?.copyWith(
+              fontWeight: AppFonts.weightRegular,
+              color: context.theme.accentTextColor,
+            ),
           ),
         ),
         const SizedBox(height: AppDimensions.large),
         CustomButton(
-          buttonText: 'Login',
+          buttonText: context.locale.login,
           onTap: () {
             final emailValidate = _emailFormKey.currentState?.validate();
             final passwordValidate = _passwordFormKey.currentState?.validate();
@@ -109,7 +117,7 @@ class _LoginBodyState extends State<LoginBody> {
           text: TextSpan(
             children: [
               TextSpan(
-                text: 'Don’t have an account?',
+                text: context.locale.dontHaveAnAccount,
                 style: context.themeData.textTheme.headlineSmall?.copyWith(
                   color: context.theme.secondaryTextColor,
                   fontWeight: AppFonts.weightRegular,
@@ -121,7 +129,7 @@ class _LoginBodyState extends State<LoginBody> {
                 ),
               ),
               TextSpan(
-                text: 'Register',
+                text: context.locale.register,
                 style: context.themeData.textTheme.headlineSmall?.copyWith(
                   color: context.theme.accentTextColor,
                   fontWeight: AppFonts.weightRegular,

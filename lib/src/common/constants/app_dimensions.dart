@@ -8,4 +8,9 @@ abstract final class AppDimensions {
   static const double extraLarge = 32;
   static const double superLarge = 64;
   static const double extremeLarge = 128;
+
+  // Other values
+  static const double stepperHeight = 4;
+  static const double pinputHeight = 60;
+  static const double pinputWidth = 56;
 }

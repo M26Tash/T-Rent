@@ -98,11 +98,209 @@ abstract class AppLocalization {
     Locale('tr')
   ];
 
-  /// No description provided for @hello.
+  /// No description provided for @welcomeBack.
   ///
   /// In en, this message translates to:
-  /// **'Hello'**
-  String get hello;
+  /// **'Welcome Back'**
+  String get welcomeBack;
+
+  /// No description provided for @pleaseLoginToYourAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Please login to your account.'**
+  String get pleaseLoginToYourAccount;
+
+  /// No description provided for @emailAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Email Address'**
+  String get emailAddress;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @forgotPasswordQ.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgotPasswordQ;
+
+  /// No description provided for @forgotPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password'**
+  String get forgotPassword;
+
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// No description provided for @dontHaveAnAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don’t have an account?'**
+  String get dontHaveAnAccount;
+
+  /// No description provided for @register.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get register;
+
+  /// No description provided for @signUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign up'**
+  String get signUp;
+
+  /// No description provided for @createYourAccountToStartYourRide.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your account to start your ride.'**
+  String get createYourAccountToStartYourRide;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @alreadyHaveAnAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get alreadyHaveAnAccount;
+
+  /// No description provided for @enterYourRegisteredEmailAddressWeWillSendYouCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your registered email address. We’ll send you a code to reset your password.'**
+  String get enterYourRegisteredEmailAddressWeWillSendYouCode;
+
+  /// No description provided for @continues.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continues;
+
+  /// No description provided for @createNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Create New Password'**
+  String get createNewPassword;
+
+  /// No description provided for @setAStrongNewPasswordForYourAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a strong new password for your account.'**
+  String get setAStrongNewPasswordForYourAccount;
+
+  /// No description provided for @previous.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get previous;
+
+  /// No description provided for @verifyOtp.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify OTP'**
+  String get verifyOtp;
+
+  /// No description provided for @enterSixDigitCodeWeSentYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit code we sent to your email to complete the reset.'**
+  String get enterSixDigitCodeWeSentYou;
+
+  /// No description provided for @verify.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify'**
+  String get verify;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @nameCannotBeEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Name cannot be empty'**
+  String get nameCannotBeEmpty;
+
+  /// No description provided for @nameMustBeAtLeastTwoCharsLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must be at least 2 characters long'**
+  String get nameMustBeAtLeastTwoCharsLong;
+
+  /// No description provided for @nameContainsInvalidChars.
+  ///
+  /// In en, this message translates to:
+  /// **'Name contains invalid characters'**
+  String get nameContainsInvalidChars;
+
+  /// No description provided for @emailCannotBeEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Email cannot be empty'**
+  String get emailCannotBeEmpty;
+
+  /// No description provided for @pleaseEnterAValidEmailAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get pleaseEnterAValidEmailAddress;
+
+  /// No description provided for @passwordCannotBeEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Password cannot be empty'**
+  String get passwordCannotBeEmpty;
+
+  /// No description provided for @passwordMustBeAtLeastEightCharsLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters long'**
+  String get passwordMustBeAtLeastEightCharsLong;
+
+  /// No description provided for @passwordCannotContainOnlyNumbers.
+  ///
+  /// In en, this message translates to:
+  /// **'Password cannot contain only numbers'**
+  String get passwordCannotContainOnlyNumbers;
+
+  /// No description provided for @passwordCannotContainOnlyLetters.
+  ///
+  /// In en, this message translates to:
+  /// **'Password cannot contain only letters'**
+  String get passwordCannotContainOnlyLetters;
+
+  /// No description provided for @otpCodeCannotBeEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'OTP Code cannot be empty'**
+  String get otpCodeCannotBeEmpty;
+
+  /// No description provided for @otpCodeContainsSixDigits.
+  ///
+  /// In en, this message translates to:
+  /// **'OTP code contains 6 digits'**
+  String get otpCodeContainsSixDigits;
+
+  /// No description provided for @oopsThatCodeDoesntMatchTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Oops! That code doesn’t match. Try again.'**
+  String get oopsThatCodeDoesntMatchTryAgain;
 }
 
 class _AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

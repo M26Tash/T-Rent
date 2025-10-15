@@ -151,6 +151,7 @@ final class InputField extends StatelessWidget {
                         fontWeight: AppFonts.weightRegular,
                         color: context.theme.hintTextColor,
                         height: AppFonts.sizeFactorLarge,
+                        fontFamily: FontFamily.carmeFamily,
                       ),
                   prefixIcon: prefixIcon,
                   suffixIcon: suffixIcon,

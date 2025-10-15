@@ -1,3 +1,5 @@
+// ignore_for_file: unused_element
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
@@ -47,7 +49,7 @@ const lightTheme = TRentTheme(
   fontFamily: FontFamily.montserratFamily,
   statusBarTheme: Brightness.dark,
   navigationBarBrightness: Brightness.light,
-  errorColor: _bittersweet,
+  errorColor: _vermilion,
   successColor: _ufoGreen,
   warningColor: _brightYellow,
   borderColor: _philippineGray,

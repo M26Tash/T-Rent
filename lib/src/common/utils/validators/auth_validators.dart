@@ -1,39 +1,56 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/material.dart';
+import 'package:t_rent/src/common/localization/localizations_ext.dart';
 
 class AuthValidators {
-  static String? validateName(String value) {
+  final BuildContext context;
+  AuthValidators(this.context);
+
+  String? validateName(String value) {
     if (value.trim().isEmpty) {
-      return 'Name cannot be empty';
+      return context.locale.nameCannotBeEmpty;
     } else if (value.trim().length < 2) {
-      return 'Name must be at least 2 characters long';
+      return context.locale.nameMustBeAtLeastTwoCharsLong;
     } else if (!RegExp(r"^[a-zA-Z\s'-]+$").hasMatch(value)) {
-      return 'Name contains invalid characters';
+      return context.locale.nameContainsInvalidChars;
     }
     return null;
   }
 
-  static String? validateEmail(String value) {
+  String? validateEmail(String value) {
     final isValid = EmailValidator.validate(value);
 
     if (value.isEmpty) {
-      return 'Email cannot be empty';
+      return context.locale.emailCannotBeEmpty;
     } else if (isValid == false) {
-      return 'Please enter a valid email address';
+      return context.locale.pleaseEnterAValidEmailAddress;
     }
 
     return null;
   }
 
-  static String? validatePassword(String value) {
+  String? validatePassword(String value) {
     if (value.isEmpty) {
-      return 'Password cannot be empty';
+      return context.locale.passwordCannotBeEmpty;
     } else if (value.length < 8) {
-      return 'Password must be at least 8 characters long';
+      return context.locale.passwordMustBeAtLeastEightCharsLong;
     } else if (RegExp(r'^[0-9]+$').hasMatch(value)) {
-      return 'Password cannot contain only numbers';
+      return context.locale.passwordCannotContainOnlyNumbers;
     } else if (RegExp(r'^[a-zA-Z]+$').hasMatch(value)) {
-      return 'Password cannot contain only letters';
+      return context.locale.passwordCannotContainOnlyLetters;
     }
+    return null;
+  }
+
+  String? validateOtpCode(String value, String otpCode) {
+    if (value.isEmpty) {
+      return context.locale.otpCodeCannotBeEmpty;
+    } else if (value.length < 6) {
+      return context.locale.otpCodeContainsSixDigits;
+    } else if (value != otpCode) {
+      return context.locale.oopsThatCodeDoesntMatchTryAgain;
+    }
+
     return null;
   }
 }
