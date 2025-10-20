@@ -301,6 +301,48 @@ abstract class AppLocalization {
   /// In en, this message translates to:
   /// **'Oops! That code doesn’t match. Try again.'**
   String get oopsThatCodeDoesntMatchTryAgain;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
+
+  /// No description provided for @suv.
+  ///
+  /// In en, this message translates to:
+  /// **'SUV'**
+  String get suv;
+
+  /// No description provided for @sedan.
+  ///
+  /// In en, this message translates to:
+  /// **'Sedan'**
+  String get sedan;
+
+  /// No description provided for @hatchback.
+  ///
+  /// In en, this message translates to:
+  /// **'Hatchback'**
+  String get hatchback;
+
+  /// No description provided for @sport.
+  ///
+  /// In en, this message translates to:
+  /// **'Sport'**
+  String get sport;
+
+  /// No description provided for @pickup.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick-up'**
+  String get pickup;
+
+  /// No description provided for @minivan.
+  ///
+  /// In en, this message translates to:
+  /// **'Minivan'**
+  String get minivan;
 }
 
 class _AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

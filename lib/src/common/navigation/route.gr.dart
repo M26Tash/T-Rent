@@ -43,6 +43,22 @@ class ForgotPasswordRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [HomePage]
+class HomeRoute extends PageRouteInfo<void> {
+  const HomeRoute({List<PageRouteInfo>? children})
+      : super(HomeRoute.name, initialChildren: children);
+
+  static const String name = 'HomeRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const HomePage();
+    },
+  );
+}
+
+/// generated route for
 /// [TestPage]
 class TestRoute extends PageRouteInfo<void> {
   const TestRoute({List<PageRouteInfo>? children})

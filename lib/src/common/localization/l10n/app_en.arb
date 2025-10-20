@@ -30,7 +30,14 @@
     "passwordMustBeAtLeastEightCharsLong": "Password must be at least 8 characters long",
     "passwordCannotContainOnlyNumbers": "Password cannot contain only numbers",
     "passwordCannotContainOnlyLetters": "Password cannot contain only letters",
-    "otpCodeCannotBeEmpty":"OTP Code cannot be empty",
-    "otpCodeContainsSixDigits":"OTP code contains 6 digits",
-    "oopsThatCodeDoesntMatchTryAgain": "Oops! That code doesn’t match. Try again."
+    "otpCodeCannotBeEmpty": "OTP Code cannot be empty",
+    "otpCodeContainsSixDigits": "OTP code contains 6 digits",
+    "oopsThatCodeDoesntMatchTryAgain": "Oops! That code doesn’t match. Try again.",
+    "all": "All",
+    "suv": "SUV",
+    "sedan": "Sedan",
+    "hatchback": "Hatchback",
+    "sport": "Sport",
+    "pickup": "Pick-up",
+    "minivan": "Minivan"
 }

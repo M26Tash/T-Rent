@@ -118,4 +118,25 @@ class AppLocalizationTr extends AppLocalization {
   @override
   String get oopsThatCodeDoesntMatchTryAgain =>
       'Hata! Bu kod eşleşmiyor. Tekrar deneyin.';
+
+  @override
+  String get all => 'Tüm';
+
+  @override
+  String get suv => 'SUV';
+
+  @override
+  String get sedan => 'Sedan';
+
+  @override
+  String get hatchback => 'Hatchback';
+
+  @override
+  String get sport => 'Sport';
+
+  @override
+  String get pickup => 'Pick-up';
+
+  @override
+  String get minivan => 'Minivan';
 }

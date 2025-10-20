@@ -119,4 +119,25 @@ class AppLocalizationEn extends AppLocalization {
   @override
   String get oopsThatCodeDoesntMatchTryAgain =>
       'Oops! That code doesn’t match. Try again.';
+
+  @override
+  String get all => 'All';
+
+  @override
+  String get suv => 'SUV';
+
+  @override
+  String get sedan => 'Sedan';
+
+  @override
+  String get hatchback => 'Hatchback';
+
+  @override
+  String get sport => 'Sport';
+
+  @override
+  String get pickup => 'Pick-up';
+
+  @override
+  String get minivan => 'Minivan';
 }

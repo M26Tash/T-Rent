@@ -32,5 +32,12 @@
     "passwordCannotContainOnlyLetters": "Şifre yalnızca harf içeremez",
     "otpCodeCannotBeEmpty": "OTP Kodu boş olamaz",
     "otpCodeContainsSixDigits": "OTP kodu 6 hane içeriyor",
-    "oopsThatCodeDoesntMatchTryAgain": "Hata! Bu kod eşleşmiyor. Tekrar deneyin."
+    "oopsThatCodeDoesntMatchTryAgain": "Hata! Bu kod eşleşmiyor. Tekrar deneyin.",
+    "all": "Tüm",
+    "suv": "SUV",
+    "sedan": "Sedan",
+    "hatchback": "Hatchback",
+    "sport": "Sport",
+    "pickup": "Pick-up",
+    "minivan": "Minivan"
 }

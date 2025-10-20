@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:t_rent/src/features/auth_page/page/auth_page.dart';
 import 'package:t_rent/src/features/forgot_password_page/page/forgot_password_page.dart';
+import 'package:t_rent/src/features/home_page/page/home_page.dart';
 import 'package:t_rent/src/features/test_page/pages/test_page.dart';
 
 part 'route.gr.dart';
@@ -14,6 +15,10 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
           page: AuthRoute.page,
+          // initial: true
+        ),
+        AutoRoute(
+          page: HomeRoute.page,
           initial: true
         ),
         AutoRoute(

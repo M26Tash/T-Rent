@@ -153,8 +153,22 @@ final class InputField extends StatelessWidget {
                         height: AppFonts.sizeFactorLarge,
                         fontFamily: FontFamily.carmeFamily,
                       ),
-                  prefixIcon: prefixIcon,
-                  suffixIcon: suffixIcon,
+                  prefixIcon: prefixIcon != null
+                      ? Padding(
+                          padding: const EdgeInsets.all(
+                            AppDimensions.large,
+                          ),
+                          child: prefixIcon,
+                        )
+                      : const SizedBox.shrink(),
+                  suffixIcon: suffixIcon != null
+                      ? Padding(
+                          padding: const EdgeInsets.all(
+                            AppDimensions.large,
+                          ),
+                          child: suffixIcon,
+                        )
+                      : const SizedBox.shrink(),
                 ),
             onChanged: onChanged,
           ),

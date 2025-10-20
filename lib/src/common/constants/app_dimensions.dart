@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 abstract final class AppDimensions {
   static const double none = 0;
   static const double extraSmall = 2;
@@ -13,4 +15,11 @@ abstract final class AppDimensions {
   static const double stepperHeight = 4;
   static const double pinputHeight = 60;
   static const double pinputWidth = 56;
+  static const double smallAvatarRadius = 25;
+}
+
+extension AvailableSize on BuildContext {
+  double get availableWidth => MediaQuery.of(this).size.width;
+
+  double get availableHeight => MediaQuery.of(this).size.height;
 }

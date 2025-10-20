@@ -21,9 +21,11 @@ final class TRentTheme extends Equatable {
 
   final Color primaryIconColor;
   final Color secondaryIconColor;
+  final Color tertiaryIconColor;
 
   final Color primaryTextColor;
   final Color secondaryTextColor;
+  final Color tertiaryTextColor;
   final Color accentTextColor;
   final Color hintTextColor;
   final Color buttonTextColor;
@@ -47,9 +49,11 @@ final class TRentTheme extends Equatable {
         borderColor,
         primaryIconColor,
         secondaryIconColor,
+        tertiaryIconColor,
         transparent,
         primaryTextColor,
         secondaryTextColor,
+        tertiaryTextColor,
         accentTextColor,
         hintTextColor,
         buttonTextColor,
@@ -71,9 +75,11 @@ final class TRentTheme extends Equatable {
     required this.borderColor,
     required this.primaryIconColor,
     required this.secondaryIconColor,
+    required this.tertiaryIconColor,
     required this.transparent,
     required this.primaryTextColor,
     required this.secondaryTextColor,
+    required this.tertiaryTextColor,
     required this.accentTextColor,
     required this.hintTextColor,
     required this.buttonTextColor,
