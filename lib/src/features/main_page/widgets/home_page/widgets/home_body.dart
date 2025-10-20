@@ -5,15 +5,16 @@ import 'package:t_rent/src/common/constants/app_fonts.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/enums/car_type.dart';
 import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
+import 'package:t_rent/src/common/widgets/car_item/car_item.dart';
 import 'package:t_rent/src/common/widgets/input_field/input_field.dart';
 import 'package:t_rent/src/common/widgets/vector_button/vector_button.dart';
 import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
-import 'package:t_rent/src/features/home_page/widgets/car_item.dart';
 
 class HomeBody extends StatelessWidget {
   final List<MockCar> mockCarList;
   final ValueChanged<int> onTabTap;
   final ValueChanged<String> onSearchChanged;
+  
   const HomeBody({
     required this.mockCarList,
     required this.onTabTap,

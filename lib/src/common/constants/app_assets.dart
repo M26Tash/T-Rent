@@ -33,6 +33,12 @@ abstract final class AppAssets {
   static const String notificationIcon =
       '${_assetsVectors}notification_icon.svg';
 
+  // Navigation Panel Icons
+  static const String homeIcon = '${_assetsVectors}home_icon.svg';
+  static const String favoriteIcon = '${_assetsVectors}favorite_icon.svg';
+  static const String routeIcon = '${_assetsVectors}route_icon.svg';
+  static const String settingsIcon = '${_assetsVectors}settings_icon.svg';
+
   // Folder Paths
   static const String _assetsFolder = 'assets/';
   static const String _assetsVectors = '${_assetsFolder}vectors/';

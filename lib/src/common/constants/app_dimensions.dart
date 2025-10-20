@@ -16,6 +16,7 @@ abstract final class AppDimensions {
   static const double pinputHeight = 60;
   static const double pinputWidth = 56;
   static const double smallAvatarRadius = 25;
+  static const double panelNavigationIconSize = 30;
 }
 
 extension AvailableSize on BuildContext {
