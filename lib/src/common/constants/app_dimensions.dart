@@ -17,6 +17,9 @@ abstract final class AppDimensions {
   static const double pinputWidth = 56;
   static const double smallAvatarRadius = 25;
   static const double panelNavigationIconSize = 30;
+  static const double overlayWidth = 150;
+  static const double overlayCarHeight = 60;
+  static const double overlayCarWidth = 120;
 }
 
 extension AvailableSize on BuildContext {

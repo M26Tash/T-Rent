@@ -30,6 +30,8 @@ final class TRentTheme extends Equatable {
   final Color hintTextColor;
   final Color buttonTextColor;
 
+  final Color shadowColor;
+
   final String fontFamily;
 
   final Brightness statusBarTheme;
@@ -57,6 +59,7 @@ final class TRentTheme extends Equatable {
         accentTextColor,
         hintTextColor,
         buttonTextColor,
+        shadowColor,
         fontFamily,
         statusBarTheme,
         navigationBarBrightness,
@@ -83,6 +86,7 @@ final class TRentTheme extends Equatable {
     required this.accentTextColor,
     required this.hintTextColor,
     required this.buttonTextColor,
+    required this.shadowColor,
     required this.fontFamily,
     required this.statusBarTheme,
     required this.navigationBarBrightness,

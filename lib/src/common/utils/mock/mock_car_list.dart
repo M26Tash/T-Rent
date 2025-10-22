@@ -1,6 +1,16 @@
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/utils/enums/car_type.dart';
 
+class Coordinates {
+  final double latitude;
+  final double longitude;
+
+  const Coordinates({
+    required this.latitude,
+    required this.longitude,
+  });
+}
+
 class MockCar {
   final String asset;
   final CarType type;
@@ -9,6 +19,7 @@ class MockCar {
   final String consumption;
   final String seats;
   final double pricePerDay;
+  final Coordinates coordinates;
 
   MockCar({
     required this.asset,
@@ -18,6 +29,7 @@ class MockCar {
     required this.consumption,
     required this.seats,
     required this.pricePerDay,
+    required this.coordinates,
   });
 }
 
@@ -31,6 +43,10 @@ abstract final class MockCarList {
       consumption: '13.6L',
       seats: '5',
       pricePerDay: 18000,
+      coordinates: const Coordinates(
+        latitude: 41.069672,
+        longitude: -330.953880,
+      ),
     ),
     MockCar(
       asset: AppAssets.audiQ7Side,
@@ -40,6 +56,10 @@ abstract final class MockCarList {
       consumption: '11.0L',
       seats: '7',
       pricePerDay: 9000,
+       coordinates: const Coordinates(
+        latitude: 41.075754,
+        longitude: -330.956739,
+      ),
     ),
     MockCar(
       asset: AppAssets.audiA6Side,
@@ -49,6 +69,10 @@ abstract final class MockCarList {
       consumption: '10.5L',
       seats: '5',
       pricePerDay: 12000,
+       coordinates: const Coordinates(
+        latitude: 41.066567,
+        longitude: -330.981439,
+      ),
     ),
     MockCar(
       asset: AppAssets.ferrariSF90Side,
@@ -58,6 +82,10 @@ abstract final class MockCarList {
       consumption: '6.1L',
       seats: '2',
       pricePerDay: 45000,
+       coordinates: const Coordinates(
+        latitude: 41.026723,
+        longitude: 28.983078,
+      ),
     ),
     MockCar(
       asset: AppAssets.cadillacEscaladeSide,
@@ -67,6 +95,10 @@ abstract final class MockCarList {
       consumption: '22.0L',
       seats: '7',
       pricePerDay: 32000,
+       coordinates: const Coordinates(
+        latitude: 41.028392,
+        longitude: 28.987204,
+      ),
     ),
     MockCar(
       asset: AppAssets.volkswagenGolfSide,
@@ -76,6 +108,10 @@ abstract final class MockCarList {
       consumption: '6.14L',
       seats: '5',
       pricePerDay: 1500,
+       coordinates: const Coordinates(
+        latitude: 41.037238,
+        longitude: 28.995959,
+      ),
     ),
     MockCar(
       asset: AppAssets.mercedesVitoSide,
@@ -85,6 +121,10 @@ abstract final class MockCarList {
       consumption: '7.0L',
       seats: '8',
       pricePerDay: 2500,
+       coordinates: const Coordinates(
+        latitude: 41.037060,
+        longitude: 28.995734,
+      ),
     ),
     MockCar(
       asset: AppAssets.hyundaiStariaSide,
@@ -94,6 +134,10 @@ abstract final class MockCarList {
       consumption: '5.5L',
       seats: '8',
       pricePerDay: 2500,
+       coordinates: const Coordinates(
+        latitude: 41.044722,
+        longitude: 29.016014,
+      ),
     ),
     MockCar(
       asset: AppAssets.fordRaptorSide,
@@ -103,6 +147,10 @@ abstract final class MockCarList {
       consumption: '25.5L',
       seats: '5',
       pricePerDay: 7500,
+       coordinates: const Coordinates(
+        latitude: 41.044564,
+        longitude: 29.015666,
+      ),
     ),
   ];
 }

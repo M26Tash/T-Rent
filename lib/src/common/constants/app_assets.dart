@@ -39,6 +39,8 @@ abstract final class AppAssets {
   static const String routeIcon = '${_assetsVectors}route_icon.svg';
   static const String settingsIcon = '${_assetsVectors}settings_icon.svg';
 
+  static const String carGpsMarker = '${_assetsImages}car_gps_marker.png';
+
   // Folder Paths
   static const String _assetsFolder = 'assets/';
   static const String _assetsVectors = '${_assetsFolder}vectors/';
