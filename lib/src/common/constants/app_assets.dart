@@ -35,7 +35,7 @@ abstract final class AppAssets {
 
   // Navigation Panel Icons
   static const String homeIcon = '${_assetsVectors}home_icon.svg';
-  static const String favoriteIcon = '${_assetsVectors}favorite_icon.svg';
+  static const String historyIcon = '${_assetsVectors}history_icon.svg';
   static const String routeIcon = '${_assetsVectors}route_icon.svg';
   static const String settingsIcon = '${_assetsVectors}settings_icon.svg';
 

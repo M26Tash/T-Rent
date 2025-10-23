@@ -1,11 +1,16 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart' as geo;
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
+import 'package:t_rent/src/common/cubit_scope/cubit_scope.dart';
 import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
 import 'package:t_rent/src/common/widgets/support_methods/support_methods.dart';
+import 'package:t_rent/src/features/main_page/cubits/route_cubit/route_cubit.dart';
 
 class RoutePage extends StatefulWidget {
   const RoutePage({super.key});
@@ -26,7 +31,6 @@ class _RoutePageState extends State<RoutePage> {
     super.initState();
     _ensurePermissions();
   }
-
 
   // ! Remove to the appropriate file
   Future<void> _ensurePermissions() async {
@@ -152,9 +156,17 @@ class _RoutePageState extends State<RoutePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MapWidget(
-      textureView: false,
-      onMapCreated: _onMapCreated,
+    return CubitScope<RouteCubit>(
+      child: BlocBuilder<RouteCubit, RouteState>(
+        builder: (context, state) {
+          final routeCubit = CubitScope.of<RouteCubit>(context);
+          
+          return MapWidget(
+            textureView: false,
+            onMapCreated: _onMapCreated,
+          );
+        },
+      ),
     );
   }
 }

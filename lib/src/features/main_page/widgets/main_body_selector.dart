@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:t_rent/src/features/main_page/widgets/history_page/history_page.dart';
 import 'package:t_rent/src/features/main_page/widgets/home_page/home_page.dart';
-import 'package:t_rent/src/features/main_page/widgets/page2_body/page2_body.dart';
 import 'package:t_rent/src/features/main_page/widgets/page4_body/page4_body.dart';
 import 'package:t_rent/src/features/main_page/widgets/route_page/route_page.dart';
 
@@ -19,7 +19,7 @@ class MainBodySelector extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       children: const [
         HomePage(),
-        Page2Body(),
+        HistoryPage(),
         RoutePage(),
         Page4Body(),
       ],

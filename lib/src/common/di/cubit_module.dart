@@ -5,7 +5,9 @@ import 'package:t_rent/src/common/shared_cubits/navigation_panel_cubit/navigatio
 import 'package:t_rent/src/features/app/cubit/app_cubit.dart';
 import 'package:t_rent/src/features/auth_page/cubit/auth_cubit.dart';
 import 'package:t_rent/src/features/forgot_password_page/cubit/forgot_password_cubit.dart';
+import 'package:t_rent/src/features/main_page/cubits/history_cubit/history_cubit.dart';
 import 'package:t_rent/src/features/main_page/cubits/home_cubit/home_cubit.dart';
+import 'package:t_rent/src/features/main_page/cubits/route_cubit/route_cubit.dart';
 import 'package:t_rent/src/features/test_page/cubit/test_cubit.dart';
 
 void initSharedCubits() {
@@ -37,6 +39,12 @@ void initCubits() {
     )
     ..registerFactory<HomeCubit>(
       HomeCubit.new,
+    )
+    ..registerFactory<HistoryCubit>(
+      HistoryCubit.new,
+    )
+    ..registerFactory<RouteCubit>(
+      RouteCubit.new,
     )
     ..registerFactory<TestCubit>(
       TestCubit.new,

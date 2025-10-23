@@ -7,6 +7,7 @@ import 'package:t_rent/src/common/di/injector.dart';
 import 'package:t_rent/src/common/navigation/entities/auto_route_extension.dart';
 import 'package:t_rent/src/common/shared_cubits/navigation_panel_cubit/navigation_panel_cubit.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
+import 'package:t_rent/src/common/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:t_rent/src/common/widgets/custom_navigation_panel/custom_navigation_panel.dart';
 import 'package:t_rent/src/features/main_page/widgets/main_body_selector.dart';
 
@@ -58,6 +59,14 @@ class _MainPageState extends State<MainPage> {
         prev.route.type == null && current.route.type != null;
   }
 
+  String? _appBarTitle(int pageIndex) => switch (pageIndex) {
+        0 => null,
+        1 => 'History',
+        2 => null,
+        3 => 'Settings',
+        _ => null,
+      };
+
   @override
   Widget build(BuildContext context) {
     return CubitScope<NavigationPanelCubit>(
@@ -69,6 +78,11 @@ class _MainPageState extends State<MainPage> {
           final navCubit = CubitScope.of<NavigationPanelCubit>(context);
           return Scaffold(
             backgroundColor: context.theme.backgroundColor,
+            appBar: _appBarTitle(state.navigationIndex) == null
+                ? null
+                : CustomAppBar(
+                    title: _appBarTitle(state.navigationIndex),
+                  ),
             body: MainBodySelector(
               pageController: _pageController,
             ),
@@ -82,7 +96,7 @@ class _MainPageState extends State<MainPage> {
                   iconPath: AppAssets.homeIcon,
                 ),
                 CustomNavigationItem(
-                  iconPath: AppAssets.favoriteIcon,
+                  iconPath: AppAssets.historyIcon,
                 ),
                 CustomNavigationItem(
                   iconPath: AppAssets.routeIcon,
