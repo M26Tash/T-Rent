@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
+import 'package:t_rent/src/common/navigation/route.dart';
 
 part 'navigation_panel_state.dart';
 
@@ -21,6 +22,45 @@ class NavigationPanelCubit extends Cubit<NavigationPanelState> {
         navigationIndex: navigationIndex,
       ),
     );
+  }
+
+  void navigateToMyAccount() {
+    emit(
+      state.copyWith(
+        route: const CustomizedRoute(
+          TypeRoute.navigateTo,
+          MyAccountRoute(),
+        ),
+      ),
+    );
+
+    _resetRoute();
+  }
+
+  void navigateToHelp() {
+    emit(
+      state.copyWith(
+        route: const CustomizedRoute(
+          TypeRoute.navigateTo,
+          HelpRoute(),
+        ),
+      ),
+    );
+
+    _resetRoute();
+  }
+
+  void navigateToAboutUs() {
+    emit(
+      state.copyWith(
+        route: const CustomizedRoute(
+          TypeRoute.navigateTo,
+          AboutUsRoute(),
+        ),
+      ),
+    );
+
+    _resetRoute();
   }
 
   // ignore: unused_element

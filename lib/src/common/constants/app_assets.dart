@@ -53,6 +53,7 @@ abstract final class AppAssets {
   static const String helpIcon = '${_assetsVectors}help_icon.svg';
   static const String aboutUsIcon = '${_assetsVectors}about_us_icon.svg';
   static const String logoutIcon = '${_assetsVectors}logout_icon.svg';
+  static const String imageAddIcon = '${_assetsVectors}image_add_icon.svg';
 
   // Folder Paths
   static const String _assetsFolder = 'assets/';

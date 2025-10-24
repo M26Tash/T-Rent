@@ -1,7 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:t_rent/src/features/about_us_page/pages/about_us_page.dart';
 import 'package:t_rent/src/features/auth_page/page/auth_page.dart';
 import 'package:t_rent/src/features/forgot_password_page/page/forgot_password_page.dart';
+import 'package:t_rent/src/features/help_page/page/help_page.dart';
 import 'package:t_rent/src/features/main_page/page/main_page.dart';
+import 'package:t_rent/src/features/my_account_page/pages/my_account_page.dart';
 import 'package:t_rent/src/features/test_page/pages/test_page.dart';
 
 part 'route.gr.dart';
@@ -19,10 +22,19 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: MainRoute.page,
-          initial: true
+          initial: true,
         ),
         AutoRoute(
           page: ForgotPasswordRoute.page,
+        ),
+        AutoRoute(
+          page: MyAccountRoute.page,
+        ),
+        AutoRoute(
+          page: HelpRoute.page,
+        ),
+        AutoRoute(
+          page: AboutUsRoute.page,
         ),
         AutoRoute(
           page: TestRoute.page,

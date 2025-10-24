@@ -160,7 +160,7 @@ final class InputField extends StatelessWidget {
                           ),
                           child: prefixIcon,
                         )
-                      : const SizedBox.shrink(),
+                      : null,
                   suffixIcon: suffixIcon != null
                       ? Padding(
                           padding: const EdgeInsets.all(
@@ -168,7 +168,7 @@ final class InputField extends StatelessWidget {
                           ),
                           child: suffixIcon,
                         )
-                      : const SizedBox.shrink(),
+                      : null,
                 ),
             onChanged: onChanged,
           ),

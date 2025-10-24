@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/localization/localizations_ext.dart';
+import 'package:t_rent/src/common/shared_cubits/navigation_panel_cubit/navigation_panel_cubit.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/widgets/settings_section/settings_section.dart';
 import 'package:t_rent/src/features/main_page/widgets/settings_page/widgets/profile_overview.dart';
@@ -27,7 +29,8 @@ class SettingsBody extends StatelessWidget {
       padding: const EdgeInsets.all(AppDimensions.large),
       children: [
         ProfileOverview(
-          onEditTap: () {},
+          onEditTap: () =>
+              context.read<NavigationPanelCubit>().navigateToMyAccount(),
           fullName: 'John Due',
           email: 'john.due@gmail.com',
           avatarUrl: AppAssets.userPlaceholder,
@@ -36,12 +39,6 @@ class SettingsBody extends StatelessWidget {
         SettingsSection(
           sectionTitle: context.locale.preferences,
           settingsItems: [
-            SettingsItem(
-              onTap: () {},
-              assetPath: AppAssets.userIcon,
-              title: context.locale.myAccount,
-              subtitle: context.locale.makeChangesToYourAccount,
-            ),
             SettingsItem(
               assetPath: AppAssets.notificationIcon,
               title: context.locale.notification,
@@ -84,12 +81,14 @@ class SettingsBody extends StatelessWidget {
           sectionTitle: context.locale.support,
           settingsItems: [
             SettingsItem(
-              onTap: () {},
+              onTap: () =>
+                  context.read<NavigationPanelCubit>().navigateToHelp(),
               assetPath: AppAssets.helpIcon,
               title: context.locale.help,
             ),
             SettingsItem(
-              onTap: () {},
+              onTap: () =>
+                  context.read<NavigationPanelCubit>().navigateToAboutUs(),
               assetPath: AppAssets.aboutUsIcon,
               title: context.locale.aboutUs,
             ),
