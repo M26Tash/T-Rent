@@ -8,6 +8,7 @@ import 'package:t_rent/src/features/forgot_password_page/cubit/forgot_password_c
 import 'package:t_rent/src/features/main_page/cubits/history_cubit/history_cubit.dart';
 import 'package:t_rent/src/features/main_page/cubits/home_cubit/home_cubit.dart';
 import 'package:t_rent/src/features/main_page/cubits/route_cubit/route_cubit.dart';
+import 'package:t_rent/src/features/main_page/cubits/settings_cubit/settings_cubit.dart';
 import 'package:t_rent/src/features/test_page/cubit/test_cubit.dart';
 
 void initSharedCubits() {
@@ -45,6 +46,9 @@ void initCubits() {
     )
     ..registerFactory<RouteCubit>(
       RouteCubit.new,
+    )
+    ..registerFactory<SettingsCubit>(
+      SettingsCubit.new,
     )
     ..registerFactory<TestCubit>(
       TestCubit.new,

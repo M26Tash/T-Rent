@@ -343,6 +343,90 @@ abstract class AppLocalization {
   /// In en, this message translates to:
   /// **'Minivan'**
   String get minivan;
+
+  /// No description provided for @preferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get preferences;
+
+  /// No description provided for @myAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'My Account'**
+  String get myAccount;
+
+  /// No description provided for @makeChangesToYourAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Make changes to your account'**
+  String get makeChangesToYourAccount;
+
+  /// No description provided for @notification.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification'**
+  String get notification;
+
+  /// No description provided for @manageYourAlertsAndUpdates.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your alerts and updates'**
+  String get manageYourAlertsAndUpdates;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @setYourPreferredAppLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Set your preferred app language'**
+  String get setYourPreferredAppLanguage;
+
+  /// No description provided for @appearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance;
+
+  /// No description provided for @lightOrDarkYourChoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Light or Dark, your choice'**
+  String get lightOrDarkYourChoice;
+
+  /// No description provided for @support.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get support;
+
+  /// No description provided for @help.
+  ///
+  /// In en, this message translates to:
+  /// **'Help'**
+  String get help;
+
+  /// No description provided for @aboutUs.
+  ///
+  /// In en, this message translates to:
+  /// **'About Us'**
+  String get aboutUs;
+
+  /// No description provided for @logOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get logOut;
+
+  /// No description provided for @furtherSecureYourAccountForSafety.
+  ///
+  /// In en, this message translates to:
+  /// **'Further secure your account for safety'**
+  String get furtherSecureYourAccountForSafety;
 }
 
 class _AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

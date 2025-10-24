@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:t_rent/src/features/main_page/widgets/history_page/history_page.dart';
 import 'package:t_rent/src/features/main_page/widgets/home_page/home_page.dart';
-import 'package:t_rent/src/features/main_page/widgets/page4_body/page4_body.dart';
 import 'package:t_rent/src/features/main_page/widgets/route_page/route_page.dart';
+import 'package:t_rent/src/features/main_page/widgets/settings_page/settings_page.dart';
 
 class MainBodySelector extends StatelessWidget {
   final PageController pageController;
@@ -21,7 +21,7 @@ class MainBodySelector extends StatelessWidget {
         HomePage(),
         HistoryPage(),
         RoutePage(),
-        Page4Body(),
+        SettingsPage(),
       ],
     );
   }

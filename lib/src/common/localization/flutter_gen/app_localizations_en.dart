@@ -140,4 +140,47 @@ class AppLocalizationEn extends AppLocalization {
 
   @override
   String get minivan => 'Minivan';
+
+  @override
+  String get preferences => 'Preferences';
+
+  @override
+  String get myAccount => 'My Account';
+
+  @override
+  String get makeChangesToYourAccount => 'Make changes to your account';
+
+  @override
+  String get notification => 'Notification';
+
+  @override
+  String get manageYourAlertsAndUpdates => 'Manage your alerts and updates';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get setYourPreferredAppLanguage => 'Set your preferred app language';
+
+  @override
+  String get appearance => 'Appearance';
+
+  @override
+  String get lightOrDarkYourChoice => 'Light or Dark, your choice';
+
+  @override
+  String get support => 'Support';
+
+  @override
+  String get help => 'Help';
+
+  @override
+  String get aboutUs => 'About Us';
+
+  @override
+  String get logOut => 'Log out';
+
+  @override
+  String get furtherSecureYourAccountForSafety =>
+      'Further secure your account for safety';
 }

@@ -77,6 +77,7 @@ class _MainPageState extends State<MainPage> {
         builder: (context, state) {
           final navCubit = CubitScope.of<NavigationPanelCubit>(context);
           return Scaffold(
+            extendBody: true,
             backgroundColor: context.theme.backgroundColor,
             appBar: _appBarTitle(state.navigationIndex) == null
                 ? null

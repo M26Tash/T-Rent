@@ -39,5 +39,19 @@
     "hatchback": "Hatchback",
     "sport": "Sport",
     "pickup": "Pick-up",
-    "minivan": "Minivan"
+    "minivan": "Minivan",
+    "preferences": "Preferences",
+    "myAccount": "My Account",
+    "makeChangesToYourAccount": "Make changes to your account",
+    "notification": "Notification",
+    "manageYourAlertsAndUpdates": "Manage your alerts and updates",
+    "language": "Language",
+    "setYourPreferredAppLanguage": "Set your preferred app language",
+    "appearance": "Appearance",
+    "lightOrDarkYourChoice": "Light or Dark, your choice",
+    "support": "Support",
+    "help": "Help",
+    "aboutUs": "About Us",
+    "logOut": "Log out",
+    "furtherSecureYourAccountForSafety": "Further secure your account for safety"
 }

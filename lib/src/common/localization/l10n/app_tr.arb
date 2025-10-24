@@ -39,5 +39,19 @@
     "hatchback": "Hatchback",
     "sport": "Sport",
     "pickup": "Pick-up",
-    "minivan": "Minivan"
+    "minivan": "Minivan",
+    "preferences": "Tercihler",
+    "myAccount": "Hesabım",
+    "makeChangesToYourAccount": "Hesabınızda değişiklik yapın",
+    "notification": "Bildirim",
+    "manageYourAlertsAndUpdates": "Uyarılarınızı ve güncellemelerinizi yönetin",
+    "language": "Dil",
+    "setYourPreferredAppLanguage": "Tercih ettiğiniz uygulama dilini ayarlayın",
+    "appearance": "Görünüm",
+    "lightOrDarkYourChoice": "Tema tercihini seç",
+    "support": "Destek",
+    "help": "Yardım",
+    "aboutUs": "Hakkımızda",
+    "logOut": "Çıkış Yap",
+    "furtherSecureYourAccountForSafety": "Hesabınızı güvenlik için daha da güvenli hale getirin"
 }

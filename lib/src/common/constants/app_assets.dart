@@ -32,6 +32,10 @@ abstract final class AppAssets {
   static const String userIcon = '${_assetsVectors}user_icon.svg';
   static const String notificationIcon =
       '${_assetsVectors}notification_icon.svg';
+  static const String clockIcon = '${_assetsVectors}clock_icon.svg';
+  static const String drivingIcon = '${_assetsVectors}driving_icon.svg';
+  static const String gpsIcon = '${_assetsVectors}gps_icon.svg';
+  static const String editIcon = '${_assetsVectors}edit_icon.svg';
 
   // Navigation Panel Icons
   static const String homeIcon = '${_assetsVectors}home_icon.svg';
@@ -40,6 +44,15 @@ abstract final class AppAssets {
   static const String settingsIcon = '${_assetsVectors}settings_icon.svg';
 
   static const String carGpsMarker = '${_assetsImages}car_gps_marker.png';
+
+  // Settings Icons
+  static const String languageIcon = '${_assetsVectors}language_icon.svg';
+  static const String lightIcon = '${_assetsVectors}light_icon.svg';
+  static const String darkIcon = '${_assetsVectors}dark_icon.svg';
+  static const String brushIcon = '${_assetsVectors}brush_icon.svg';
+  static const String helpIcon = '${_assetsVectors}help_icon.svg';
+  static const String aboutUsIcon = '${_assetsVectors}about_us_icon.svg';
+  static const String logoutIcon = '${_assetsVectors}logout_icon.svg';
 
   // Folder Paths
   static const String _assetsFolder = 'assets/';

@@ -139,4 +139,49 @@ class AppLocalizationTr extends AppLocalization {
 
   @override
   String get minivan => 'Minivan';
+
+  @override
+  String get preferences => 'Tercihler';
+
+  @override
+  String get myAccount => 'Hesabım';
+
+  @override
+  String get makeChangesToYourAccount => 'Hesabınızda değişiklik yapın';
+
+  @override
+  String get notification => 'Bildirim';
+
+  @override
+  String get manageYourAlertsAndUpdates =>
+      'Uyarılarınızı ve güncellemelerinizi yönetin';
+
+  @override
+  String get language => 'Dil';
+
+  @override
+  String get setYourPreferredAppLanguage =>
+      'Tercih ettiğiniz uygulama dilini ayarlayın';
+
+  @override
+  String get appearance => 'Görünüm';
+
+  @override
+  String get lightOrDarkYourChoice => 'Tema tercihini seç';
+
+  @override
+  String get support => 'Destek';
+
+  @override
+  String get help => 'Yardım';
+
+  @override
+  String get aboutUs => 'Hakkımızda';
+
+  @override
+  String get logOut => 'Çıkış Yap';
+
+  @override
+  String get furtherSecureYourAccountForSafety =>
+      'Hesabınızı güvenlik için daha da güvenli hale getirin';
 }
