@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
+import 'package:t_rent/src/common/shared_cubits/navigation_panel_cubit/navigation_panel_cubit.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/enums/car_type.dart';
 import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
@@ -14,7 +16,7 @@ class HomeBody extends StatelessWidget {
   final List<MockCar> mockCarList;
   final ValueChanged<int> onTabTap;
   final ValueChanged<String> onSearchChanged;
-  
+
   const HomeBody({
     required this.mockCarList,
     required this.onTabTap,
@@ -115,6 +117,10 @@ class HomeBody extends StatelessWidget {
         const SizedBox(height: AppDimensions.extraLarge),
         for (final car in mockCarList)
           CarItem(
+            onCarTap: () =>
+                context.read<NavigationPanelCubit>().navigateToCarDetails(
+                      mockCar: car,
+                    ),
             mockCar: car,
           ),
       ],

@@ -43,6 +43,69 @@ class AuthRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [BookingPage]
+class BookingRoute extends PageRouteInfo<void> {
+  const BookingRoute({List<PageRouteInfo>? children})
+      : super(BookingRoute.name, initialChildren: children);
+
+  static const String name = 'BookingRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const BookingPage();
+    },
+  );
+}
+
+/// generated route for
+/// [CarDetailsPage]
+class CarDetailsRoute extends PageRouteInfo<CarDetailsRouteArgs> {
+  CarDetailsRoute({
+    required MockCar mockCar,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          CarDetailsRoute.name,
+          args: CarDetailsRouteArgs(mockCar: mockCar, key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'CarDetailsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<CarDetailsRouteArgs>();
+      return CarDetailsPage(mockCar: args.mockCar, key: args.key);
+    },
+  );
+}
+
+class CarDetailsRouteArgs {
+  const CarDetailsRouteArgs({required this.mockCar, this.key});
+
+  final MockCar mockCar;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'CarDetailsRouteArgs{mockCar: $mockCar, key: $key}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! CarDetailsRouteArgs) return false;
+    return mockCar == other.mockCar && key == other.key;
+  }
+
+  @override
+  int get hashCode => mockCar.hashCode ^ key.hashCode;
+}
+
+/// generated route for
 /// [ForgotPasswordPage]
 class ForgotPasswordRoute extends PageRouteInfo<void> {
   const ForgotPasswordRoute({List<PageRouteInfo>? children})

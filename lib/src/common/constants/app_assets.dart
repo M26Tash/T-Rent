@@ -12,6 +12,7 @@ abstract final class AppAssets {
 
   //? Cars photo (just for testing)
   static const String audiRsQ8Side = '${_assetsImages}audi_rs_q8_side.png';
+  static const String audiRsQ8Front = '${_assetsImages}audi_rs_q8_front.png';
   static const String audiQ7Side = '${_assetsImages}audi_q7_side.png';
   static const String audiA6Side = '${_assetsImages}audi_a6_side.png';
   static const String ferrariSF90Side = '${_assetsImages}ferrari_sf90_side.png';
@@ -36,6 +37,9 @@ abstract final class AppAssets {
   static const String drivingIcon = '${_assetsVectors}driving_icon.svg';
   static const String gpsIcon = '${_assetsVectors}gps_icon.svg';
   static const String editIcon = '${_assetsVectors}edit_icon.svg';
+  static const String moneyIcon = '${_assetsVectors}money_icon.svg';
+  static const String steeringWheelIcon =
+      '${_assetsVectors}steering_wheel_icon.svg';
 
   // Navigation Panel Icons
   static const String homeIcon = '${_assetsVectors}home_icon.svg';

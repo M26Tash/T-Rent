@@ -5,6 +5,8 @@ import 'package:t_rent/src/common/shared_cubits/navigation_panel_cubit/navigatio
 import 'package:t_rent/src/features/about_us_page/cubit/about_us_cubit.dart';
 import 'package:t_rent/src/features/app/cubit/app_cubit.dart';
 import 'package:t_rent/src/features/auth_page/cubit/auth_cubit.dart';
+import 'package:t_rent/src/features/booking_page/cubit/booking_cubit.dart';
+import 'package:t_rent/src/features/car_details_page/cubit/car_details_cubit.dart';
 import 'package:t_rent/src/features/forgot_password_page/cubit/forgot_password_cubit.dart';
 import 'package:t_rent/src/features/help_page/cubit/help_cubit.dart';
 import 'package:t_rent/src/features/main_page/cubits/history_cubit/history_cubit.dart';
@@ -52,6 +54,12 @@ void initCubits() {
     )
     ..registerFactory<SettingsCubit>(
       SettingsCubit.new,
+    )
+    ..registerFactory<CarDetailsCubit>(
+      CarDetailsCubit.new,
+    )
+    ..registerFactory<BookingCubit>(
+      BookingCubit.new,
     )
     ..registerFactory<MyAccountCubit>(
       MyAccountCubit.new,

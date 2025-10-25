@@ -72,7 +72,7 @@ abstract final class SupportMethods {
                   ),
                 ),
                 Image.asset(
-                  mockCar.asset,
+                  mockCar.assets.sideView,
                   width: AppDimensions.overlayCarWidth,
                   height: AppDimensions.overlayCarHeight,
                   fit: BoxFit.cover,

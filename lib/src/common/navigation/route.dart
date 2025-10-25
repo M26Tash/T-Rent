@@ -1,6 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
 import 'package:t_rent/src/features/about_us_page/pages/about_us_page.dart';
 import 'package:t_rent/src/features/auth_page/page/auth_page.dart';
+import 'package:t_rent/src/features/booking_page/page/booking_page.dart';
+import 'package:t_rent/src/features/car_details_page/page/car_details_page.dart';
 import 'package:t_rent/src/features/forgot_password_page/page/forgot_password_page.dart';
 import 'package:t_rent/src/features/help_page/page/help_page.dart';
 import 'package:t_rent/src/features/main_page/page/main_page.dart';
@@ -26,6 +30,9 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: ForgotPasswordRoute.page,
+        ),
+        AutoRoute(
+          page: CarDetailsRoute.page,
         ),
         AutoRoute(
           page: MyAccountRoute.page,

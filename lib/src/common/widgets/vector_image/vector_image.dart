@@ -1,8 +1,9 @@
-// 
+//
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:svg_flutter/svg.dart';
+import 'package:t_rent/src/common/theme/theme_extension.dart';
 
 final class VectorImage extends StatelessWidget {
   final double? width;
@@ -51,7 +52,7 @@ final class VectorImage extends StatelessWidget {
       width: width,
       height: height,
       fit: fit,
-      color: color,
+      color: color ?? context.theme.primaryIconColor,
       alignment: alignment,
       matchTextDirection: matchTextDirection,
       allowDrawingOutsideViewBox: canDrawOutsideViewBox,

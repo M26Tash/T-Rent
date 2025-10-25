@@ -21,6 +21,8 @@ abstract final class AppDimensions {
   static const double overlayWidth = 150;
   static const double overlayCarHeight = 60;
   static const double overlayCarWidth = 120;
+  static const double specsListHeight = 150;
+  static const double sliderHeight = 80;
 }
 
 extension AvailableSize on BuildContext {

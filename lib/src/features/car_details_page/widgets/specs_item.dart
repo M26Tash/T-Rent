@@ -5,15 +5,15 @@ import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
 
-class AchievementItem extends StatelessWidget {
+class SpecsItem extends StatelessWidget {
   final String asset;
-  final String achievement;
-  final String achievementTitle;
+  final String specsTitle;
+  final String specsDetail;
 
-  const AchievementItem({
+  const SpecsItem({
     required this.asset,
-    required this.achievement,
-    required this.achievementTitle,
+    required this.specsTitle,
+    required this.specsDetail,
     super.key,
   });
 
@@ -54,14 +54,14 @@ class AchievementItem extends StatelessWidget {
           ),
           const SizedBox(height: AppDimensions.medium),
           Text(
-            achievement,
+            specsDetail,
             style: context.themeData.textTheme.displayMedium?.copyWith(
               color: context.theme.tertiaryTextColor,
             ),
           ),
           const SizedBox(height: AppDimensions.medium),
           Text(
-            achievementTitle,
+            specsTitle,
             style: context.themeData.textTheme.headlineLarge?.copyWith(
               color: context.theme.tertiaryTextColor,
             ),

@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
 import 'package:t_rent/src/common/navigation/route.dart';
+import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
 
 part 'navigation_panel_state.dart';
 
@@ -43,6 +44,23 @@ class NavigationPanelCubit extends Cubit<NavigationPanelState> {
         route: const CustomizedRoute(
           TypeRoute.navigateTo,
           HelpRoute(),
+        ),
+      ),
+    );
+
+    _resetRoute();
+  }
+
+  void navigateToCarDetails({
+    required MockCar mockCar,
+  }) {
+    emit(
+      state.copyWith(
+        route: CustomizedRoute(
+          TypeRoute.navigateTo,
+          CarDetailsRoute(
+            mockCar: mockCar,
+          ),
         ),
       ),
     );

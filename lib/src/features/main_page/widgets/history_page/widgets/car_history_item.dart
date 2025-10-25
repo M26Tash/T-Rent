@@ -105,7 +105,7 @@ class CarHistoryItem extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: '${mockCar.pricePerDay * 3}₺',
+                      text: '${mockCar.rentalPlanRate.pricePerDay * 3}₺',
                       style:
                           context.themeData.textTheme.headlineLarge?.copyWith(
                         color: context.theme.primaryTextColor,
@@ -151,7 +151,7 @@ class CarHistoryItem extends StatelessWidget {
             child: FittedBox(
               alignment: Alignment.centerRight,
               child: Image.asset(
-                mockCar.asset,
+                mockCar.assets.sideView,
               ),
             ),
           ),
