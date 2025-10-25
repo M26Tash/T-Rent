@@ -4,7 +4,12 @@ import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 
 class ReservationSlider extends StatelessWidget {
-  const ReservationSlider({super.key});
+  final VoidCallback onSubmit;
+
+  const ReservationSlider({
+    required this.onSubmit,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +19,10 @@ class ReservationSlider extends StatelessWidget {
       ),
       height: AppDimensions.sliderHeight,
       child: SlideAction(
-        animationDuration: const Duration(milliseconds: 500),
+        animationDuration: const Duration(milliseconds: 400),
         outerColor: context.theme.primaryColor,
-        text: 'Slide to confirm',
-        onSubmit: () async {},
+        text: 'Slide to continue',
+        onSubmit: () async => onSubmit(),
       ),
     );
   }

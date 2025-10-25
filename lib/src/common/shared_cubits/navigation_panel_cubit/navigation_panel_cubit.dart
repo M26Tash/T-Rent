@@ -81,7 +81,6 @@ class NavigationPanelCubit extends Cubit<NavigationPanelState> {
     _resetRoute();
   }
 
-  // ignore: unused_element
   void _resetRoute() {
     emit(
       state.copyWith(

@@ -55,8 +55,11 @@ class CarDetailsPage extends StatelessWidget {
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
-            floatingActionButton:
-                state.rentalPlan == null ? null : const ReservationSlider(),
+            floatingActionButton: state.rentalPlan == null
+                ? null
+                : ReservationSlider(
+                    onSubmit: carDetailsCubit.navigateToBooking,
+                  ),
           );
         },
       ),

@@ -35,6 +35,9 @@ class AppRouter extends RootStackRouter {
           page: CarDetailsRoute.page,
         ),
         AutoRoute(
+          page: BookingRoute.page,
+        ),
+        AutoRoute(
           page: MyAccountRoute.page,
         ),
         AutoRoute(
