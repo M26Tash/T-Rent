@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/cubit_scope/cubit_scope.dart';
 import 'package:t_rent/src/common/di/injector.dart';
+import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/navigation/entities/auto_route_extension.dart';
 import 'package:t_rent/src/common/shared_cubits/navigation_panel_cubit/navigation_panel_cubit.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
@@ -61,9 +62,9 @@ class _MainPageState extends State<MainPage> {
 
   String? _appBarTitle(int pageIndex) => switch (pageIndex) {
         0 => null,
-        1 => 'History',
+        1 => context.locale.history,
         2 => null,
-        3 => 'Settings',
+        3 => context.locale.settings,
         _ => null,
       };
 

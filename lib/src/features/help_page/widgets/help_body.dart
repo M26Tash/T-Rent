@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
+import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/utils/extensions/list_extension.dart';
 import 'package:t_rent/src/common/widgets/custom_button/custom_button.dart';
 import 'package:t_rent/src/common/widgets/input_field/input_field.dart';
@@ -14,16 +15,16 @@ class HelpBody extends StatelessWidget {
         AppDimensions.large,
       ),
       children: <Widget>[
-        const InputField(
-          hintText: 'Subject',
+        InputField(
+          hintText: context.locale.subject,
         ),
-        const InputField(
-          hintText: 'Message',
+        InputField(
+          hintText: context.locale.message,
           minLines: 19,
           maxLines: 20,
         ),
-        const CustomButton(
-          buttonText: 'Submit',
+        CustomButton(
+          buttonText: context.locale.submit,
         ),
       ].insertBetween(
         const SizedBox(

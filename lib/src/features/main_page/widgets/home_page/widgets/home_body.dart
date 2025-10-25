@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
+import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/shared_cubits/navigation_panel_cubit/navigation_panel_cubit.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/enums/car_type.dart';
@@ -67,7 +68,7 @@ class HomeBody extends StatelessWidget {
           prefixIcon: const VectorImage(
             svgAssetPath: AppAssets.searchIcon,
           ),
-          hintText: 'Search...',
+          hintText: context.locale.search,
           onChanged: onSearchChanged,
         ),
         const SizedBox(height: AppDimensions.extraLarge),

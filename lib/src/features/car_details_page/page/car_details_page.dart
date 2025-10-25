@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/cubit_scope/cubit_scope.dart';
+import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/navigation/entities/auto_route_extension.dart';
 import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
@@ -46,7 +47,7 @@ class CarDetailsPage extends StatelessWidget {
             appBar: CustomAppBar(
               svgAssetPath: AppAssets.arrowLeftIcon,
               onLeadingTap: carDetailsCubit.navigateBack,
-              title: 'Details',
+              title: context.locale.details,
             ),
             body: CarDetailsBody(
               mockCar: mockCar,

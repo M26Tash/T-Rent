@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
+import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
 
@@ -63,7 +64,7 @@ class CarHistoryItem extends StatelessWidget {
                 ),
               ),
               Text(
-                'Oct 20, 2025 - Oct 23, 2025\n(3 Days)',
+                'Oct 20, 2025 - Oct 23, 2025\n(${context.locale.days(3)})',
                 style: context.themeData.textTheme.headlineMedium?.copyWith(
                   color: context.theme.primaryTextColor,
                   fontWeight: AppFonts.weightBold,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
+import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/enums/rental_plan.dart';
 import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
@@ -73,7 +74,7 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Brand',
+                    context.locale.brand,
                     style: context.themeData.textTheme.headlineLarge?.copyWith(
                       color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightSemiBold,
@@ -88,7 +89,7 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                   ),
                   const SizedBox(height: AppDimensions.large),
                   Text(
-                    'Model',
+                    context.locale.model,
                     style: context.themeData.textTheme.headlineLarge?.copyWith(
                       color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightSemiBold,
@@ -103,7 +104,7 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                   ),
                   const SizedBox(height: AppDimensions.large),
                   Text(
-                    'Year',
+                    context.locale.year,
                     style: context.themeData.textTheme.headlineLarge?.copyWith(
                       color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightSemiBold,
@@ -118,14 +119,14 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                   ),
                   const SizedBox(height: AppDimensions.large),
                   Text(
-                    'Price',
+                    context.locale.price,
                     style: context.themeData.textTheme.headlineLarge?.copyWith(
                       color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightSemiBold,
                     ),
                   ),
                   Text(
-                    '${widget.mockCar.rentalPlanRate.pricePerDay}₺ / Day',
+                    '${widget.mockCar.rentalPlanRate.pricePerDay}₺ / ${context.locale.day}',
                     style: context.themeData.textTheme.headlineMedium?.copyWith(
                       color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightMedium,
@@ -145,7 +146,7 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
         ),
         const SizedBox(height: AppDimensions.large),
         Text(
-          'Car Specifications',
+          context.locale.carSpecifications,
           style: context.themeData.textTheme.headlineLarge?.copyWith(
             color: context.theme.primaryTextColor,
             fontWeight: AppFonts.weightBold,
@@ -157,20 +158,20 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
           child: ListView(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            children: const [
+            children: [
               SpecsItem(
                 asset: AppAssets.drivingIcon,
-                specsTitle: 'Horsepowers',
+                specsTitle: context.locale.horsepower,
                 specsDetail: '689 HP',
               ),
               SpecsItem(
                 asset: AppAssets.userIcon,
-                specsTitle: 'Seats',
+                specsTitle: context.locale.seats,
                 specsDetail: '4',
               ),
               SpecsItem(
                 asset: AppAssets.gasStationIcon,
-                specsTitle: 'Per 100 km',
+                specsTitle: context.locale.per100km,
                 specsDetail: '10.2 L',
               ),
             ],
@@ -178,7 +179,7 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
         ),
         const SizedBox(height: AppDimensions.large),
         Text(
-          'Rental Plan',
+          context.locale.rentalPlan,
           style: context.themeData.textTheme.headlineLarge?.copyWith(
             color: context.theme.primaryTextColor,
             fontWeight: AppFonts.weightBold,

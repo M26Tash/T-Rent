@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
+import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/enums/rental_plan.dart';
 import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
@@ -21,11 +22,11 @@ class RentalPlanItem extends StatelessWidget {
     super.key,
   });
 
-  String rentalRateTitle(RentalPlan plan) {
+  String rentalRateTitle(RentalPlan plan, BuildContext context) {
     return switch (plan) {
-      RentalPlan.hourly => 'Hourly',
-      RentalPlan.daily => 'Daily',
-      RentalPlan.weekly => 'Weekly',
+      RentalPlan.hourly => context.locale.hourly,
+      RentalPlan.daily => context.locale.daily,
+      RentalPlan.weekly => context.locale.weekly,
     };
   }
 
@@ -77,7 +78,7 @@ class RentalPlanItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  rentalRateTitle(rentalPlan),
+                  rentalRateTitle(rentalPlan, context),
                   style: context.themeData.textTheme.headlineMedium?.copyWith(
                     color: context.theme.primaryTextColor,
                     fontWeight: AppFonts.weightBold,
@@ -94,8 +95,8 @@ class RentalPlanItem extends StatelessWidget {
             ),
             const Spacer(),
             Container(
-              width: 24,
-              height: 24,
+              width: AppDimensions.outerRadioSize,
+              height: AppDimensions.outerRadioSize,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
@@ -108,8 +109,8 @@ class RentalPlanItem extends StatelessWidget {
               child: currentRentalPlan == rentalPlan
                   ? Center(
                       child: Container(
-                        width: 12,
-                        height: 12,
+                        width: AppDimensions.innerRadioSize,
+                        height: AppDimensions.innerRadioSize,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: context.theme.primaryColor,

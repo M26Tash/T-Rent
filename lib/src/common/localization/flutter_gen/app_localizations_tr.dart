@@ -184,4 +184,97 @@ class AppLocalizationTr extends AppLocalization {
   @override
   String get furtherSecureYourAccountForSafety =>
       'Hesabınızı güvenlik için daha da güvenli hale getirin';
+
+  @override
+  String get booking => 'Rezervasyon';
+
+  @override
+  String get details => 'Ayrıntılar';
+
+  @override
+  String get brand => 'Marka';
+
+  @override
+  String get model => 'Model';
+
+  @override
+  String get year => 'Yıl';
+
+  @override
+  String get price => 'Fiyat';
+
+  @override
+  String get carSpecifications => 'Araç Özellikleri';
+
+  @override
+  String get horsepower => 'Beygir Gücü';
+
+  @override
+  String get seats => 'Koltuklar';
+
+  @override
+  String get per100km => '100 km Başına';
+
+  @override
+  String get rentalPlan => 'Kiralama Planı';
+
+  @override
+  String get hourly => 'Saatlik';
+
+  @override
+  String get daily => 'Günlük';
+
+  @override
+  String get weekly => 'Haftalık';
+
+  @override
+  String get slideToContinue => 'Devam etmek için kaydırın';
+
+  @override
+  String get day => 'Gün';
+
+  @override
+  String get subject => 'Konu';
+
+  @override
+  String get message => 'Mesaj';
+
+  @override
+  String get submit => 'Gönder';
+
+  @override
+  String get username => 'Kullanıcı Adı';
+
+  @override
+  String get fullName => 'Tam Ad';
+
+  @override
+  String get email => 'e-posta';
+
+  @override
+  String get dateOfBirth => 'Doğum Tarihi';
+
+  @override
+  String get update => 'Güncelle';
+
+  @override
+  String days(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count gün',
+      one: '$count gün',
+      zero: '0 gün',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get search => 'Ara...';
+
+  @override
+  String get history => 'Geçmiş';
+
+  @override
+  String get settings => 'Ayarlar';
 }

@@ -183,4 +183,97 @@ class AppLocalizationEn extends AppLocalization {
   @override
   String get furtherSecureYourAccountForSafety =>
       'Further secure your account for safety';
+
+  @override
+  String get booking => 'Booking';
+
+  @override
+  String get details => 'Details';
+
+  @override
+  String get brand => 'Brand';
+
+  @override
+  String get model => 'Model';
+
+  @override
+  String get year => 'Year';
+
+  @override
+  String get price => 'price';
+
+  @override
+  String get carSpecifications => 'Car Specifications';
+
+  @override
+  String get horsepower => 'Horsepower';
+
+  @override
+  String get seats => 'Seats';
+
+  @override
+  String get per100km => 'Per 100 km';
+
+  @override
+  String get rentalPlan => 'Rental Plan';
+
+  @override
+  String get hourly => 'Hourly';
+
+  @override
+  String get daily => 'Daily';
+
+  @override
+  String get weekly => 'Weekly';
+
+  @override
+  String get slideToContinue => 'Slide to continue';
+
+  @override
+  String get day => 'Day';
+
+  @override
+  String get subject => 'Subject';
+
+  @override
+  String get message => 'Message';
+
+  @override
+  String get submit => 'Submit';
+
+  @override
+  String get username => 'Username';
+
+  @override
+  String get fullName => 'Full name';
+
+  @override
+  String get email => 'email';
+
+  @override
+  String get dateOfBirth => 'Date of Birth';
+
+  @override
+  String get update => 'Update';
+
+  @override
+  String days(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days',
+      one: '$count day',
+      zero: '0 days',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get search => 'Search...';
+
+  @override
+  String get history => 'History';
+
+  @override
+  String get settings => 'Settings';
 }
