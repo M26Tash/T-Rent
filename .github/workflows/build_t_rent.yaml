@@ -27,7 +27,9 @@ jobs:
 
       - name: Create .env file
         run: |
-          echo "ACCESSTOKEN=${{ secrets.MAPBOX_ACCESS_TOKEN }}" > .env
+          echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" > .env
+          echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" > .env
+          echo "ACCESS_TOKEN=${{ secrets.MAPBOX_ACCESS_TOKEN }}" > .env
 
 
       - name: Initialize dependencies
