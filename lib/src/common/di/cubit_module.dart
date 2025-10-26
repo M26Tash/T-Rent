@@ -38,7 +38,9 @@ void initCubits() {
       ),
     )
     ..registerFactory<AuthCubit>(
-      AuthCubit.new,
+      () => AuthCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<ForgotPasswordCubit>(
       ForgotPasswordCubit.new,
@@ -53,7 +55,9 @@ void initCubits() {
       RouteCubit.new,
     )
     ..registerFactory<SettingsCubit>(
-      SettingsCubit.new,
+      () => SettingsCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<CarDetailsCubit>(
       CarDetailsCubit.new,

@@ -20,8 +20,8 @@ class HelpBody extends StatelessWidget {
         ),
         InputField(
           hintText: context.locale.message,
-          minLines: 19,
-          maxLines: 20,
+          // minLines: 19,
+          // maxLines: 20,
         ),
         CustomButton(
           buttonText: context.locale.submit,

@@ -15,6 +15,15 @@ class HomePage extends StatelessWidget {
       child: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
           final homeCubit = CubitScope.of<HomeCubit>(context);
+
+          if (state.isAddressLoading == true) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: context.theme.primaryColor,
+              ),
+            );
+          }
+
           return DefaultTabController(
             length: CarType.values.length,
             child: Scaffold(
@@ -26,6 +35,7 @@ class HomePage extends StatelessWidget {
                     CarType.values[index],
                   ),
                   onSearchChanged: homeCubit.updateSearchQuery,
+                  userAddress: state.userAddress ?? 'NOT FOUND',
                 ),
               ),
             ),

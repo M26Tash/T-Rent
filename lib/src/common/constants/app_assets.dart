@@ -38,8 +38,8 @@ abstract final class AppAssets {
   static const String gpsIcon = '${_assetsVectors}gps_icon.svg';
   static const String editIcon = '${_assetsVectors}edit_icon.svg';
   static const String moneyIcon = '${_assetsVectors}money_icon.svg';
-  static const String steeringWheelIcon =
-      '${_assetsVectors}steering_wheel_icon.svg';
+  static const String eyeIcon = '${_assetsVectors}eye_icon.svg';
+  static const String eyeOffIcon = '${_assetsVectors}eye_off_icon.svg';
 
   // Navigation Panel Icons
   static const String homeIcon = '${_assetsVectors}home_icon.svg';

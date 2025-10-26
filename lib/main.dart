@@ -8,8 +8,6 @@ import 'package:t_rent/src/features/app/page/app.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  injectDependencies();
-
   await dotenv.load();
 
   final supabaseUrl = dotenv.get('SUPABASE_URL');
@@ -23,6 +21,8 @@ void main() async {
   );
 
   MapboxOptions.setAccessToken(accessToken);
+
+  injectDependencies();
 
   runApp(
     const App(),

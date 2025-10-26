@@ -15,7 +15,7 @@ class SettingsPage extends StatelessWidget {
           final settingsCubit = CubitScope.of<SettingsCubit>(context);
           return SafeArea(
             child: SettingsBody(
-              // ignore: lines_longer_than_80_chars
+              onSignOutTap: settingsCubit.signOut,
               onThemeSwitchChanged: (value) =>
                   settingsCubit.toggleThemeSwitcher(value: value),
               onNotificationSwitchChanged: (value) =>

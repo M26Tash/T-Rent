@@ -29,6 +29,9 @@ dependencies:
   flutter_dotenv: ^6.0.0
   slide_to_act: ^2.0.2
   supabase_flutter: ^2.10.3
+  rxdart: ^0.28.0
+  top_snackbar_flutter: ^3.3.0
+  geocoding: ^4.0.0
   
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:t_rent/src/common/navigation/guards/auth_guard.dart';
 import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
 import 'package:t_rent/src/features/about_us_page/pages/about_us_page.dart';
 import 'package:t_rent/src/features/auth_page/page/auth_page.dart';
@@ -22,7 +23,10 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
           page: AuthRoute.page,
-          // initial: true
+          // initial: true,
+          guards: [
+            AuthGuard(),
+          ],
         ),
         AutoRoute(
           page: MainRoute.page,

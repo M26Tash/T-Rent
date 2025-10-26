@@ -5,6 +5,8 @@ class HomeState extends Equatable {
   final List<MockCar> mockCarList;
   final CarType selectedCarType;
   final String searchQuery;
+  final String? userAddress;
+  final bool isAddressLoading;
 
   @override
   List<Object?> get props => [
@@ -12,6 +14,8 @@ class HomeState extends Equatable {
         mockCarList,
         selectedCarType,
         searchQuery,
+        userAddress,
+        isAddressLoading,
       ];
 
   const HomeState({
@@ -19,7 +23,8 @@ class HomeState extends Equatable {
     required this.mockCarList,
     required this.selectedCarType,
     required this.searchQuery,
-
+    required this.userAddress,
+    required this.isAddressLoading,
   });
 
   HomeState copyWith({
@@ -27,12 +32,16 @@ class HomeState extends Equatable {
     List<MockCar>? mockCarList,
     CarType? selectedCarType,
     String? searchQuery,
+    String? userAddress,
+    bool? isAddressLoading,
   }) {
     return HomeState(
       route: route ?? this.route,
       mockCarList: mockCarList ?? this.mockCarList,
       selectedCarType: selectedCarType ?? this.selectedCarType,
       searchQuery: searchQuery ?? this.searchQuery,
+      userAddress: userAddress ?? this.userAddress,
+      isAddressLoading: isAddressLoading ?? this.isAddressLoading,
     );
   }
 }

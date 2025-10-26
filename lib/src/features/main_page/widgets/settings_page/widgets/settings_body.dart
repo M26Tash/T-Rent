@@ -10,12 +10,14 @@ import 'package:t_rent/src/common/widgets/settings_section/settings_section.dart
 import 'package:t_rent/src/features/main_page/widgets/settings_page/widgets/profile_overview.dart';
 
 class SettingsBody extends StatelessWidget {
+  final VoidCallback onSignOutTap;
   final ValueChanged<bool> onThemeSwitchChanged;
   final ValueChanged<bool> onNotificationSwitchChanged;
   final bool isDarkThemeEnabled;
   final bool isNotificationEnabled;
 
   const SettingsBody({
+    required this.onSignOutTap,
     required this.onThemeSwitchChanged,
     required this.onNotificationSwitchChanged,
     required this.isDarkThemeEnabled,
@@ -98,7 +100,7 @@ class SettingsBody extends StatelessWidget {
         SettingsSection(
           settingsItems: [
             SettingsItem(
-              onTap: () {},
+              onTap: onSignOutTap,
               assetPath: AppAssets.logoutIcon,
               title: context.locale.logOut,
               subtitle: context.locale.furtherSecureYourAccountForSafety,
