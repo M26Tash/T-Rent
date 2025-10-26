@@ -28,6 +28,7 @@ dependencies:
   geolocator: ^14.0.2
   flutter_dotenv: ^6.0.0
   slide_to_act: ^2.0.2
+  supabase_flutter: ^2.10.3
   
 dev_dependencies:
   flutter_test:
