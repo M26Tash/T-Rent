@@ -557,7 +557,7 @@ abstract class AppLocalization {
   /// No description provided for @email.
   ///
   /// In en, this message translates to:
-  /// **'email'**
+  /// **'Email'**
   String get email;
 
   /// No description provided for @dateOfBirth.
@@ -595,6 +595,18 @@ abstract class AppLocalization {
   /// In en, this message translates to:
   /// **'Settings'**
   String get settings;
+
+  /// No description provided for @phoneNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number'**
+  String get phoneNumber;
+
+  /// No description provided for @userDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'User Details'**
+  String get userDetails;
 }
 
 class _AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

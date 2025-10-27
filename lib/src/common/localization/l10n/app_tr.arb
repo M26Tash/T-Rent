@@ -75,11 +75,13 @@
     "submit": "Gönder",
     "username": "Kullanıcı Adı",
     "fullName": "Tam Ad",
-    "email": "e-posta",
+    "email": "E-posta",
     "dateOfBirth": "Doğum Tarihi",
     "update": "Güncelle",
     "days": "{count, plural, =0{0 gün} one{{count} gün} other{{count} gün}}",
     "search": "Ara...",
     "history": "Geçmiş",
-    "settings": "Ayarlar"
+    "settings": "Ayarlar",
+    "phoneNumber": "Telefon numarası",
+    "userDetails": "Kullanıcı Ayrıntıları"
 }

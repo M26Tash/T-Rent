@@ -82,7 +82,7 @@ final class InputField extends StatelessWidget {
             enableInteractiveSelection: enableInteractiveSelection,
             autovalidateMode: AutovalidateMode.disabled,
             initialValue: initialValue,
-            onTap: onTap,
+
             onEditingComplete: onEditingComplete,
             readOnly: readOnly ?? false,
             keyboardType: keyboardType,
@@ -172,6 +172,7 @@ final class InputField extends StatelessWidget {
                       : null,
                 ),
             onChanged: onChanged,
+            onTap: onTap,
           ),
         ),
       ],

@@ -2,7 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_rent/src/common/cubit_scope/cubit_scope.dart';
+import 'package:t_rent/src/common/di/injector.dart';
 import 'package:t_rent/src/common/navigation/entities/auto_route_extension.dart';
+import 'package:t_rent/src/common/shared_cubits/app_locale_cubit/app_locale_cubit.dart';
+import 'package:t_rent/src/common/shared_cubits/app_theme_cubit/app_theme_cubit.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/features/splash_page/cubit/splash_cubit.dart';
 import 'package:t_rent/src/features/splash_page/widgets/splash_body.dart';
@@ -19,6 +22,9 @@ class _SplashPageState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
+  final AppLocaleCubit _appLocaleCubit = i.get<AppLocaleCubit>();
+  final AppThemeCubit _themeSharedCubit = i.get<AppThemeCubit>();
+
   @override
   void initState() {
     super.initState();
@@ -26,6 +32,9 @@ class _SplashPageState extends State<SplashPage>
     _controller = AnimationController(
       vsync: this,
     );
+
+    _appLocaleCubit.readLocale();
+    _themeSharedCubit.readThemeType();
   }
 
   @override

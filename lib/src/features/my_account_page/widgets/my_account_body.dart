@@ -1,17 +1,26 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'package:flutter/material.dart';
-
-import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
-import 'package:t_rent/src/common/theme/theme_extension.dart';
+import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/utils/extensions/list_extension.dart';
+import 'package:t_rent/src/common/widgets/avatar_pick_widget/avatar_pick_widget.dart';
 import 'package:t_rent/src/common/widgets/custom_button/custom_button.dart';
 import 'package:t_rent/src/common/widgets/input_field/input_field.dart';
-import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
+import 'package:t_rent/src/common/widgets/support_methods/support_methods.dart';
+import 'package:t_rent/src/core/domain/entities/profile_model/profile_model.dart';
 
 class MyAccountBody extends StatefulWidget {
+  final ProfileModel profile;
+  final ValueChanged<DateTime?> onDatePicked;
+  final ValueChanged<ProfileModel> onSubmitTap;
+  final VoidCallback onAvatarEditTap;
+  final DateTime? pickedDateTime;
+
   const MyAccountBody({
+    required this.profile,
+    required this.onDatePicked,
+    required this.onSubmitTap,
+    required this.onAvatarEditTap,
+    required this.pickedDateTime,
     super.key,
   });
 
@@ -20,26 +29,33 @@ class MyAccountBody extends StatefulWidget {
 }
 
 class _MyAccountBodyState extends State<MyAccountBody> {
-  late final TextEditingController _userNameController;
-  late final TextEditingController _fullNameController;
   late final TextEditingController _emailController;
+  late final TextEditingController _fullNameController;
+  late final TextEditingController _phoneNumberController;
 
   @override
   void initState() {
     super.initState();
 
-    _userNameController = TextEditingController();
-    _fullNameController = TextEditingController();
     _emailController = TextEditingController();
+    _fullNameController = TextEditingController();
+    _phoneNumberController = TextEditingController();
   }
 
   @override
   void dispose() {
     super.dispose();
 
-    _userNameController.dispose();
-    _fullNameController.dispose();
     _emailController.dispose();
+    _fullNameController.dispose();
+    _phoneNumberController.dispose();
+  }
+
+  Future<void> _pickDate() async {
+    return SupportMethods.pickDate(
+      context: context,
+      onDatePicked: widget.onDatePicked,
+    );
   }
 
   @override
@@ -50,56 +66,36 @@ class _MyAccountBodyState extends State<MyAccountBody> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Stack(
-              children: [
-                CircleAvatar(
-                  backgroundColor: context.theme.surfaceColor,
-                  radius: 70,
-                  backgroundImage: const AssetImage(
-                    AppAssets.userPlaceholder,
-                  ),
-                ),
-                Positioned.fill(
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: FloatingActionButton.small(
-                      backgroundColor: context.theme.primaryColor,
-                      shape: const CircleBorder(),
-                      elevation: AppDimensions.none,
-                      onPressed: () {},
-                      child: VectorImage(
-                        svgAssetPath: AppAssets.editIcon,
-                        color: context.theme.tertiaryIconColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            AvatarPickWidget(
+              avatarUrl: widget.profile.avatarUrl,
+              onEditTap: widget.onAvatarEditTap,
             ),
           ],
         ),
         InputField(
-          controller: _userNameController,
-          fieldTitle: 'Username',
-          hintText: 'test user',
+          controller: _emailController,
+          fieldTitle: context.locale.email,
+          hintText: widget.profile.email,
         ),
         InputField(
           controller: _fullNameController,
-          fieldTitle: 'Full name',
-          hintText: 'John Due',
+          fieldTitle: context.locale.fullName,
+          hintText: widget.profile.fullName,
         ),
         InputField(
-          controller: _emailController,
-          fieldTitle: 'Email',
-          hintText: 'john.due@gmail.com',
+          onTap: _pickDate,
+          fieldTitle: context.locale.dateOfBirth,
+          hintText: '${widget.profile.dateOfBirth ?? '01.01.1980'}',
+          readOnly: true,
         ),
-        const InputField(
-          fieldTitle: 'Date of Birth',
-          hintText: '24.10.1996',
+        InputField(
+          controller: _phoneNumberController,
+          fieldTitle: context.locale.phoneNumber,
+          hintText: widget.profile.phoneNumber,
         ),
         CustomButton(
           onTap: () {},
-          buttonText: 'Update',
+          buttonText: context.locale.update,
         ),
       ].insertBetween(
         const SizedBox(

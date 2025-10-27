@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
+import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
 import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
@@ -143,7 +144,8 @@ class CarItem extends StatelessWidget {
                           text: '${mockCar.rentalPlanRate.pricePerDay}₺',
                           style:
                               // ignore: lines_longer_than_80_chars
-                              context.themeData.textTheme.headlineLarge?.copyWith(
+                              context.themeData.textTheme.headlineLarge
+                                  ?.copyWith(
                             color: context.theme.primaryTextColor,
                             fontWeight: AppFonts.weightBold,
                           ),
@@ -167,7 +169,7 @@ class CarItem extends StatelessWidget {
                           ),
                         ),
                         TextSpan(
-                          text: 'Day',
+                          text: context.locale.day,
                           style: context.themeData.textTheme.headlineMedium
                               ?.copyWith(
                             color: context.theme.primaryTextColor,

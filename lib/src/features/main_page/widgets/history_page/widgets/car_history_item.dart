@@ -132,7 +132,7 @@ class CarHistoryItem extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: '3 Days',
+                      text: context.locale.days(3),
                       style:
                           context.themeData.textTheme.headlineMedium?.copyWith(
                         color: context.theme.primaryTextColor,

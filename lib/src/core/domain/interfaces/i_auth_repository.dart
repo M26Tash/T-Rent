@@ -7,6 +7,8 @@ abstract interface class IAuthRepository {
 
   Stream<Session?> get sessionStream;
 
+  User? get currentUser;
+
   Future<void> signInWithPassword({
     required String email,
     required String password,

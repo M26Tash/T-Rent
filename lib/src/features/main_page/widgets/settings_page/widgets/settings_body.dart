@@ -3,27 +3,62 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
+import 'package:t_rent/src/common/localization/flutter_gen/app_localizations.dart';
 import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/shared_cubits/navigation_panel_cubit/navigation_panel_cubit.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
+import 'package:t_rent/src/common/utils/extensions/list_extension.dart';
 import 'package:t_rent/src/common/widgets/settings_section/settings_section.dart';
+import 'package:t_rent/src/common/widgets/support_methods/support_methods.dart';
+import 'package:t_rent/src/core/domain/entities/profile_model/profile_model.dart';
+import 'package:t_rent/src/features/main_page/widgets/settings_page/widgets/language_item.dart';
 import 'package:t_rent/src/features/main_page/widgets/settings_page/widgets/profile_overview.dart';
 
 class SettingsBody extends StatelessWidget {
+  final ProfileModel profile;
   final VoidCallback onSignOutTap;
   final ValueChanged<bool> onThemeSwitchChanged;
   final ValueChanged<bool> onNotificationSwitchChanged;
+  final ValueChanged<String> onLanguageChanged;
   final bool isDarkThemeEnabled;
   final bool isNotificationEnabled;
 
   const SettingsBody({
+    required this.profile,
     required this.onSignOutTap,
     required this.onThemeSwitchChanged,
     required this.onNotificationSwitchChanged,
+    required this.onLanguageChanged,
     required this.isDarkThemeEnabled,
     required this.isNotificationEnabled,
     super.key,
   });
+
+  Future<void> languageBottomSheet({
+    required BuildContext context,
+    required String currentLocale,
+    required ValueChanged<String> onValueChanged,
+  }) async {
+    await SupportMethods.showBottomSheet(
+      context: context,
+      sheetTitle: context.locale.language,
+      useRootNavigator: true,
+      child: Column(
+        children: <Widget>[
+          for (final language in AppLocalization.supportedLocales)
+            LanguageItem(
+              languageCode: language.languageCode,
+              currentLocale: currentLocale,
+              onValueChanged: onValueChanged,
+            ),
+        ].insertBetween(
+          const SizedBox(
+            height: AppDimensions.large,
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +68,7 @@ class SettingsBody extends StatelessWidget {
         ProfileOverview(
           onEditTap: () =>
               context.read<NavigationPanelCubit>().navigateToMyAccount(),
-          fullName: 'John Due',
-          email: 'john.due@gmail.com',
-          avatarUrl: AppAssets.userPlaceholder,
+          profileModel: profile,
         ),
         const SizedBox(height: AppDimensions.extraLarge),
         SettingsSection(
@@ -52,7 +85,11 @@ class SettingsBody extends StatelessWidget {
               ),
             ),
             SettingsItem(
-              onTap: () {},
+              onTap: () => languageBottomSheet(
+                context: context,
+                currentLocale: context.locale.localeName,
+                onValueChanged: onLanguageChanged,
+              ),
               assetPath: AppAssets.languageIcon,
               title: context.locale.language,
               subtitle: context.locale.setYourPreferredAppLanguage,

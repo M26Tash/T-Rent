@@ -248,7 +248,7 @@ class AppLocalizationEn extends AppLocalization {
   String get fullName => 'Full name';
 
   @override
-  String get email => 'email';
+  String get email => 'Email';
 
   @override
   String get dateOfBirth => 'Date of Birth';
@@ -276,4 +276,10 @@ class AppLocalizationEn extends AppLocalization {
 
   @override
   String get settings => 'Settings';
+
+  @override
+  String get phoneNumber => 'Phone number';
+
+  @override
+  String get userDetails => 'User Details';
 }

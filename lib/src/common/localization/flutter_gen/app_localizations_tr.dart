@@ -249,7 +249,7 @@ class AppLocalizationTr extends AppLocalization {
   String get fullName => 'Tam Ad';
 
   @override
-  String get email => 'e-posta';
+  String get email => 'E-posta';
 
   @override
   String get dateOfBirth => 'Doğum Tarihi';
@@ -277,4 +277,10 @@ class AppLocalizationTr extends AppLocalization {
 
   @override
   String get settings => 'Ayarlar';
+
+  @override
+  String get phoneNumber => 'Telefon numarası';
+
+  @override
+  String get userDetails => 'Kullanıcı Ayrıntıları';
 }

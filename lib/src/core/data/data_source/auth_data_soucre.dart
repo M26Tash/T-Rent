@@ -37,6 +37,9 @@ class AuthDataSource implements IAuthDataSource {
   Stream<Session?> get sessionStream => _sessionSubject;
 
   @override
+  User? get currentUser => supabase.auth.currentUser;
+
+  @override
   Future<void> signInWithPassword({
     required String email,
     required String password,

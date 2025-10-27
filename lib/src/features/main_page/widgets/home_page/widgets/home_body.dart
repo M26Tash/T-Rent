@@ -12,14 +12,17 @@ import 'package:t_rent/src/common/widgets/car_item/car_item.dart';
 import 'package:t_rent/src/common/widgets/input_field/input_field.dart';
 import 'package:t_rent/src/common/widgets/vector_button/vector_button.dart';
 import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
+import 'package:t_rent/src/core/domain/entities/profile_model/profile_model.dart';
 
 class HomeBody extends StatelessWidget {
+  final ProfileModel profile;
   final List<MockCar> mockCarList;
   final ValueChanged<int> onTabTap;
   final ValueChanged<String> onSearchChanged;
   final String userAddress;
 
   const HomeBody({
+    required this.profile,
     required this.mockCarList,
     required this.onTabTap,
     required this.onSearchChanged,
@@ -36,9 +39,10 @@ class HomeBody extends StatelessWidget {
       children: [
         Row(
           children: [
-            const CircleAvatar(
+            CircleAvatar(
+              backgroundColor: context.theme.surfaceColor,
               radius: AppDimensions.smallAvatarRadius,
-              backgroundImage: AssetImage(AppAssets.userPlaceholder),
+              backgroundImage: NetworkImage(profile.avatarUrl ?? ''),
             ),
             const SizedBox(width: AppDimensions.large),
             Expanded(
@@ -46,7 +50,7 @@ class HomeBody extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'John Due',
+                    profile.fullName ?? '',
                     style: context.themeData.textTheme.headlineMedium?.copyWith(
                       color: context.theme.primaryTextColor,
                     ),
@@ -54,6 +58,7 @@ class HomeBody extends StatelessWidget {
                   Text(
                     userAddress,
                     style: context.themeData.textTheme.headlineSmall?.copyWith(
+                      color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightMedium,
                     ),
                     softWrap: true,
@@ -100,11 +105,11 @@ class HomeBody extends StatelessWidget {
             indicatorAnimation: TabIndicatorAnimation.elastic,
             indicatorSize: TabBarIndicatorSize.tab,
             labelStyle: context.themeData.textTheme.headlineMedium?.copyWith(
-              color: context.theme.tertiaryTextColor,
+              color: context.theme.activeTabTextColor,
             ),
             unselectedLabelStyle:
                 context.themeData.textTheme.headlineSmall?.copyWith(
-              color: context.theme.accentTextColor,
+              color: context.theme.inActiveTabTextColor,
               fontWeight: AppFonts.weightMedium,
             ),
             tabs: CarType.values

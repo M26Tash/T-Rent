@@ -14,6 +14,8 @@ final class AuthInteractor {
 
   Stream<Session?> get sessionStream => _authRepository.sessionStream;
 
+  User? get currentUser => _authRepository.currentUser;
+
   Future<void> signInWithPassword({
     required String email,
     required String password,

@@ -200,3 +200,64 @@ class TestRoute extends PageRouteInfo<void> {
     },
   );
 }
+
+/// generated route for
+/// [UserDetailsPage]
+class UserDetailsRoute extends PageRouteInfo<UserDetailsRouteArgs> {
+  UserDetailsRoute({
+    required String email,
+    required String fullName,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          UserDetailsRoute.name,
+          args:
+              UserDetailsRouteArgs(email: email, fullName: fullName, key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'UserDetailsRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<UserDetailsRouteArgs>();
+      return UserDetailsPage(
+        email: args.email,
+        fullName: args.fullName,
+        key: args.key,
+      );
+    },
+  );
+}
+
+class UserDetailsRouteArgs {
+  const UserDetailsRouteArgs({
+    required this.email,
+    required this.fullName,
+    this.key,
+  });
+
+  final String email;
+
+  final String fullName;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'UserDetailsRouteArgs{email: $email, fullName: $fullName, key: $key}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! UserDetailsRouteArgs) return false;
+    return email == other.email &&
+        fullName == other.fullName &&
+        key == other.key;
+  }
+
+  @override
+  int get hashCode => email.hashCode ^ fullName.hashCode ^ key.hashCode;
+}

@@ -1,11 +1,15 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
+import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
+import 'package:t_rent/src/common/widgets/fade_transition_overlay/fade_transition_overlay.dart';
+import 'package:t_rent/src/common/widgets/vector_button/vector_button.dart';
 
 abstract final class SupportMethods {
   static Future<OverlayEntry?> showCarOverlay({
@@ -93,47 +97,87 @@ abstract final class SupportMethods {
 
     return overlay;
   }
-}
 
-class FadeTransitionOverlay extends StatefulWidget {
-  final Widget child;
-  const FadeTransitionOverlay({
-    required this.child,
-    super.key,
-  });
+  static Future<void> pickDate({
+    required BuildContext context,
+    required ValueChanged<DateTime?> onDatePicked,
+  }) async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime(2000),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      helpText: 'Select your date of birth',
+    );
 
-  @override
-  State<FadeTransitionOverlay> createState() => _FadeTransitionOverlayState();
-}
+    if (picked != null) {
+      onDatePicked(picked);
+    }
+  }
 
-class _FadeTransitionOverlayState extends State<FadeTransitionOverlay>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _animationController;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(
-        milliseconds: 250,
+  static Future<void> showBottomSheet({
+    required BuildContext context,
+    required Widget child,
+    String? sheetTitle,
+    TextStyle? titleStyle,
+    bool useCloseButton = true,
+    bool useRootNavigator = false,
+    Color barrierColor = kCupertinoModalBarrierColor,
+  }) async {
+    final sheetBody = Material(
+      color: context.theme.backgroundColor,
+      borderRadius: const BorderRadius.all(
+        Radius.circular(AppDimensions.large),
       ),
-    )..forward();
-  }
+      child: SizedBox(
+        width: MediaQuery.sizeOf(context).width,
+        child: Padding(
+          padding: const EdgeInsets.all(AppDimensions.large),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (sheetTitle != null || useCloseButton) ...[
+                Row(
+                  children: [
+                    if (sheetTitle != null)
+                      Text(
+                        sheetTitle,
+                        style: titleStyle ??
+                            context.themeData.textTheme.displaySmall?.copyWith(
+                              color: context.theme.primaryTextColor,
+                            ),
+                      ),
+                    const Spacer(),
+                    if (useCloseButton)
+                      VectorButton(
+                        onTap: () => Navigator.canPop(context)
+                            ? Navigator.pop(context)
+                            : throw Exception(),
+                        svgAssetPath: AppAssets.arrowRightIcon,
+                      ),
+                  ],
+                ),
+                const SizedBox(height: AppDimensions.medium),
+              ],
+              child,
+            ],
+          ),
+        ),
+      ),
+    );
 
-  @override
-  void dispose() {
-    super.dispose();
-
-    _animationController.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _animationController,
-      child: widget.child,
+    return showModalBottomSheet(
+      context: context,
+      backgroundColor: context.theme.transparent,
+      builder: (_) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppDimensions.large,
+            vertical: AppDimensions.extraLarge,
+          ),
+          child: sheetBody,
+        );
+      },
     );
   }
 }

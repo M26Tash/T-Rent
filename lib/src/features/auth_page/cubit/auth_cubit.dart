@@ -24,6 +24,7 @@ class AuthCubit extends Cubit<AuthState> {
             registerInExceptionMessage: null,
             showLogin: true,
             isObscure: true,
+            userFullName: null,
           ),
         ) {
     _subscribeAll();
@@ -90,6 +91,14 @@ class AuthCubit extends Cubit<AuthState> {
     return _authInteractor.signOut();
   }
 
+  void updateFullName({required String fullName}) {
+    emit(
+      state.copyWith(
+        userFullName: fullName,
+      ),
+    );
+  }
+
   void _onNewSignInExceptionMessage(String? message) {
     emit(
       state.copyWith(
@@ -112,6 +121,13 @@ class AuthCubit extends Cubit<AuthState> {
         currentSession: session,
       ),
     );
+
+    if (session != null && state.userFullName != null) {
+      _navigateToUserDetails(
+        email: session.user.email ?? '',
+        fullName: state.userFullName ?? 'NOT FOUND',
+      );
+    }
   }
 
   void toggleAuthStep() {
@@ -140,6 +156,25 @@ class AuthCubit extends Cubit<AuthState> {
         route: const CustomizedRoute(
           TypeRoute.navigateTo,
           ForgotPasswordRoute(),
+        ),
+      ),
+    );
+
+    _resetRoute();
+  }
+
+  void _navigateToUserDetails({
+    required String email,
+    required String fullName,
+  }) {
+    emit(
+      state.copyWith(
+        route: CustomizedRoute(
+          TypeRoute.navigateTo,
+          UserDetailsRoute(
+            email: email,
+            fullName: fullName,
+          ),
         ),
       ),
     );

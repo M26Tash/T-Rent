@@ -24,6 +24,7 @@ class SplashCubit extends Cubit<SplashState> {
         route: const CustomizedRoute(
           TypeRoute.navigateTo,
           AuthRoute(),
+          shouldClearStack: true,
         ),
       ),
     );
