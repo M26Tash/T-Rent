@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localized_locales/flutter_localized_locales.dart';
 import 'package:t_rent/src/common/cubit_scope/cubit_scope.dart';
 import 'package:t_rent/src/common/localization/flutter_gen/app_localizations.dart';
 import 'package:t_rent/src/common/navigation/route.dart';
@@ -45,6 +46,7 @@ class _AppState extends State<App> {
             child: MaterialApp.router(
               debugShowCheckedModeBanner: false,
               localizationsDelegates: const [
+                LocaleNamesLocalizationsDelegate(),
                 ...AppLocalization.localizationsDelegates,
               ],
               supportedLocales: AppLocalization.supportedLocales,

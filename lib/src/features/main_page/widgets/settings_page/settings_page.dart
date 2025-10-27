@@ -22,6 +22,7 @@ class SettingsPage extends StatelessWidget {
                   settingsCubit.toggleNotificationSwitcher(
                 value: value,
               ),
+              onLanguageChanged: settingsCubit.updateLocale,
               isDarkThemeEnabled: state.isDarkThemeEnabled,
               isNotificationEnabled: state.isNotificationEnabled,
             ),

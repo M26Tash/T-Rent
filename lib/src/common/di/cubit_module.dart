@@ -21,10 +21,14 @@ import 'package:t_rent/src/features/user_details_page/cubit/user_details_cubit.d
 void initSharedCubits() {
   i
     ..registerSingleton<AppLocaleCubit>(
-      AppLocaleCubit(),
+      AppLocaleCubit(
+        i.get(),
+      ),
     )
     ..registerSingleton<AppThemeCubit>(
-      AppThemeCubit(),
+      AppThemeCubit(
+        i.get(),
+      ),
     )
     ..registerSingleton<NavigationPanelCubit>(
       NavigationPanelCubit(),
@@ -68,6 +72,8 @@ void initCubits() {
     )
     ..registerFactory<SettingsCubit>(
       () => SettingsCubit(
+        i.get(),
+        i.get(),
         i.get(),
       ),
     )

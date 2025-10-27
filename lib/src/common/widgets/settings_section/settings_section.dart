@@ -78,25 +78,29 @@ class _SettingsItem extends StatelessWidget {
             ),
             const SizedBox(width: AppDimensions.medium),
             if (settingsItem.subtitle != null)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    settingsItem.title,
-                    style: context.themeData.textTheme.headlineSmall?.copyWith(
-                      color: context.theme.primaryTextColor,
-                      fontWeight: AppFonts.weightMedium,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      settingsItem.title,
+                      style:
+                          context.themeData.textTheme.headlineSmall?.copyWith(
+                        color: context.theme.primaryTextColor,
+                        fontWeight: AppFonts.weightMedium,
+                      ),
                     ),
-                  ),
-                  Text(
-                    settingsItem.subtitle!,
-                    style: context.themeData.textTheme.headlineSmall?.copyWith(
-                      fontSize: AppFonts.sizeTitleMedium,
-                      color: context.theme.hintTextColor,
-                      fontWeight: AppFonts.weightRegular,
+                    Text(
+                      settingsItem.subtitle!,
+                      style:
+                          context.themeData.textTheme.headlineSmall?.copyWith(
+                        fontSize: AppFonts.sizeTitleMedium,
+                        color: context.theme.hintTextColor,
+                        fontWeight: AppFonts.weightRegular,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             if (settingsItem.subtitle == null)
               Text(
@@ -106,7 +110,7 @@ class _SettingsItem extends StatelessWidget {
                   fontWeight: AppFonts.weightMedium,
                 ),
               ),
-            const Spacer(),
+            // const Spacer(),
             if (settingsItem.suffix == null)
               VectorImage(
                 svgAssetPath: AppAssets.arrowRightIcon,

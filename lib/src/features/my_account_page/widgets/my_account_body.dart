@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
+import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/utils/extensions/list_extension.dart';
 import 'package:t_rent/src/common/widgets/avatar_pick_widget/avatar_pick_widget.dart';
 import 'package:t_rent/src/common/widgets/custom_button/custom_button.dart';
@@ -73,28 +74,28 @@ class _MyAccountBodyState extends State<MyAccountBody> {
         ),
         InputField(
           controller: _emailController,
-          fieldTitle: 'Email',
+          fieldTitle: context.locale.email,
           hintText: widget.profile.email,
         ),
         InputField(
           controller: _fullNameController,
-          fieldTitle: 'Full name',
+          fieldTitle: context.locale.fullName,
           hintText: widget.profile.fullName,
         ),
         InputField(
           onTap: _pickDate,
-          fieldTitle: 'Date of Birth',
+          fieldTitle: context.locale.dateOfBirth,
           hintText: '${widget.profile.dateOfBirth ?? '01.01.1980'}',
           readOnly: true,
         ),
         InputField(
           controller: _phoneNumberController,
-          fieldTitle: 'Phone number',
+          fieldTitle: context.locale.phoneNumber,
           hintText: widget.profile.phoneNumber,
         ),
         CustomButton(
           onTap: () {},
-          buttonText: 'Update',
+          buttonText: context.locale.update,
         ),
       ].insertBetween(
         const SizedBox(

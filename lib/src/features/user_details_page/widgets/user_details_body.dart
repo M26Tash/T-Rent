@@ -94,13 +94,13 @@ class _UserDetailsBodyState extends State<UserDetailsBody> {
         const SizedBox(height: AppDimensions.large),
         InputField(
           onTap: _pickDate,
-          fieldTitle: 'Date of Birth',
+          fieldTitle: context.locale.dateOfBirth,
           hintText: '${widget.pickedDateTime ?? '01.01.1980'}',
           readOnly: true,
         ),
         const SizedBox(height: AppDimensions.large),
         InputField(
-          fieldTitle: 'Phone number (Optional)',
+          fieldTitle: context.locale.phoneNumber,
           controller: _phoneNumberController,
           hintText: '+90 (555) 900-00-00',
         ),

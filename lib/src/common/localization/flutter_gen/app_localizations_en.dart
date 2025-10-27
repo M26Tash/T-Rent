@@ -276,4 +276,10 @@ class AppLocalizationEn extends AppLocalization {
 
   @override
   String get settings => 'Settings';
+
+  @override
+  String get phoneNumber => 'Phone number';
+
+  @override
+  String get userDetails => 'User Details';
 }

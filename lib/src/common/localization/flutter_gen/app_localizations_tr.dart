@@ -277,4 +277,10 @@ class AppLocalizationTr extends AppLocalization {
 
   @override
   String get settings => 'Ayarlar';
+
+  @override
+  String get phoneNumber => 'Telefon numarası';
+
+  @override
+  String get userDetails => 'Kullanıcı Ayrıntıları';
 }
