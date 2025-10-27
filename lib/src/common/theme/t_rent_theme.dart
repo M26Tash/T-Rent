@@ -22,6 +22,10 @@ final class TRentTheme extends Equatable {
   final Color primaryIconColor;
   final Color secondaryIconColor;
   final Color tertiaryIconColor;
+  final Color whiteIconColor;
+
+  final Color activeBottomNavIcon;
+  final Color inActiveBottomNavIcon;
 
   final Color primaryTextColor;
   final Color secondaryTextColor;
@@ -29,6 +33,12 @@ final class TRentTheme extends Equatable {
   final Color accentTextColor;
   final Color hintTextColor;
   final Color buttonTextColor;
+
+  final Color profileNameColor;
+  final Color profileEmailColor;
+
+  final Color activeTabTextColor;
+  final Color inActiveTabTextColor;
 
   final Color shadowColor;
 
@@ -52,6 +62,9 @@ final class TRentTheme extends Equatable {
         primaryIconColor,
         secondaryIconColor,
         tertiaryIconColor,
+        whiteIconColor,
+        activeBottomNavIcon,
+        inActiveBottomNavIcon,
         transparent,
         primaryTextColor,
         secondaryTextColor,
@@ -59,6 +72,10 @@ final class TRentTheme extends Equatable {
         accentTextColor,
         hintTextColor,
         buttonTextColor,
+        profileNameColor,
+        profileEmailColor,
+        activeTabTextColor,
+        inActiveTabTextColor,
         shadowColor,
         fontFamily,
         statusBarTheme,
@@ -79,6 +96,9 @@ final class TRentTheme extends Equatable {
     required this.primaryIconColor,
     required this.secondaryIconColor,
     required this.tertiaryIconColor,
+    required this.whiteIconColor,
+    required this.activeBottomNavIcon,
+    required this.inActiveBottomNavIcon,
     required this.transparent,
     required this.primaryTextColor,
     required this.secondaryTextColor,
@@ -86,6 +106,10 @@ final class TRentTheme extends Equatable {
     required this.accentTextColor,
     required this.hintTextColor,
     required this.buttonTextColor,
+    required this.profileNameColor,
+    required this.profileEmailColor,
+    required this.activeTabTextColor,
+    required this.inActiveTabTextColor,
     required this.shadowColor,
     required this.fontFamily,
     required this.statusBarTheme,

@@ -10,10 +10,12 @@ import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/extensions/list_extension.dart';
 import 'package:t_rent/src/common/widgets/settings_section/settings_section.dart';
 import 'package:t_rent/src/common/widgets/support_methods/support_methods.dart';
+import 'package:t_rent/src/core/domain/entities/profile_model/profile_model.dart';
 import 'package:t_rent/src/features/main_page/widgets/settings_page/widgets/language_item.dart';
 import 'package:t_rent/src/features/main_page/widgets/settings_page/widgets/profile_overview.dart';
 
 class SettingsBody extends StatelessWidget {
+  final ProfileModel profile;
   final VoidCallback onSignOutTap;
   final ValueChanged<bool> onThemeSwitchChanged;
   final ValueChanged<bool> onNotificationSwitchChanged;
@@ -22,6 +24,7 @@ class SettingsBody extends StatelessWidget {
   final bool isNotificationEnabled;
 
   const SettingsBody({
+    required this.profile,
     required this.onSignOutTap,
     required this.onThemeSwitchChanged,
     required this.onNotificationSwitchChanged,
@@ -65,9 +68,7 @@ class SettingsBody extends StatelessWidget {
         ProfileOverview(
           onEditTap: () =>
               context.read<NavigationPanelCubit>().navigateToMyAccount(),
-          fullName: 'John Due',
-          email: 'john.due@gmail.com',
-          avatarUrl: AppAssets.userPlaceholder,
+          profileModel: profile,
         ),
         const SizedBox(height: AppDimensions.extraLarge),
         SettingsSection(

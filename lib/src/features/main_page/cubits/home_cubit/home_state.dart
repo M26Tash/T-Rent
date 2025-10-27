@@ -2,6 +2,7 @@ part of 'home_cubit.dart';
 
 class HomeState extends Equatable {
   final CustomizedRoute route;
+  final ProfileModel? profile;
   final List<MockCar> mockCarList;
   final CarType selectedCarType;
   final String searchQuery;
@@ -11,6 +12,7 @@ class HomeState extends Equatable {
   @override
   List<Object?> get props => [
         route,
+        profile,
         mockCarList,
         selectedCarType,
         searchQuery,
@@ -20,6 +22,7 @@ class HomeState extends Equatable {
 
   const HomeState({
     required this.route,
+    required this.profile,
     required this.mockCarList,
     required this.selectedCarType,
     required this.searchQuery,
@@ -29,6 +32,7 @@ class HomeState extends Equatable {
 
   HomeState copyWith({
     CustomizedRoute? route,
+     ProfileModel? profile,
     List<MockCar>? mockCarList,
     CarType? selectedCarType,
     String? searchQuery,
@@ -37,6 +41,7 @@ class HomeState extends Equatable {
   }) {
     return HomeState(
       route: route ?? this.route,
+      profile: profile ?? this.profile,
       mockCarList: mockCarList ?? this.mockCarList,
       selectedCarType: selectedCarType ?? this.selectedCarType,
       searchQuery: searchQuery ?? this.searchQuery,

@@ -62,7 +62,9 @@ void initCubits() {
       ),
     )
     ..registerFactory<HomeCubit>(
-      HomeCubit.new,
+      () => HomeCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<HistoryCubit>(
       HistoryCubit.new,
@@ -72,6 +74,7 @@ void initCubits() {
     )
     ..registerFactory<SettingsCubit>(
       () => SettingsCubit(
+        i.get(),
         i.get(),
         i.get(),
         i.get(),

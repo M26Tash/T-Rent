@@ -4,17 +4,15 @@ import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
+import 'package:t_rent/src/core/domain/entities/profile_model/profile_model.dart';
 
 class ProfileOverview extends StatelessWidget {
   final VoidCallback onEditTap;
-  final String? fullName;
-  final String? email;
-  final String? avatarUrl;
+  final ProfileModel profileModel;
+
   const ProfileOverview({
     required this.onEditTap,
-    required this.fullName,
-    required this.email,
-    required this.avatarUrl,
+    required this.profileModel,
     super.key,
   });
 
@@ -35,23 +33,23 @@ class ProfileOverview extends StatelessWidget {
           CircleAvatar(
             radius: 30,
             backgroundColor: context.theme.surfaceColor,
-            backgroundImage: AssetImage(avatarUrl!),
+            backgroundImage: AssetImage(profileModel.avatarUrl ?? ''),
           ),
           const SizedBox(width: AppDimensions.medium),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                fullName ?? '',
+                profileModel.fullName ?? '',
                 style: context.themeData.textTheme.headlineMedium?.copyWith(
-                  color: context.theme.tertiaryTextColor,
+                  color: context.theme.profileNameColor,
                 ),
               ),
               Text(
-                email ?? '',
+                profileModel.email ?? '',
                 style: context.themeData.textTheme.headlineSmall?.copyWith(
                   fontSize: AppFonts.sizeTitleMedium,
-                  color: context.theme.tertiaryIconColor,
+                  color: context.theme.profileEmailColor,
                   fontWeight: AppFonts.weightMedium,
                 ),
               ),
@@ -65,7 +63,7 @@ class ProfileOverview extends StatelessWidget {
             onPressed: onEditTap,
             child: VectorImage(
               svgAssetPath: AppAssets.editIcon,
-              color: context.theme.tertiaryIconColor,
+              color: context.theme.whiteIconColor,
             ),
           ),
         ],

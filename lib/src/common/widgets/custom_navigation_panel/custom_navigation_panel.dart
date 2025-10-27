@@ -68,8 +68,8 @@ final class _CustomNavigationItem extends StatelessWidget {
     const selectedIconScale = 1.2;
     const unselectedIconScale = 1.0;
 
-    final activeColor = context.theme.tertiaryIconColor;
-    final inactiveColor = context.theme.secondaryIconColor;
+    final activeColor = context.theme.activeBottomNavIcon;
+    final inactiveColor = context.theme.inActiveBottomNavIcon;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,

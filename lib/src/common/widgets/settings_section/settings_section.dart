@@ -110,7 +110,7 @@ class _SettingsItem extends StatelessWidget {
                   fontWeight: AppFonts.weightMedium,
                 ),
               ),
-            // const Spacer(),
+            if (settingsItem.subtitle == null) const Spacer(),
             if (settingsItem.suffix == null)
               VectorImage(
                 svgAssetPath: AppAssets.arrowRightIcon,
