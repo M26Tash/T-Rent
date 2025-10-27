@@ -10,6 +10,7 @@ import 'package:t_rent/src/features/forgot_password_page/page/forgot_password_pa
 import 'package:t_rent/src/features/help_page/page/help_page.dart';
 import 'package:t_rent/src/features/main_page/page/main_page.dart';
 import 'package:t_rent/src/features/my_account_page/pages/my_account_page.dart';
+import 'package:t_rent/src/features/splash_page/pages/splash_page.dart';
 import 'package:t_rent/src/features/test_page/pages/test_page.dart';
 
 part 'route.gr.dart';
@@ -22,15 +23,17 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
+          page: SplashRoute.page,
+          initial: true,
+        ),
+        AutoRoute(
           page: AuthRoute.page,
-          // initial: true,
           guards: [
             AuthGuard(),
           ],
         ),
         AutoRoute(
           page: MainRoute.page,
-          initial: true,
         ),
         AutoRoute(
           page: ForgotPasswordRoute.page,
