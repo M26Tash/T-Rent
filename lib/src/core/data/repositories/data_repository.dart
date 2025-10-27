@@ -1,0 +1,28 @@
+import 'package:image_picker/image_picker.dart';
+import 'package:t_rent/src/core/data/data_source/interfaces/i_data_source.dart';
+import 'package:t_rent/src/core/domain/entities/profile_model/profile_model.dart';
+import 'package:t_rent/src/core/domain/interfaces/i_data_repository.dart';
+
+final class DataRepository implements IDataRepository {
+  final IDataSource _dataSource;
+
+  DataRepository(this._dataSource);
+
+  @override
+  Stream<ProfileModel?> get profileStream => _dataSource.profileStream;
+
+  @override
+  Future<void> updateProfile(ProfileModel profile) async {
+    return _dataSource.updateProfile(profile);
+  }
+
+  @override
+  Future<void> getProfile() async {
+    return _dataSource.getProfile();
+  }
+
+  @override
+  Future<void> uploadAvatar(XFile? avatar) async {
+    return _dataSource.uploadAvatar(avatar);
+  }
+}

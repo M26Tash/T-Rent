@@ -5,28 +5,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
+import 'package:t_rent/src/common/navigation/route.dart';
 import 'package:t_rent/src/core/domain/entities/profile_model/profile_model.dart';
 import 'package:t_rent/src/core/domain/interactors/auth_interactor.dart';
 import 'package:t_rent/src/core/domain/interactors/data_interactor.dart';
 import 'package:t_rent/src/core/domain/interactors/file_interactor.dart';
 
-part 'my_account_state.dart';
+part 'user_details_state.dart';
 
-class MyAccountCubit extends Cubit<MyAccountState> {
+class UserDetailsCubit extends Cubit<UserDetailsState> {
   final AuthInteractor _authInteractor;
   final DataInteractor _dataInteractor;
   final FileInteractor _fileInteractor;
-  MyAccountCubit(
+  UserDetailsCubit(
     this._authInteractor,
     this._dataInteractor,
     this._fileInteractor,
   ) : super(
-          const MyAccountState(
+          const UserDetailsState(
             route: CustomizedRoute(
               null,
               null,
             ),
-            profile: null,
             dateOfBirth: null,
             image: null,
           ),
@@ -34,16 +34,12 @@ class MyAccountCubit extends Cubit<MyAccountState> {
     _subscribeAll();
   }
 
-  StreamSubscription<ProfileModel?>? _profileSubscription;
   StreamSubscription<XFile?>? _imageSubscription;
 
   User? get currentUser => _authInteractor.currentUser;
 
   @override
   Future<void> close() {
-    _profileSubscription?.cancel();
-    _profileSubscription = null;
-
     _imageSubscription?.cancel();
     _imageSubscription = null;
 
@@ -51,19 +47,10 @@ class MyAccountCubit extends Cubit<MyAccountState> {
   }
 
   void _subscribeAll() {
-    _profileSubscription?.cancel();
-    _profileSubscription = _dataInteractor.profileStream.listen(
-      _onNewProfile,
-    );
-
     _imageSubscription?.cancel();
     _imageSubscription = _fileInteractor.imageStream.listen(
       _onNewImage,
     );
-  }
-
-  Future<void> getProfile() async {
-    return _dataInteractor.getProfile();
   }
 
   Future<void> updateProfile(ProfileModel profile) async {
@@ -88,10 +75,14 @@ class MyAccountCubit extends Cubit<MyAccountState> {
     _uploadAvatar(image);
   }
 
-  void _onNewProfile(ProfileModel? profile) {
+  void navigateToMain() {
     emit(
       state.copyWith(
-        profile: profile,
+        route: const CustomizedRoute(
+          TypeRoute.navigateTo,
+          MainRoute(),
+          shouldClearStack: true,
+        ),
       ),
     );
   }
@@ -108,14 +99,6 @@ class MyAccountCubit extends Cubit<MyAccountState> {
     return _dataInteractor.updateProfile(
       profile.copyWith(
         dateOfBirth: state.dateOfBirth,
-      ),
-    );
-  }
-
-  void navigateBack() {
-    emit(
-      state.copyWith(
-        route: const CustomizedRoute.pop(),
       ),
     );
   }

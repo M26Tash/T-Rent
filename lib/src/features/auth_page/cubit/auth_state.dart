@@ -7,6 +7,7 @@ class AuthState extends Equatable {
   final String? registerInExceptionMessage;
   final bool showLogin;
   final bool isObscure;
+  final String? userFullName;
 
   @override
   List<Object?> get props => [
@@ -16,6 +17,7 @@ class AuthState extends Equatable {
         registerInExceptionMessage,
         showLogin,
         isObscure,
+        userFullName,
       ];
 
   const AuthState({
@@ -25,6 +27,7 @@ class AuthState extends Equatable {
     required this.registerInExceptionMessage,
     required this.showLogin,
     required this.isObscure,
+    required this.userFullName,
   });
 
   AuthState copyWith({
@@ -34,6 +37,7 @@ class AuthState extends Equatable {
     String? registerInExceptionMessage,
     bool? showLogin,
     bool? isObscure,
+    String? userFullName,
   }) {
     return AuthState(
       route: route ?? this.route,
@@ -44,6 +48,7 @@ class AuthState extends Equatable {
           registerInExceptionMessage ?? this.registerInExceptionMessage,
       showLogin: showLogin ?? this.showLogin,
       isObscure: isObscure ?? this.isObscure,
+      userFullName: userFullName ?? this.userFullName,
     );
   }
 }

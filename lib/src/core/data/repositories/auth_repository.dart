@@ -19,6 +19,9 @@ final class AuthRepository implements IAuthRepository {
   Stream<Session?> get sessionStream => _authDataSource.sessionStream;
 
   @override
+  User? get currentUser => _authDataSource.currentUser;
+
+  @override
   Future<void> signInWithPassword({
     required String email,
     required String password,

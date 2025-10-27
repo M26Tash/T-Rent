@@ -123,10 +123,14 @@ class _RegisterBodyState extends State<RegisterBody> {
             final passwordValidate = _passwordFormKey.currentState?.validate();
 
             if (nameValidate! && emailValidate! && passwordValidate!) {
-              widget.authCubit.registerWithPassword(
-                email: _emailController.text.trim(),
-                password: _passwordController.text.trim(),
-              );
+              widget.authCubit
+                ..registerWithPassword(
+                  email: _emailController.text.trim(),
+                  password: _passwordController.text.trim(),
+                )
+                ..updateFullName(
+                  fullName: _nameController.text.trim(),
+                );
             }
           },
         ),

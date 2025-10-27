@@ -93,6 +93,23 @@ abstract final class SupportMethods {
 
     return overlay;
   }
+
+  static Future<void> pickDate({
+    required BuildContext context,
+    required ValueChanged<DateTime?> onDatePicked,
+  }) async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime(2000),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      helpText: 'Select your date of birth',
+    );
+
+    if (picked != null) {
+      onDatePicked(picked);
+    }
+  }
 }
 
 class FadeTransitionOverlay extends StatefulWidget {

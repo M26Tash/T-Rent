@@ -248,7 +248,7 @@ class AppLocalizationEn extends AppLocalization {
   String get fullName => 'Full name';
 
   @override
-  String get email => 'email';
+  String get email => 'Email';
 
   @override
   String get dateOfBirth => 'Date of Birth';

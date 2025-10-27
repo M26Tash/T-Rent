@@ -1,53 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
-import 'package:t_rent/src/common/utils/extensions/list_extension.dart';
+import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/widgets/avatar_pick_widget/avatar_pick_widget.dart';
 import 'package:t_rent/src/common/widgets/custom_button/custom_button.dart';
 import 'package:t_rent/src/common/widgets/input_field/input_field.dart';
 import 'package:t_rent/src/common/widgets/support_methods/support_methods.dart';
 import 'package:t_rent/src/core/domain/entities/profile_model/profile_model.dart';
 
-class MyAccountBody extends StatefulWidget {
-  final ProfileModel profile;
+class UserDetailsBody extends StatefulWidget {
   final ValueChanged<DateTime?> onDatePicked;
   final ValueChanged<ProfileModel> onSubmitTap;
   final VoidCallback onAvatarEditTap;
+  final String email;
+  final String fullName;
   final DateTime? pickedDateTime;
+  final String? avatarUrl;
 
-  const MyAccountBody({
-    required this.profile,
+  const UserDetailsBody({
     required this.onDatePicked,
     required this.onSubmitTap,
     required this.onAvatarEditTap,
+    required this.email,
+    required this.fullName,
     required this.pickedDateTime,
+    required this.avatarUrl,
     super.key,
   });
 
   @override
-  State<MyAccountBody> createState() => _MyAccountBodyState();
+  State<UserDetailsBody> createState() => _UserDetailsBodyState();
 }
 
-class _MyAccountBodyState extends State<MyAccountBody> {
-  late final TextEditingController _emailController;
+class _UserDetailsBodyState extends State<UserDetailsBody> {
   late final TextEditingController _fullNameController;
   late final TextEditingController _phoneNumberController;
+  late final TextEditingController _dateOfBirthController;
 
   @override
   void initState() {
     super.initState();
 
-    _emailController = TextEditingController();
-    _fullNameController = TextEditingController();
+    _fullNameController = TextEditingController(
+      text: widget.fullName,
+    );
+
     _phoneNumberController = TextEditingController();
+
+    _dateOfBirthController = TextEditingController();
   }
 
   @override
   void dispose() {
     super.dispose();
 
-    _emailController.dispose();
     _fullNameController.dispose();
     _phoneNumberController.dispose();
+    _dateOfBirthController.dispose();
   }
 
   Future<void> _pickDate() async {
@@ -61,46 +69,56 @@ class _MyAccountBodyState extends State<MyAccountBody> {
   Widget build(BuildContext context) {
     return ListView(
       padding: const EdgeInsets.all(AppDimensions.large),
-      children: <Widget>[
+      children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AvatarPickWidget(
-              avatarUrl: widget.profile.avatarUrl,
+              avatarUrl: widget.avatarUrl,
               onEditTap: widget.onAvatarEditTap,
             ),
           ],
         ),
+        const SizedBox(height: AppDimensions.extraLarge),
         InputField(
-          controller: _emailController,
-          fieldTitle: 'Email',
-          hintText: widget.profile.email,
+          fieldTitle: context.locale.email,
+          hintText: widget.email,
+          readOnly: true,
         ),
+        const SizedBox(height: AppDimensions.large),
         InputField(
+          fieldTitle: context.locale.fullName,
           controller: _fullNameController,
-          fieldTitle: 'Full name',
-          hintText: widget.profile.fullName,
+          hintText: widget.fullName,
         ),
+        const SizedBox(height: AppDimensions.large),
         InputField(
           onTap: _pickDate,
           fieldTitle: 'Date of Birth',
-          hintText: '${widget.profile.dateOfBirth ?? '01.01.1980'}',
+          hintText: '${widget.pickedDateTime ?? '01.01.1980'}',
           readOnly: true,
         ),
+        const SizedBox(height: AppDimensions.large),
         InputField(
+          fieldTitle: 'Phone number (Optional)',
           controller: _phoneNumberController,
-          fieldTitle: 'Phone number',
-          hintText: widget.profile.phoneNumber,
+          hintText: '+90 (555) 900-00-00',
         ),
+        const SizedBox(height: AppDimensions.extraLarge),
         CustomButton(
-          onTap: () {},
-          buttonText: 'Update',
+          buttonText: context.locale.submit,
+          onTap: () => widget.onSubmitTap(
+            ProfileModel(
+              email: widget.email,
+              fullName: _fullNameController.text.trim(),
+              phoneNumber: _phoneNumberController.text.trim(),
+              dateOfBirth: DateTime.tryParse(
+                _dateOfBirthController.text.trim(),
+              ),
+            ),
+          ),
         ),
-      ].insertBetween(
-        const SizedBox(
-          height: AppDimensions.large,
-        ),
-      ),
+      ],
     );
   }
 }

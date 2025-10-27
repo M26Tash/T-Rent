@@ -16,6 +16,7 @@ import 'package:t_rent/src/features/main_page/cubits/settings_cubit/settings_cub
 import 'package:t_rent/src/features/my_account_page/cubit/my_account_cubit.dart';
 import 'package:t_rent/src/features/splash_page/cubit/splash_cubit.dart';
 import 'package:t_rent/src/features/test_page/cubit/test_cubit.dart';
+import 'package:t_rent/src/features/user_details_page/cubit/user_details_cubit.dart';
 
 void initSharedCubits() {
   i
@@ -49,6 +50,13 @@ void initCubits() {
     ..registerFactory<ForgotPasswordCubit>(
       ForgotPasswordCubit.new,
     )
+    ..registerFactory<UserDetailsCubit>(
+      () => UserDetailsCubit(
+        i.get(),
+        i.get(),
+        i.get(),
+      ),
+    )
     ..registerFactory<HomeCubit>(
       HomeCubit.new,
     )
@@ -70,7 +78,11 @@ void initCubits() {
       BookingCubit.new,
     )
     ..registerFactory<MyAccountCubit>(
-      MyAccountCubit.new,
+      () => MyAccountCubit(
+        i.get(),
+        i.get(),
+        i.get(),
+      ),
     )
     ..registerFactory<HelpCubit>(
       HelpCubit.new,

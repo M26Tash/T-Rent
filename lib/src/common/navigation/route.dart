@@ -12,6 +12,7 @@ import 'package:t_rent/src/features/main_page/page/main_page.dart';
 import 'package:t_rent/src/features/my_account_page/pages/my_account_page.dart';
 import 'package:t_rent/src/features/splash_page/pages/splash_page.dart';
 import 'package:t_rent/src/features/test_page/pages/test_page.dart';
+import 'package:t_rent/src/features/user_details_page/pages/user_details_page.dart';
 
 part 'route.gr.dart';
 
@@ -37,6 +38,10 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: ForgotPasswordRoute.page,
+        ),
+        AutoRoute(
+          page: UserDetailsRoute.page,
+          // initial: true,
         ),
         AutoRoute(
           page: CarDetailsRoute.page,
