@@ -59,8 +59,13 @@ abstract final class AppAssets {
   static const String logoutIcon = '${_assetsVectors}logout_icon.svg';
   static const String imageAddIcon = '${_assetsVectors}image_add_icon.svg';
 
+  // Lottie animation
+  static const String carAnimation = '${_assetsLottie}car_animation.lottie';
+  static const String carAnimationJson = '${_assetsLottie}car_animation.json';
+
   // Folder Paths
   static const String _assetsFolder = 'assets/';
   static const String _assetsVectors = '${_assetsFolder}vectors/';
   static const String _assetsImages = '${_assetsFolder}images/';
+  static const String _assetsLottie = '${_assetsFolder}lottie/';
 }

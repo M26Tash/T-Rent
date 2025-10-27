@@ -1,11 +1,9 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_rent/src/common/cubit_scope/cubit_scope.dart';
-import 'package:t_rent/src/common/di/injector.dart';
 import 'package:t_rent/src/common/navigation/entities/auto_route_extension.dart';
+import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/features/splash_page/cubit/splash_cubit.dart';
 import 'package:t_rent/src/features/splash_page/widgets/splash_body.dart';
 
@@ -19,31 +17,21 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
-  final SplashCubit splashCubit = i.get<SplashCubit>();
-  late AnimationController _animationController;
+  late final AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
 
-    _animationController = AnimationController(
-      duration: const Duration(seconds: 3),
+    _controller = AnimationController(
       vsync: this,
     );
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      splashCubit.initAnimation(
-        _animationController,
-        MediaQuery.of(context).size,
-      );
-      _animationController.forward();
-    });
   }
 
   @override
   void dispose() {
+    _controller.dispose();
     super.dispose();
-    _animationController.dispose();
   }
 
   void _listener(BuildContext context, SplashState state) {
@@ -60,19 +48,15 @@ class _SplashPageState extends State<SplashPage>
   Widget build(BuildContext context) {
     return CubitScope<SplashCubit>(
       child: BlocConsumer<SplashCubit, SplashState>(
-        bloc: splashCubit,
         listener: _listener,
         listenWhen: _listenWhen,
         builder: (context, state) {
           final cubit = CubitScope.of<SplashCubit>(context);
           return Scaffold(
-            backgroundColor: state.backgroundColor,
+            backgroundColor: context.theme.backgroundColor,
             body: SplashBody(
-              cubit: cubit,
-              backgroundColor: state.backgroundColor,
-              tracePoints: state.tracePoints,
-              buttonPosition: state.buttonPosition,
-              animationCompleted: state.animationCompleted,
+              animationController: _controller,
+              onAnimationComplete: cubit.navigateToAuth,
             ),
           );
         },
