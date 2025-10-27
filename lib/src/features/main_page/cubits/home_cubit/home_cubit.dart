@@ -1,5 +1,9 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
 import 'package:t_rent/src/common/utils/enums/car_type.dart';
 import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
@@ -17,8 +21,49 @@ class HomeCubit extends Cubit<HomeState> {
             mockCarList: MockCarList.cars,
             selectedCarType: CarType.all,
             searchQuery: '',
+            userAddress: null,
+            isAddressLoading: true,
           ),
-        );
+        ) {
+    _initUserAddress();
+  }
+
+  Future<void> _initUserAddress() async {
+    final fetchedAddress = await _getUserAddress();
+
+    emit(
+      state.copyWith(
+        userAddress: fetchedAddress,
+        isAddressLoading: false,
+      ),
+    );
+  }
+
+  Future<String?> _getUserAddress() async {
+    final permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      return 'Permission denied';
+    }
+
+    final position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    final placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+
+    final place = placemarks.first;
+    emit(
+      state.copyWith(
+        userAddress:
+            // ignore: lines_longer_than_80_chars
+            '${place.administrativeArea}, ${place.subAdministrativeArea}, ${place.street}, ${place.postalCode}',
+        isAddressLoading: true,
+      ),
+    );
+    return null;
+  }
 
   void selectCarType(CarType type) {
     emit(

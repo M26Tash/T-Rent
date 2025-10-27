@@ -17,11 +17,13 @@ class HomeBody extends StatelessWidget {
   final List<MockCar> mockCarList;
   final ValueChanged<int> onTabTap;
   final ValueChanged<String> onSearchChanged;
+  final String userAddress;
 
   const HomeBody({
     required this.mockCarList,
     required this.onTabTap,
     required this.onSearchChanged,
+    required this.userAddress,
     super.key,
   });
 
@@ -38,25 +40,27 @@ class HomeBody extends StatelessWidget {
               radius: AppDimensions.smallAvatarRadius,
               backgroundImage: AssetImage(AppAssets.userPlaceholder),
             ),
-            const SizedBox(width: AppDimensions.medium),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'John Due',
-                  style: context.themeData.textTheme.headlineMedium?.copyWith(
-                    color: context.theme.primaryTextColor,
+            const SizedBox(width: AppDimensions.large),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'John Due',
+                    style: context.themeData.textTheme.headlineMedium?.copyWith(
+                      color: context.theme.primaryTextColor,
+                    ),
                   ),
-                ),
-                Text(
-                  'İstanbul, Beşiktaş, Çırağan Cd.',
-                  style: context.themeData.textTheme.headlineSmall?.copyWith(
-                    fontWeight: AppFonts.weightMedium,
+                  Text(
+                    userAddress,
+                    style: context.themeData.textTheme.headlineSmall?.copyWith(
+                      fontWeight: AppFonts.weightMedium,
+                    ),
+                    softWrap: true,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            const Spacer(),
             VectorButton(
               onTap: () {},
               svgAssetPath: AppAssets.notificationIcon,

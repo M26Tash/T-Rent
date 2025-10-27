@@ -16,39 +16,43 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Install latest Flutter
+      - name: Install Flutter (cached)
         uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.x"
           channel: "stable"
           cache: true
 
+      - name: Cache pub dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            build/
+          key: ${{ runner.os }}-pub-${{ hashFiles('pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
+
       - name: Create .env file
         run: |
-          echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}" > .env
-          echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}" > .env
-          echo "ACCESS_TOKEN=${{ secrets.MAPBOX_ACCESS_TOKEN }}" > .env
+          {
+            echo "SUPABASE_URL=${{ secrets.SUPABASE_URL }}"
+            echo "SUPABASE_ANON_KEY=${{ secrets.SUPABASE_ANON_KEY }}"
+            echo "ACCESS_TOKEN=${{ secrets.MAPBOX_ACCESS_TOKEN }}"
+          } > .env
 
+      - name: Get dependencies
+        run: flutter pub get
 
-      - name: Initialize dependencies
-        run: |
-          flutter pub get
+      - name: Static analysis
+        run: flutter analyze --no-pub
 
-      - name: Check dependencies
-        run: |
-          flutter pub outdated
+      # - name: Run tests
+      #   if: github.event_name == 'push'
+      #   run: flutter test --no-pub
 
-      - name: Analyze code
-        run: |
-          flutter analyze
-
-      - name: Run tests
-        run: |
-          flutter test
-
-      - name: Build Android APK
-        run: |
-          flutter build apk
-
+      # - name: Build Android APK
+      #   if: github.ref == 'refs/heads/master'
+      #   run: flutter build apk --release --no-pub

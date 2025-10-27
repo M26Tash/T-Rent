@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
 import 'package:t_rent/src/common/localization/localizations_ext.dart';
@@ -7,13 +8,16 @@ import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/validators/auth_validators.dart';
 import 'package:t_rent/src/common/widgets/custom_button/custom_button.dart';
 import 'package:t_rent/src/common/widgets/input_field/input_field.dart';
+import 'package:t_rent/src/common/widgets/vector_button/vector_button.dart';
 import 'package:t_rent/src/features/auth_page/cubit/auth_cubit.dart';
 
 class RegisterBody extends StatefulWidget {
   final AuthCubit authCubit;
+  final bool isObscure;
 
   const RegisterBody({
     required this.authCubit,
+    required this.isObscure,
     super.key,
   });
 
@@ -99,9 +103,16 @@ class _RegisterBodyState extends State<RegisterBody> {
         InputField(
           formKey: _passwordFormKey,
           controller: _passwordController,
+          obscureText: widget.isObscure,
           fieldTitle: context.locale.password,
           hintText: '********',
           validator: (passwd) => _authValidators.validatePassword(passwd!),
+          suffixIcon: VectorButton(
+            onTap: widget.authCubit.toggleObscure,
+            svgAssetPath:
+                widget.isObscure ? AppAssets.eyeOffIcon : AppAssets.eyeIcon,
+            iconColor: context.theme.secondaryIconColor,
+          ),
         ),
         const SizedBox(height: AppDimensions.large),
         CustomButton(
@@ -111,7 +122,12 @@ class _RegisterBodyState extends State<RegisterBody> {
             final emailValidate = _emailFormKey.currentState?.validate();
             final passwordValidate = _passwordFormKey.currentState?.validate();
 
-            if (nameValidate! && emailValidate! && passwordValidate!) {}
+            if (nameValidate! && emailValidate! && passwordValidate!) {
+              widget.authCubit.registerWithPassword(
+                email: _emailController.text.trim(),
+                password: _passwordController.text.trim(),
+              );
+            }
           },
         ),
         const SizedBox(height: AppDimensions.large),

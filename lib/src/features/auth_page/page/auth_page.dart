@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_rent/src/common/cubit_scope/cubit_scope.dart';
 import 'package:t_rent/src/common/navigation/entities/auto_route_extension.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
+import 'package:t_rent/src/common/utils/extensions/context_extension.dart';
 import 'package:t_rent/src/features/auth_page/cubit/auth_cubit.dart';
 import 'package:t_rent/src/features/auth_page/widgets/login_body.dart';
 import 'package:t_rent/src/features/auth_page/widgets/register_body.dart';
@@ -15,15 +16,18 @@ class AuthPage extends StatelessWidget {
   Widget showBody({
     required AuthCubit cubit,
     required bool showLogin,
+    required bool isObscure,
   }) {
     if (showLogin) {
       return LoginBody(
         authCubit: cubit,
+        isObscure: isObscure,
       );
     }
 
     return RegisterBody(
       authCubit: cubit,
+      isObscure: isObscure,
     );
   }
 
@@ -31,10 +35,24 @@ class AuthPage extends StatelessWidget {
     if (state.route.type != null) {
       context.navigateToRoute(state.route);
     }
+
+    if (state.signInExceptionMessage != null) {
+      context.showErrorSnackBar(
+        state.signInExceptionMessage!,
+      );
+    }
+
+    if (state.registerInExceptionMessage != null) {
+      context.showErrorSnackBar(
+        state.registerInExceptionMessage!,
+      );
+    }
   }
 
   bool _listenWhen(AuthState prev, AuthState current) {
-    return prev.route.type == null && current.route.type != null;
+    return prev.route.type == null && current.route.type != null ||
+        prev.signInExceptionMessage != current.signInExceptionMessage ||
+        prev.registerInExceptionMessage != current.registerInExceptionMessage;
   }
 
   @override
@@ -51,6 +69,7 @@ class AuthPage extends StatelessWidget {
               child: showBody(
                 cubit: authCubit,
                 showLogin: state.showLogin,
+                isObscure: state.isObscure,
               ),
             ),
           );
