@@ -9,6 +9,8 @@ class HomeState extends Equatable {
   final String searchQuery;
   final String? userAddress;
   final bool isAddressLoading;
+  final FilterTab filterTab;
+  final SortOrder sortOrder;
 
   @override
   List<Object?> get props => [
@@ -20,6 +22,8 @@ class HomeState extends Equatable {
         searchQuery,
         userAddress,
         isAddressLoading,
+        filterTab,
+        sortOrder,
       ];
 
   const HomeState({
@@ -31,6 +35,8 @@ class HomeState extends Equatable {
     required this.searchQuery,
     required this.userAddress,
     required this.isAddressLoading,
+    required this.filterTab,
+    required this.sortOrder,
   });
 
   HomeState copyWith({
@@ -42,6 +48,8 @@ class HomeState extends Equatable {
     String? searchQuery,
     String? userAddress,
     bool? isAddressLoading,
+    FilterTab? filterTab,
+    SortOrder? sortOrder,
   }) {
     return HomeState(
       route: route ?? this.route,
@@ -52,6 +60,8 @@ class HomeState extends Equatable {
       searchQuery: searchQuery ?? this.searchQuery,
       userAddress: userAddress ?? this.userAddress,
       isAddressLoading: isAddressLoading ?? this.isAddressLoading,
+      filterTab: filterTab ?? this.filterTab,
+      sortOrder: sortOrder ?? this.sortOrder,
     );
   }
 }

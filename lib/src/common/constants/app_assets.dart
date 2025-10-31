@@ -69,6 +69,7 @@ abstract final class AppAssets {
 
   static const String brokenImageIcon =
       '${_assetsVectors}broken_image_icon.svg';
+  static const String filterIcon = '${_assetsVectors}filter_icon.svg';
 
   // Lottie animation
   static const String carAnimation = '${_assetsLottie}car_animation.lottie';

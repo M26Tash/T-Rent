@@ -7,18 +7,22 @@ import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/shared_cubits/navigation_panel_cubit/navigation_panel_cubit.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/enums/car_type.dart';
-
 import 'package:t_rent/src/common/widgets/car_item/car_item.dart';
+import 'package:t_rent/src/common/widgets/custom_tab_bar/custom_tab_bar.dart';
 import 'package:t_rent/src/common/widgets/input_field/input_field.dart';
+import 'package:t_rent/src/common/widgets/support_methods/support_methods.dart';
 import 'package:t_rent/src/common/widgets/vector_button/vector_button.dart';
 import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
 import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 import 'package:t_rent/src/core/domain/entities/profile_model/profile_model.dart';
+import 'package:t_rent/src/features/main_page/widgets/home_page/widgets/filter_bottom_sheet_child.dart';
 
 class HomeBody extends StatelessWidget {
   final ProfileModel profile;
   final List<CarModel> cars;
   final ValueChanged<int> onTabTap;
+  final ValueChanged<int> onSortOrderTabTap;
+  final ValueChanged<int> onFilterTabTap;
   final ValueChanged<String> onSearchChanged;
   final String userAddress;
 
@@ -26,10 +30,25 @@ class HomeBody extends StatelessWidget {
     required this.profile,
     required this.cars,
     required this.onTabTap,
+    required this.onSortOrderTabTap,
+    required this.onFilterTabTap,
     required this.onSearchChanged,
     required this.userAddress,
     super.key,
   });
+
+  Future<void> filterBottomSheet({
+    required BuildContext context,
+    required Widget child,
+  }) async {
+    await SupportMethods.showBottomSheet(
+      context: context,
+      sheetTitle: 'Filter',
+      useRootNavigator: true,
+      useCloseButton: false,
+      child: child,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,52 +100,31 @@ class HomeBody extends StatelessWidget {
           prefixIcon: const VectorImage(
             svgAssetPath: AppAssets.searchIcon,
           ),
+          suffixIcon: VectorButton(
+            onTap: () => filterBottomSheet(
+              context: context,
+              child: FilterBottomSheetChild(
+                onSortOrderTap: onSortOrderTabTap,
+                onFilterTap: onFilterTabTap,
+              ),
+            ),
+            svgAssetPath: AppAssets.filterIcon,
+          ),
           hintText: context.locale.search,
           onChanged: onSearchChanged,
         ),
         const SizedBox(height: AppDimensions.extraLarge),
-        Container(
-          decoration: BoxDecoration(
-            color: context.theme.surfaceColor,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(
-                AppDimensions.preLarge,
-              ),
-            ),
-          ),
-          child: TabBar(
-            isScrollable: true,
-            tabAlignment: TabAlignment.start,
-            dividerColor: context.theme.transparent,
-            indicator: BoxDecoration(
-              color: context.theme.primaryColor,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(
-                  AppDimensions.preLarge,
-                ),
-              ),
-            ),
-            indicatorAnimation: TabIndicatorAnimation.elastic,
-            indicatorSize: TabBarIndicatorSize.tab,
-            labelStyle: context.themeData.textTheme.headlineMedium?.copyWith(
-              color: context.theme.activeTabTextColor,
-            ),
-            unselectedLabelStyle:
-                context.themeData.textTheme.headlineSmall?.copyWith(
-              color: context.theme.inActiveTabTextColor,
-              fontWeight: AppFonts.weightMedium,
-            ),
-            tabs: CarType.values
-                .map(
-                  (type) => Tab(
-                    text: type.displayName(
-                      context,
-                    ),
+        CustomTabBar(
+          tabs: CarType.values
+              .map(
+                (type) => Tab(
+                  text: type.displayName(
+                    context,
                   ),
-                )
-                .toList(),
-            onTap: onTabTap,
-          ),
+                ),
+              )
+              .toList(),
+          onTap: onTabTap,
         ),
         const SizedBox(height: AppDimensions.extraLarge),
         for (final car in cars)
@@ -137,7 +135,6 @@ class HomeBody extends StatelessWidget {
                     ),
             car: car,
             asset: car.carImage.sideView,
-            // asset: AppAssets.audiQ7Side,
           ),
       ],
     );

@@ -4,6 +4,8 @@ import 'package:t_rent/src/common/cubit_scope/cubit_scope.dart';
 import 'package:t_rent/src/common/di/injector.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/enums/car_type.dart';
+import 'package:t_rent/src/common/utils/enums/filter_tab.dart';
+import 'package:t_rent/src/common/utils/enums/sort_order.dart';
 import 'package:t_rent/src/features/main_page/cubits/home_cubit/home_cubit.dart';
 import 'package:t_rent/src/features/main_page/widgets/home_page/widgets/home_body.dart';
 
@@ -49,8 +51,14 @@ class _HomePageState extends State<HomePage> {
                 child: HomeBody(
                   profile: state.profile!,
                   cars: state.cars!,
-                  onTabTap: (index) => homeCubit.selectCarType(
+                  onTabTap: (index) => homeCubit.onCarTypeSelect(
                     CarType.values[index],
+                  ),
+                  onSortOrderTabTap: (index) => homeCubit.onSortOrderSelect(
+                    SortOrder.values[index],
+                  ),
+                  onFilterTabTap: (index) => homeCubit.onFilterTabSelect(
+                    FilterTab.values[index],
                   ),
                   onSearchChanged: homeCubit.updateSearchQuery,
                   userAddress: state.userAddress ?? 'NOT FOUND',
