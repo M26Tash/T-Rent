@@ -1,21 +1,25 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
 import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
+import 'package:t_rent/src/common/utils/enums/drive_type.dart';
 import 'package:t_rent/src/common/utils/enums/rental_plan.dart';
-import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
+import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
+import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 import 'package:t_rent/src/features/car_details_page/widgets/rental_plan_item.dart';
-import 'package:t_rent/src/features/car_details_page/widgets/specs_item.dart';
+import 'package:t_rent/src/features/car_details_page/widgets/specs_grid_view.dart';
 
 class CarDetailsBody extends StatefulWidget {
-  final MockCar mockCar;
+  final CarModel car;
   final ValueChanged<RentalPlan?> onPlanChanged;
   final RentalPlan? currentRentalPlan;
 
   const CarDetailsBody({
-    required this.mockCar,
+    required this.car,
     required this.onPlanChanged,
     required this.currentRentalPlan,
     super.key,
@@ -81,7 +85,7 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                     ),
                   ),
                   Text(
-                    widget.mockCar.brand,
+                    widget.car.brand,
                     style: context.themeData.textTheme.headlineMedium?.copyWith(
                       color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightMedium,
@@ -96,7 +100,7 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                     ),
                   ),
                   Text(
-                    widget.mockCar.model,
+                    widget.car.model,
                     style: context.themeData.textTheme.headlineMedium?.copyWith(
                       color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightMedium,
@@ -111,7 +115,7 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                     ),
                   ),
                   Text(
-                    widget.mockCar.carYear,
+                    '${widget.car.year}',
                     style: context.themeData.textTheme.headlineMedium?.copyWith(
                       color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightMedium,
@@ -126,7 +130,7 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                     ),
                   ),
                   Text(
-                    '${widget.mockCar.rentalPlanRate.pricePerDay}₺ / ${context.locale.day}',
+                    '${widget.car.carPricing.perDay}₺ / ${context.locale.day}',
                     style: context.themeData.textTheme.headlineMedium?.copyWith(
                       color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightMedium,
@@ -137,9 +141,28 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
             ),
             SizedBox(
               width: context.availableWidth * 0.6,
-              child: Image.asset(
-                widget.mockCar.assets.frontView,
-                fit: BoxFit.contain,
+              child: CachedNetworkImage(
+                imageUrl: widget.car.carImage.frontView,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Shimmer.fromColors(
+                  baseColor: context.theme.overlayBackgroundColor,
+                  highlightColor: context.theme.accentColor,
+                  child: Image.asset(
+                    height: context.availableHeight,
+                    width: context.availableWidth,
+                    AppAssets.testFrontView,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                errorWidget: (context, url, error) => const Center(
+                  child: VectorImage(
+                    height: AppDimensions.errorWidgetIconSize,
+                    width: AppDimensions.errorWidgetIconSize,
+                    svgAssetPath: AppAssets.brokenImageIcon,
+                  ),
+                ),
+                fadeInDuration: const Duration(milliseconds: 300),
+                fadeOutDuration: const Duration(milliseconds: 150),
               ),
             ),
           ],
@@ -153,29 +176,49 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
           ),
         ),
         const SizedBox(height: AppDimensions.medium),
-        SizedBox(
-          height: AppDimensions.specsListHeight,
-          child: ListView(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            children: [
-              SpecsItem(
-                asset: AppAssets.drivingIcon,
-                specsTitle: context.locale.horsepower,
-                specsDetail: '689 HP',
+        SpecsGridView(
+          specs: [
+            SpecsItem(
+              asset: AppAssets.drivingIcon,
+              specsTitle: context.locale.driveType,
+              specsDetail: widget.car.carSpecs.driveType.toDisplayString(),
+            ),
+            SpecsItem(
+              asset: AppAssets.drivingIcon,
+              specsTitle: context.locale.engine,
+              specsDetail: context.locale.engineValue(
+                widget.car.carSpecs.engineCapacity,
               ),
-              SpecsItem(
-                asset: AppAssets.userIcon,
-                specsTitle: context.locale.seats,
-                specsDetail: '4',
+            ),
+            SpecsItem(
+              asset: AppAssets.drivingIcon,
+              specsTitle: context.locale.horsepower,
+              specsDetail: context.locale.horsepowerValue(
+                widget.car.carSpecs.horsepower,
               ),
-              SpecsItem(
-                asset: AppAssets.gasStationIcon,
-                specsTitle: context.locale.per100km,
-                specsDetail: '10.2 L',
+            ),
+            SpecsItem(
+              asset: AppAssets.drivingIcon,
+              specsTitle: context.locale.topSpeed,
+              specsDetail: context.locale.topSpeedValue(
+                widget.car.carSpecs.topSpeed,
               ),
-            ],
-          ),
+            ),
+            SpecsItem(
+              asset: AppAssets.drivingIcon,
+              specsTitle: context.locale.acceleration,
+              specsDetail: context.locale.accelerationValue(
+                widget.car.carSpecs.zeroToHundred,
+              ),
+            ),
+            SpecsItem(
+              asset: AppAssets.drivingIcon,
+              specsTitle: context.locale.torque,
+              specsDetail: context.locale.torqueValue(
+                widget.car.carSpecs.torque,
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: AppDimensions.large),
         Text(
@@ -188,9 +231,9 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
         const SizedBox(height: AppDimensions.medium),
         for (int i = 0; i < RentalPlan.values.length; i++)
           RentalPlanItem(
-            rentalPlanRate: widget.mockCar.rentalPlanRate,
-            rentalPlan: RentalPlan.values[i],
-            currentRentalPlan: widget.currentRentalPlan,
+            carPricing: widget.car.carPricing,
+            plan: RentalPlan.values[i],
+            currentPlan: widget.currentRentalPlan,
             onPlanChanged: widget.onPlanChanged,
           ),
         if (widget.currentRentalPlan != null)

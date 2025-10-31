@@ -7,23 +7,24 @@ import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/shared_cubits/navigation_panel_cubit/navigation_panel_cubit.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/enums/car_type.dart';
-import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
+
 import 'package:t_rent/src/common/widgets/car_item/car_item.dart';
 import 'package:t_rent/src/common/widgets/input_field/input_field.dart';
 import 'package:t_rent/src/common/widgets/vector_button/vector_button.dart';
 import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
+import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 import 'package:t_rent/src/core/domain/entities/profile_model/profile_model.dart';
 
 class HomeBody extends StatelessWidget {
   final ProfileModel profile;
-  final List<MockCar> mockCarList;
+  final List<CarModel> cars;
   final ValueChanged<int> onTabTap;
   final ValueChanged<String> onSearchChanged;
   final String userAddress;
 
   const HomeBody({
     required this.profile,
-    required this.mockCarList,
+    required this.cars,
     required this.onTabTap,
     required this.onSearchChanged,
     required this.userAddress,
@@ -42,7 +43,10 @@ class HomeBody extends StatelessWidget {
             CircleAvatar(
               backgroundColor: context.theme.surfaceColor,
               radius: AppDimensions.smallAvatarRadius,
-              backgroundImage: NetworkImage(profile.avatarUrl ?? ''),
+              backgroundImage: NetworkImage(
+                profile.avatarUrl ??
+                    'https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-PNG-Photos.png',
+              ),
             ),
             const SizedBox(width: AppDimensions.large),
             Expanded(
@@ -125,13 +129,15 @@ class HomeBody extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppDimensions.extraLarge),
-        for (final car in mockCarList)
+        for (final car in cars)
           CarItem(
             onCarTap: () =>
                 context.read<NavigationPanelCubit>().navigateToCarDetails(
-                      mockCar: car,
+                      car: car,
                     ),
-            mockCar: car,
+            car: car,
+            asset: car.carImage.sideView,
+            // asset: AppAssets.audiQ7Side,
           ),
       ],
     );

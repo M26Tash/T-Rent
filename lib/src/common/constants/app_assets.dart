@@ -12,6 +12,7 @@ abstract final class AppAssets {
 
   //? Cars photo (just for testing)
   static const String audiRsQ8Side = '${_assetsImages}audi_rs_q8_side.png';
+  static const String audiQ8Side = '${_assetsImages}audi_q8_side.png';
   static const String audiRsQ8Front = '${_assetsImages}audi_rs_q8_front.png';
   static const String audiQ7Side = '${_assetsImages}audi_q7_side.png';
   static const String audiA6Side = '${_assetsImages}audi_a6_side.png';
@@ -24,7 +25,14 @@ abstract final class AppAssets {
       '${_assetsImages}mercedes_vito_side.png';
   static const String hyundaiStariaSide =
       '${_assetsImages}hyundai_staria_side.png';
+  static const String hyundaiStariaFront =
+      '${_assetsImages}hyundai_staria_front.png';
+  static const String hyundaiStariaSideTest =
+      '${_assetsImages}hyundai_staria_side_test.png';
   static const String fordRaptorSide = '${_assetsImages}ford_raptor_side.png';
+
+  static const String testSideView = '${_assetsImages}test_side_view.png';
+  static const String testFrontView = '${_assetsImages}test_front_view.png';
 
   // Placeholder
   static const String userPlaceholder = '${_assetsImages}user_placeholder.jpg';
@@ -58,6 +66,9 @@ abstract final class AppAssets {
   static const String aboutUsIcon = '${_assetsVectors}about_us_icon.svg';
   static const String logoutIcon = '${_assetsVectors}logout_icon.svg';
   static const String imageAddIcon = '${_assetsVectors}image_add_icon.svg';
+
+  static const String brokenImageIcon =
+      '${_assetsVectors}broken_image_icon.svg';
 
   // Lottie animation
   static const String carAnimation = '${_assetsLottie}car_animation.lottie';

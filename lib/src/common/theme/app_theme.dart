@@ -16,6 +16,7 @@ const _outerSpace = Color(0xFF444648);
 const _chineseWhite = Color(0xFFE0E0E0);
 const _darkCharcoal = Color(0xFF2C2E30);
 const _chineseSilver = Color(0xFFCCCCCC);
+const _inchworm = Color(0xFFB9FF66);
 
 const _transparent = Color(0x00000000);
 
@@ -36,6 +37,7 @@ const lightTheme = TRentTheme(
   backgroundColor: _white,
   surfaceColor: _cultured,
   overlayBackgroundColor: _chineseSilver,
+  electricSurfaceColor: _inchworm,
   primaryColor: _rosewood,
   accentColor: _blood,
   primaryIconColor: _darkJungleGreen,
@@ -70,6 +72,7 @@ const darkTheme = TRentTheme(
   backgroundColor: _darkJungleGreen,
   surfaceColor: _darkCharcoal,
   overlayBackgroundColor: _outerSpace,
+  electricSurfaceColor: _inchworm,
   primaryColor: _rosewood,
   accentColor: _blood,
   primaryIconColor: _white,

@@ -21,11 +21,12 @@ abstract final class AppDimensions {
   static const double overlayWidth = 150;
   static const double overlayCarHeight = 60;
   static const double overlayCarWidth = 120;
-  static const double specsListHeight = 150;
+  static const double specsListHeight = 260;
   static const double sliderHeight = 80;
   static const double outerRadioSize = 24;
   static const double innerRadioSize = 12;
   static const double avatarPickRadius = 70;
+  static const double errorWidgetIconSize = 48;
 }
 
 extension AvailableSize on BuildContext {

@@ -21,7 +21,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
 
-    _homeCubit.getProfile();
+    _homeCubit
+      ..getProfile()
+      ..getCars();
   }
 
   @override
@@ -31,7 +33,7 @@ class _HomePageState extends State<HomePage> {
         builder: (context, state) {
           final homeCubit = CubitScope.of<HomeCubit>(context);
 
-          if (state.isAddressLoading == true) {
+          if (state.profile == null || state.cars == null) {
             return Center(
               child: CircularProgressIndicator(
                 color: context.theme.primaryColor,
@@ -46,7 +48,7 @@ class _HomePageState extends State<HomePage> {
               body: SafeArea(
                 child: HomeBody(
                   profile: state.profile!,
-                  mockCarList: state.mockCarList,
+                  cars: state.cars!,
                   onTabTap: (index) => homeCubit.selectCarType(
                     CarType.values[index],
                   ),

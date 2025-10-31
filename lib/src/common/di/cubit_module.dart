@@ -100,6 +100,8 @@ void initCubits() {
       AboutUsCubit.new,
     )
     ..registerFactory<TestCubit>(
-      TestCubit.new,
+      () => TestCubit(
+        i.get(),
+      ),
     );
 }

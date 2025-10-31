@@ -7,6 +7,7 @@ final class TRentTheme extends Equatable {
   final Color backgroundColor;
   final Color surfaceColor;
   final Color overlayBackgroundColor;
+  final Color electricSurfaceColor;
 
   final Color primaryColor;
   final Color accentColor;
@@ -53,6 +54,7 @@ final class TRentTheme extends Equatable {
         backgroundColor,
         surfaceColor,
         overlayBackgroundColor,
+        electricSurfaceColor,
         primaryColor,
         accentColor,
         errorColor,
@@ -87,6 +89,7 @@ final class TRentTheme extends Equatable {
     required this.backgroundColor,
     required this.surfaceColor,
     required this.overlayBackgroundColor,
+    required this.electricSurfaceColor,
     required this.primaryColor,
     required this.accentColor,
     required this.errorColor,

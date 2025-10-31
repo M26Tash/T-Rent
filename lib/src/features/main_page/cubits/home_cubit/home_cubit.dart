@@ -8,7 +8,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
 import 'package:t_rent/src/common/utils/enums/car_type.dart';
-import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
+import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 import 'package:t_rent/src/core/domain/entities/profile_model/profile_model.dart';
 import 'package:t_rent/src/core/domain/interactors/data_interactor.dart';
 
@@ -19,29 +19,34 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit(
     this._dataInteractor,
   ) : super(
-          HomeState(
-            route: const CustomizedRoute(
+          const HomeState(
+            route: CustomizedRoute(
               null,
               null,
             ),
             profile: null,
-            mockCarList: MockCarList.cars,
+            cars: null,
+            allCars: null,
             selectedCarType: CarType.all,
             searchQuery: '',
             userAddress: null,
             isAddressLoading: true,
           ),
         ) {
-          _initUserAddress();
+    _initUserAddress();
     _subscribeAll();
   }
 
   StreamSubscription<ProfileModel?>? _profileSubscription;
+  StreamSubscription<List<CarModel>?>? _carsSubscription;
 
   @override
   Future<void> close() {
     _profileSubscription?.cancel();
     _profileSubscription = null;
+
+    _carsSubscription?.cancel();
+    _carsSubscription = null;
 
     return super.close();
   }
@@ -51,16 +56,34 @@ class HomeCubit extends Cubit<HomeState> {
     _profileSubscription = _dataInteractor.profileStream.listen(
       _onNewProfile,
     );
+
+    _carsSubscription?.cancel();
+    _carsSubscription = _dataInteractor.carstream.listen(
+      _onNewCars,
+    );
   }
 
   Future<void> getProfile() async {
     return _dataInteractor.getProfile();
   }
 
+  Future<void> getCars() async {
+    return _dataInteractor.getCars();
+  }
+
   void _onNewProfile(ProfileModel? profile) {
     emit(
       state.copyWith(
         profile: profile,
+      ),
+    );
+  }
+
+  void _onNewCars(List<CarModel>? cars) {
+    emit(
+      state.copyWith(
+        allCars: cars,
+        cars: cars, 
       ),
     );
   }
@@ -121,7 +144,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void _filterCars() {
-    final filtered = MockCarList.cars.where((car) {
+    final filtered = state.allCars?.where((car) {
       final matchesType = state.selectedCarType == CarType.all ||
           car.type == state.selectedCarType;
 
@@ -134,7 +157,7 @@ class HomeCubit extends Cubit<HomeState> {
 
     emit(
       state.copyWith(
-        mockCarList: filtered,
+        cars: filtered,
       ),
     );
   }

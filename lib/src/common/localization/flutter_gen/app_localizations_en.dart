@@ -200,13 +200,53 @@ class AppLocalizationEn extends AppLocalization {
   String get year => 'Year';
 
   @override
-  String get price => 'price';
+  String get price => 'Price';
 
   @override
   String get carSpecifications => 'Car Specifications';
 
   @override
+  String get driveType => 'Drive Type';
+
+  @override
+  String engineValue(Object value) {
+    return '$value cc';
+  }
+
+  @override
+  String get engine => 'Engine';
+
+  @override
+  String horsepowerValue(Object value) {
+    return '$value HP';
+  }
+
+  @override
   String get horsepower => 'Horsepower';
+
+  @override
+  String topSpeedValue(Object value) {
+    return '$value km/h';
+  }
+
+  @override
+  String get topSpeed => 'Top Speed';
+
+  @override
+  String accelerationValue(Object value) {
+    return '$value s';
+  }
+
+  @override
+  String get acceleration => 'Acceleration';
+
+  @override
+  String torqueValue(Object value) {
+    return '$value Nm';
+  }
+
+  @override
+  String get torque => 'Torque';
 
   @override
   String get seats => 'Seats';
@@ -225,9 +265,6 @@ class AppLocalizationEn extends AppLocalization {
 
   @override
   String get weekly => 'Weekly';
-
-  @override
-  String get slideToContinue => 'Slide to continue';
 
   @override
   String get day => 'Day';

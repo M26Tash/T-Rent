@@ -1,5 +1,6 @@
 import 'package:image_picker/image_picker.dart';
 import 'package:t_rent/src/core/data/data_source/interfaces/i_data_source.dart';
+import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 import 'package:t_rent/src/core/domain/entities/profile_model/profile_model.dart';
 import 'package:t_rent/src/core/domain/interfaces/i_data_repository.dart';
 
@@ -10,6 +11,9 @@ final class DataRepository implements IDataRepository {
 
   @override
   Stream<ProfileModel?> get profileStream => _dataSource.profileStream;
+
+  @override
+  Stream<List<CarModel>?> get carstream => _dataSource.carstream;
 
   @override
   Future<void> updateProfile(ProfileModel profile) async {
@@ -24,5 +28,10 @@ final class DataRepository implements IDataRepository {
   @override
   Future<void> uploadAvatar(XFile? avatar) async {
     return _dataSource.uploadAvatar(avatar);
+  }
+
+  @override
+  Future<void> getCars() async {
+    return _dataSource.getCars();
   }
 }
