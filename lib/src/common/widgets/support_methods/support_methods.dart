@@ -1,30 +1,33 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/enums/rental_plan.dart';
 import 'package:t_rent/src/common/utils/extensions/context_extension.dart';
-import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
 import 'package:t_rent/src/common/widgets/fade_transition_overlay/fade_transition_overlay.dart';
 import 'package:t_rent/src/common/widgets/vector_button/vector_button.dart';
+import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
+import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 
 abstract final class SupportMethods {
   static Future<OverlayEntry?> showCarOverlay({
     required BuildContext context,
     required MapboxMap mapboxMap,
-    required MockCar mockCar,
+    required CarModel car,
     Duration autoHideDuration = const Duration(seconds: 2),
   }) async {
     final screenCoord = await mapboxMap.pixelForCoordinate(
       Point(
         coordinates: Position(
-          mockCar.coordinates.longitude,
-          mockCar.coordinates.latitude,
+          car.carCoordinates.longitude,
+          car.carCoordinates.latitude,
         ),
       ),
     );
@@ -58,7 +61,7 @@ abstract final class SupportMethods {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: mockCar.brand.toUpperCase(),
+                        text: car.brand.toUpperCase(),
                         style: ctx.themeData.textTheme.headlineMedium?.copyWith(
                           color: ctx.theme.primaryTextColor,
                           fontWeight: AppFonts.weightBold,
@@ -68,7 +71,7 @@ abstract final class SupportMethods {
                         child: SizedBox(width: AppDimensions.small),
                       ),
                       TextSpan(
-                        text: mockCar.model,
+                        text: car.model,
                         style: ctx.themeData.textTheme.headlineSmall?.copyWith(
                           color: ctx.theme.primaryTextColor,
                           fontWeight: AppFonts.weightMedium,
@@ -77,11 +80,28 @@ abstract final class SupportMethods {
                     ],
                   ),
                 ),
-                Image.asset(
-                  mockCar.assets.sideView,
-                  width: AppDimensions.overlayCarWidth,
-                  height: AppDimensions.overlayCarHeight,
+                CachedNetworkImage(
+                  imageUrl: car.carImage.sideView,
                   fit: BoxFit.cover,
+                  placeholder: (context, url) => Shimmer.fromColors(
+                    baseColor: context.theme.overlayBackgroundColor,
+                    highlightColor: context.theme.accentColor,
+                    child: Image.asset(
+                      width: AppDimensions.overlayCarWidth,
+                      height: AppDimensions.overlayCarHeight,
+                      AppAssets.audiQ7Side,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => const Center(
+                    child: VectorImage(
+                      height: AppDimensions.errorWidgetIconSize,
+                      width: AppDimensions.errorWidgetIconSize,
+                      svgAssetPath: AppAssets.brokenImageIcon,
+                    ),
+                  ),
+                  fadeInDuration: const Duration(milliseconds: 300),
+                  fadeOutDuration: const Duration(milliseconds: 150),
                 ),
                 const SizedBox(height: AppDimensions.medium),
               ],
@@ -118,149 +138,6 @@ abstract final class SupportMethods {
     }
   }
 
-  // static Future<void> pickDateRange({
-  //   required BuildContext context,
-  //   required ValueChanged<DateTimeRange?> onRangePicked,
-  //   DateTimeRange? initialRange,
-  //   DateTime? firstDate,
-  //   DateTime? lastDate,
-  //   String? helpText,
-  // }) async {
-  //   final now = DateTime.now();
-  //   final pickedRange = await showDateRangePicker(
-  //     context: context,
-  //     initialDateRange: initialRange ??
-  //         DateTimeRange(
-  //           start: now,
-  //           end: now.add(
-  //             const Duration(
-  //               days: 1,
-  //             ),
-  //           ),
-  //         ),
-  //     firstDate: firstDate ?? now,
-  //     lastDate: lastDate ??
-  //         now.add(
-  //           const Duration(days: 365),
-  //         ),
-  //     helpText: helpText ?? 'Select rental period',
-  //     saveText: 'Confirm',
-  //     builder: (context, child) {
-  //       return Theme(
-  //         data: ThemeData(
-  //           datePickerTheme: DatePickerThemeData(
-  //             backgroundColor: context.theme.backgroundColor,
-  //             dayBackgroundColor: WidgetStatePropertyAll(
-  //               context.theme.primaryColor,
-  //             ),
-  //             rangePickerShadowColor: context.theme.accentColor,
-  //             rangePickerBackgroundColor: context.theme.surfaceColor,
-  //             rangeSelectionBackgroundColor:
-  //                 context.theme.accentColor.withOpacity(
-  //               0.3,
-  //             ),
-  //           ),
-  //         ),
-  //         child: child!,
-  //       );
-  //     },
-  //   );
-
-  //   if (pickedRange != null) {
-  //     onRangePicked(pickedRange);
-  //   }
-  // }
-
-  // static Future<void> pickRentalRange({
-  //   required BuildContext context,
-  //   required RentalPlan planType,
-  //   required ValueChanged<DateTimeRange?> onRangePicked,
-  // }) async {
-  //   final now = DateTime.now();
-
-  //   // Daily & weekly → standard date range picker
-  //   if (planType != RentalPlan.hourly) {
-  //     final pickedRange = await showDateRangePicker(
-  //       context: context,
-  //       initialDateRange: DateTimeRange(
-  //         start: now,
-  //         end: now.add(const Duration(days: 1)),
-  //       ),
-  //       firstDate: now,
-  //       lastDate: now.add(const Duration(days: 365)),
-  //       helpText: 'Select rental period',
-  //       saveText: 'Confirm',
-  //     );
-
-  //     if (pickedRange != null) {
-  //       if (planType == RentalPlan.weekly) {
-  //         final days = pickedRange.duration.inDays;
-  //         if (days % 7 != 0) {
-  //           context.showErrorSnackBar(
-  //             'Weekly plan must be in full weeks (7 days).',
-  //           );
-  //           return;
-  //         }
-  //       }
-
-  //       onRangePicked(pickedRange);
-  //     }
-  //     return;
-  //   }
-
-  //   // Hourly plan → date + time pickers
-  //   final selectedDate = await showDatePicker(
-  //     context: context,
-  //     initialDate: now,
-  //     firstDate: now,
-  //     lastDate: now.add(const Duration(days: 30)),
-  //     helpText: 'Select rental date',
-  //   );
-
-  //   if (selectedDate == null) return;
-
-  //   final startTime = await showTimePicker(
-  //     context: context,
-  //     initialTime: TimeOfDay.fromDateTime(now),
-  //     helpText: 'Select start time',
-  //   );
-  //   if (startTime == null) return;
-
-  //   final endTime = await showTimePicker(
-  //     context: context,
-  //     initialTime: startTime.replacing(hour: startTime.hour + 1),
-  //     helpText: 'Select end time',
-  //   );
-  //   if (endTime == null) return;
-
-  //   final startDateTime = DateTime(
-  //     selectedDate.year,
-  //     selectedDate.month,
-  //     selectedDate.day,
-  //     startTime.hour,
-  //     startTime.minute,
-  //   );
-
-  //   final endDateTime = DateTime(
-  //     selectedDate.year,
-  //     selectedDate.month,
-  //     selectedDate.day,
-  //     endTime.hour,
-  //     endTime.minute,
-  //   );
-
-  //   final duration = endDateTime.difference(startDateTime);
-
-  //   if (duration.inHours > 24) {
-  //     await context.showErrorSnackBar(
-  //       'Hourly rentals cannot exceed 24 hours.',
-  //     );
-  //     return;
-  //   }
-
-  //   onRangePicked(DateTimeRange(start: startDateTime, end: endDateTime));
-  // }
-
   static Future<void> pickRentalRange({
     required BuildContext context,
     required RentalPlan planType,
@@ -268,7 +145,6 @@ abstract final class SupportMethods {
   }) async {
     final now = DateTime.now();
 
-    // Daily & weekly → standard date range picker
     if (planType != RentalPlan.hourly) {
       final pickedRange = await showDateRangePicker(
         context: context,
@@ -300,7 +176,6 @@ abstract final class SupportMethods {
       return;
     }
 
-    // Hourly plan → date + time pickers
     final selectedDate = await showDatePicker(
       context: context,
       initialDate: now,

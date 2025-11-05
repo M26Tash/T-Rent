@@ -8,8 +8,10 @@ import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/cubit_scope/cubit_scope.dart';
-import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
+import 'package:t_rent/src/common/di/injector.dart';
+import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/widgets/support_methods/support_methods.dart';
+import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 import 'package:t_rent/src/features/main_page/cubits/route_cubit/route_cubit.dart';
 
 class RoutePage extends StatefulWidget {
@@ -20,15 +22,17 @@ class RoutePage extends StatefulWidget {
 }
 
 class _RoutePageState extends State<RoutePage> {
+  final RouteCubit _routeCubit = i.get<RouteCubit>();
   late MapboxMap? _mapboxMap;
   late PointAnnotationManager? _annotationManager;
   OverlayEntry? _currentOverlay;
 
-  final List<MockCar> _cars = MockCarList.cars;
+  // final List<MockCar> _cars = MockCarList.cars;
 
   @override
   void initState() {
     super.initState();
+    _routeCubit.getCars;
     _ensurePermissions();
   }
 
@@ -48,7 +52,7 @@ class _RoutePageState extends State<RoutePage> {
     }
   }
 
-  Future<void> _onMapCreated(MapboxMap mapboxMap) async {
+  Future<void> _onMapCreated(MapboxMap mapboxMap, List<CarModel> cars) async {
     _mapboxMap = mapboxMap;
 
     _mapboxMap
@@ -120,15 +124,15 @@ class _RoutePageState extends State<RoutePage> {
 
     final imageBytes = bytes.buffer.asUint8List();
 
-    final carDataMap = <String, MockCar>{};
+    final carDataMap = <String, CarModel>{};
 
-    for (final car in _cars) {
+    for (final car in cars) {
       final annotation =
           await _annotationManager!.create(PointAnnotationOptions(
         geometry: Point(
           coordinates: Position(
-            car.coordinates.longitude,
-            car.coordinates.latitude,
+            car.carCoordinates.longitude,
+            car.carCoordinates.latitude,
           ),
         ),
         image: imageBytes,
@@ -147,7 +151,7 @@ class _RoutePageState extends State<RoutePage> {
           _currentOverlay = await SupportMethods.showCarOverlay(
             context: context,
             mapboxMap: mapboxMap,
-            mockCar: car,
+            car: car,
           );
         }
       },
@@ -160,10 +164,23 @@ class _RoutePageState extends State<RoutePage> {
       child: BlocBuilder<RouteCubit, RouteState>(
         builder: (context, state) {
           final routeCubit = CubitScope.of<RouteCubit>(context);
-          
+
+          if (state.cars == null) {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(
+                  color: context.theme.primaryColor,
+                ),
+              ),
+            );
+          }
+
           return MapWidget(
             textureView: false,
-            onMapCreated: _onMapCreated,
+            onMapCreated: (controller) => _onMapCreated(
+              controller,
+              state.cars!,
+            ),
           );
         },
       ),
