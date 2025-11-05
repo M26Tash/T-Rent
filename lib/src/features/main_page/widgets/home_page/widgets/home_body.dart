@@ -37,7 +37,7 @@ class HomeBody extends StatelessWidget {
     super.key,
   });
 
-  Future<void> filterBottomSheet({
+  Future<void> _filterBottomSheet({
     required BuildContext context,
     required Widget child,
   }) async {
@@ -101,7 +101,7 @@ class HomeBody extends StatelessWidget {
             svgAssetPath: AppAssets.searchIcon,
           ),
           suffixIcon: VectorButton(
-            onTap: () => filterBottomSheet(
+            onTap: () => _filterBottomSheet(
               context: context,
               child: FilterBottomSheetChild(
                 onSortOrderTap: onSortOrderTabTap,
@@ -134,7 +134,8 @@ class HomeBody extends StatelessWidget {
                       car: car,
                     ),
             car: car,
-            asset: car.carImage.sideView,
+            asset: AppAssets.audiQ7Side,
+            // asset: car.carImage.sideView,
           ),
       ],
     );

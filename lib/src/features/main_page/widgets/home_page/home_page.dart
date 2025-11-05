@@ -47,6 +47,7 @@ class _HomePageState extends State<HomePage> {
             length: CarType.values.length,
             child: Scaffold(
               backgroundColor: context.theme.backgroundColor,
+            
               body: SafeArea(
                 child: HomeBody(
                   profile: state.profile!,

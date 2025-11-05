@@ -319,4 +319,14 @@ class AppLocalizationEn extends AppLocalization {
 
   @override
   String get userDetails => 'User Details';
+
+  @override
+  String get yourCarsReadyToRoll => 'Your Car’s Ready to Roll!';
+
+  @override
+  String get bookingDetailsAreOnTheirWayToYourInbox =>
+      'Booking details are on their way to your inbox. Drive safe and enjoy the ride!';
+
+  @override
+  String get homePage => 'Home Page';
 }

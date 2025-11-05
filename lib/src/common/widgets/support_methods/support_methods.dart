@@ -7,6 +7,8 @@ import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
+import 'package:t_rent/src/common/utils/enums/rental_plan.dart';
+import 'package:t_rent/src/common/utils/extensions/context_extension.dart';
 import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
 import 'package:t_rent/src/common/widgets/fade_transition_overlay/fade_transition_overlay.dart';
 import 'package:t_rent/src/common/widgets/vector_button/vector_button.dart';
@@ -101,10 +103,11 @@ abstract final class SupportMethods {
   static Future<void> pickDate({
     required BuildContext context,
     required ValueChanged<DateTime?> onDatePicked,
+    DateTime? initialDate,
   }) async {
     final picked = await showDatePicker(
       context: context,
-      initialDate: DateTime(2000),
+      initialDate: initialDate ?? DateTime(2000),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
       helpText: 'Select your date of birth',
@@ -113,6 +116,243 @@ abstract final class SupportMethods {
     if (picked != null) {
       onDatePicked(picked);
     }
+  }
+
+  // static Future<void> pickDateRange({
+  //   required BuildContext context,
+  //   required ValueChanged<DateTimeRange?> onRangePicked,
+  //   DateTimeRange? initialRange,
+  //   DateTime? firstDate,
+  //   DateTime? lastDate,
+  //   String? helpText,
+  // }) async {
+  //   final now = DateTime.now();
+  //   final pickedRange = await showDateRangePicker(
+  //     context: context,
+  //     initialDateRange: initialRange ??
+  //         DateTimeRange(
+  //           start: now,
+  //           end: now.add(
+  //             const Duration(
+  //               days: 1,
+  //             ),
+  //           ),
+  //         ),
+  //     firstDate: firstDate ?? now,
+  //     lastDate: lastDate ??
+  //         now.add(
+  //           const Duration(days: 365),
+  //         ),
+  //     helpText: helpText ?? 'Select rental period',
+  //     saveText: 'Confirm',
+  //     builder: (context, child) {
+  //       return Theme(
+  //         data: ThemeData(
+  //           datePickerTheme: DatePickerThemeData(
+  //             backgroundColor: context.theme.backgroundColor,
+  //             dayBackgroundColor: WidgetStatePropertyAll(
+  //               context.theme.primaryColor,
+  //             ),
+  //             rangePickerShadowColor: context.theme.accentColor,
+  //             rangePickerBackgroundColor: context.theme.surfaceColor,
+  //             rangeSelectionBackgroundColor:
+  //                 context.theme.accentColor.withOpacity(
+  //               0.3,
+  //             ),
+  //           ),
+  //         ),
+  //         child: child!,
+  //       );
+  //     },
+  //   );
+
+  //   if (pickedRange != null) {
+  //     onRangePicked(pickedRange);
+  //   }
+  // }
+
+  // static Future<void> pickRentalRange({
+  //   required BuildContext context,
+  //   required RentalPlan planType,
+  //   required ValueChanged<DateTimeRange?> onRangePicked,
+  // }) async {
+  //   final now = DateTime.now();
+
+  //   // Daily & weekly → standard date range picker
+  //   if (planType != RentalPlan.hourly) {
+  //     final pickedRange = await showDateRangePicker(
+  //       context: context,
+  //       initialDateRange: DateTimeRange(
+  //         start: now,
+  //         end: now.add(const Duration(days: 1)),
+  //       ),
+  //       firstDate: now,
+  //       lastDate: now.add(const Duration(days: 365)),
+  //       helpText: 'Select rental period',
+  //       saveText: 'Confirm',
+  //     );
+
+  //     if (pickedRange != null) {
+  //       if (planType == RentalPlan.weekly) {
+  //         final days = pickedRange.duration.inDays;
+  //         if (days % 7 != 0) {
+  //           context.showErrorSnackBar(
+  //             'Weekly plan must be in full weeks (7 days).',
+  //           );
+  //           return;
+  //         }
+  //       }
+
+  //       onRangePicked(pickedRange);
+  //     }
+  //     return;
+  //   }
+
+  //   // Hourly plan → date + time pickers
+  //   final selectedDate = await showDatePicker(
+  //     context: context,
+  //     initialDate: now,
+  //     firstDate: now,
+  //     lastDate: now.add(const Duration(days: 30)),
+  //     helpText: 'Select rental date',
+  //   );
+
+  //   if (selectedDate == null) return;
+
+  //   final startTime = await showTimePicker(
+  //     context: context,
+  //     initialTime: TimeOfDay.fromDateTime(now),
+  //     helpText: 'Select start time',
+  //   );
+  //   if (startTime == null) return;
+
+  //   final endTime = await showTimePicker(
+  //     context: context,
+  //     initialTime: startTime.replacing(hour: startTime.hour + 1),
+  //     helpText: 'Select end time',
+  //   );
+  //   if (endTime == null) return;
+
+  //   final startDateTime = DateTime(
+  //     selectedDate.year,
+  //     selectedDate.month,
+  //     selectedDate.day,
+  //     startTime.hour,
+  //     startTime.minute,
+  //   );
+
+  //   final endDateTime = DateTime(
+  //     selectedDate.year,
+  //     selectedDate.month,
+  //     selectedDate.day,
+  //     endTime.hour,
+  //     endTime.minute,
+  //   );
+
+  //   final duration = endDateTime.difference(startDateTime);
+
+  //   if (duration.inHours > 24) {
+  //     await context.showErrorSnackBar(
+  //       'Hourly rentals cannot exceed 24 hours.',
+  //     );
+  //     return;
+  //   }
+
+  //   onRangePicked(DateTimeRange(start: startDateTime, end: endDateTime));
+  // }
+
+  static Future<void> pickRentalRange({
+    required BuildContext context,
+    required RentalPlan planType,
+    required ValueChanged<DateTimeRange?> onRangePicked,
+  }) async {
+    final now = DateTime.now();
+
+    // Daily & weekly → standard date range picker
+    if (planType != RentalPlan.hourly) {
+      final pickedRange = await showDateRangePicker(
+        context: context,
+        initialDateRange: DateTimeRange(
+          start: now,
+          end: now.add(const Duration(days: 1)),
+        ),
+        firstDate: now,
+        lastDate: now.add(const Duration(days: 365)),
+        helpText: 'Select rental period',
+        saveText: 'Confirm',
+      );
+
+      if (!context.mounted) return;
+
+      if (pickedRange != null) {
+        if (planType == RentalPlan.weekly) {
+          final days = pickedRange.duration.inDays;
+          if (days % 7 != 0) {
+            context.showErrorSnackBar(
+              'Weekly plan must be in full weeks (7 days).',
+            );
+            return;
+          }
+        }
+
+        onRangePicked(pickedRange);
+      }
+      return;
+    }
+
+    // Hourly plan → date + time pickers
+    final selectedDate = await showDatePicker(
+      context: context,
+      initialDate: now,
+      firstDate: now,
+      lastDate: now.add(const Duration(days: 30)),
+      helpText: 'Select rental date',
+    );
+
+    if (selectedDate == null || !context.mounted) return;
+
+    final startTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(now),
+      helpText: 'Select start time',
+    );
+    if (startTime == null || !context.mounted) return;
+
+    final endTime = await showTimePicker(
+      context: context,
+      initialTime: startTime.replacing(hour: startTime.hour + 1),
+      helpText: 'Select end time',
+    );
+    if (endTime == null || !context.mounted) return;
+
+    final startDateTime = DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      startTime.hour,
+      startTime.minute,
+    );
+
+    final endDateTime = DateTime(
+      selectedDate.year,
+      selectedDate.month,
+      selectedDate.day,
+      endTime.hour,
+      endTime.minute,
+    );
+
+    final duration = endDateTime.difference(startDateTime);
+
+    if (duration.inHours > 24) {
+      if (!context.mounted) return;
+      await context.showErrorSnackBar(
+        'Hourly rentals cannot exceed 24 hours.',
+      );
+      return;
+    }
+
+    if (!context.mounted) return;
+    onRangePicked(DateTimeRange(start: startDateTime, end: endDateTime));
   }
 
   static Future<void> showBottomSheet({

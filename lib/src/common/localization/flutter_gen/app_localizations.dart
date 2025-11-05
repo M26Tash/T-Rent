@@ -661,6 +661,24 @@ abstract class AppLocalization {
   /// In en, this message translates to:
   /// **'User Details'**
   String get userDetails;
+
+  /// No description provided for @yourCarsReadyToRoll.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Car’s Ready to Roll!'**
+  String get yourCarsReadyToRoll;
+
+  /// No description provided for @bookingDetailsAreOnTheirWayToYourInbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking details are on their way to your inbox. Drive safe and enjoy the ride!'**
+  String get bookingDetailsAreOnTheirWayToYourInbox;
+
+  /// No description provided for @homePage.
+  ///
+  /// In en, this message translates to:
+  /// **'Home Page'**
+  String get homePage;
 }
 
 class _AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

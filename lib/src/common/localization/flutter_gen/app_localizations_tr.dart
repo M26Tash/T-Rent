@@ -320,4 +320,14 @@ class AppLocalizationTr extends AppLocalization {
 
   @override
   String get userDetails => 'Kullanıcı Ayrıntıları';
+
+  @override
+  String get yourCarsReadyToRoll => 'Aracınız Yola Çıkmaya Hazır!';
+
+  @override
+  String get bookingDetailsAreOnTheirWayToYourInbox =>
+      'Rezervasyon bilgileriniz gelen kutunuza doğru yolda. Güvenli sürüşler ve yolculuğun tadını çıkarın!';
+
+  @override
+  String get homePage => 'Ana Sayfa';
 }

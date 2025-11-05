@@ -92,5 +92,8 @@
     "history": "History",
     "settings": "Settings",
     "phoneNumber": "Phone number",
-    "userDetails": "User Details"
+    "userDetails": "User Details",
+    "yourCarsReadyToRoll": "Your Car’s Ready to Roll!",
+    "bookingDetailsAreOnTheirWayToYourInbox": "Booking details are on their way to your inbox. Drive safe and enjoy the ride!",
+    "homePage": "Home Page"
 }

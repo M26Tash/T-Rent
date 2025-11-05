@@ -8,6 +8,8 @@ import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/enums/drive_type.dart';
 import 'package:t_rent/src/common/utils/enums/rental_plan.dart';
+import 'package:t_rent/src/common/utils/extensions/date_time_range_extension.dart';
+import 'package:t_rent/src/common/widgets/support_methods/support_methods.dart';
 import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
 import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 import 'package:t_rent/src/features/car_details_page/widgets/rental_plan_item.dart';
@@ -17,11 +19,17 @@ class CarDetailsBody extends StatefulWidget {
   final CarModel car;
   final ValueChanged<RentalPlan?> onPlanChanged;
   final RentalPlan? currentRentalPlan;
+  final ValueChanged<DateTimeRange<DateTime>?> onRangePicked;
+  final DateTimeRange<DateTime>? rangePicked;
+  final double totalPrice;
 
   const CarDetailsBody({
     required this.car,
     required this.onPlanChanged,
     required this.currentRentalPlan,
+    required this.onRangePicked,
+    required this.rangePicked,
+    required this.totalPrice,
     super.key,
   });
 
@@ -62,6 +70,18 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
         }
       });
     }
+  }
+
+  Future<void> _pickRentalRange({
+    required BuildContext context,
+    required RentalPlan planType,
+    required ValueChanged<DateTimeRange<DateTime>?> onRangePicked,
+  }) async {
+    await SupportMethods.pickRentalRange(
+      context: context,
+      planType: planType,
+      onRangePicked: onRangePicked,
+    );
   }
 
   @override
@@ -142,15 +162,15 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
             SizedBox(
               width: context.availableWidth * 0.6,
               child: CachedNetworkImage(
-                imageUrl: widget.car.carImage.frontView,
+                imageUrl: AppAssets.audiQ7Front,
+                // imageUrl: widget.car.carImage.frontView,
                 fit: BoxFit.cover,
                 placeholder: (context, url) => Shimmer.fromColors(
                   baseColor: context.theme.overlayBackgroundColor,
                   highlightColor: context.theme.accentColor,
                   child: Image.asset(
-                    height: context.availableHeight,
                     width: context.availableWidth,
-                    AppAssets.testFrontView,
+                    AppAssets.audiQ7Front,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -234,10 +254,142 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
             carPricing: widget.car.carPricing,
             plan: RentalPlan.values[i],
             currentPlan: widget.currentRentalPlan,
-            onPlanChanged: widget.onPlanChanged,
+            onPlanChanged: (plan) {
+              widget.onPlanChanged(plan);
+              _pickRentalRange(
+                context: context,
+                planType: plan!,
+                onRangePicked: widget.onRangePicked,
+              );
+            },
           ),
-        if (widget.currentRentalPlan != null)
-          const SizedBox(height: AppDimensions.extremeLarge),
+        const SizedBox(height: AppDimensions.large),
+        if (widget.currentRentalPlan != null && widget.rangePicked != null)
+          Container(
+            margin: const EdgeInsets.only(
+              bottom: AppDimensions.extremeLarge,
+            ),
+            padding: const EdgeInsets.all(AppDimensions.large),
+            decoration: BoxDecoration(
+              color: context.theme.surfaceColor,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(
+                  AppDimensions.large,
+                ),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Overview',
+                  style: context.themeData.textTheme.headlineLarge?.copyWith(
+                    color: context.theme.primaryTextColor,
+                    fontWeight: AppFonts.weightBold,
+                  ),
+                ),
+                const SizedBox(height: AppDimensions.large),
+                Text(
+                  widget.rangePicked?.formatRange() ?? '',
+                  style: context.themeData.textTheme.headlineSmall?.copyWith(
+                    color: context.theme.primaryTextColor,
+                    fontWeight: AppFonts.weightSemiBold,
+                  ),
+                ),
+                const SizedBox(height: AppDimensions.large),
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: '${widget.totalPrice}₺',
+                        style:
+                            context.themeData.textTheme.headlineLarge?.copyWith(
+                          color: context.theme.primaryTextColor,
+                          fontWeight: AppFonts.weightBold,
+                        ),
+                      ),
+                      const WidgetSpan(
+                        child: SizedBox(
+                          width: AppDimensions.medium,
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                            // ignore: lines_longer_than_80_chars
+                            'Per ${context.locale.days(widget.rangePicked!.duration.inDays)}',
+                        style:
+                            context.themeData.textTheme.headlineLarge?.copyWith(
+                          color: context.theme.primaryTextColor,
+                          fontWeight: AppFonts.weightMedium,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppDimensions.large),
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: '${widget.car.carPricing.deposit}₺',
+                        style:
+                            context.themeData.textTheme.headlineLarge?.copyWith(
+                          color: context.theme.primaryTextColor,
+                          fontWeight: AppFonts.weightBold,
+                        ),
+                      ),
+                      const WidgetSpan(
+                        child: SizedBox(
+                          width: AppDimensions.medium,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Per deposit',
+                        style:
+                            context.themeData.textTheme.headlineLarge?.copyWith(
+                          color: context.theme.primaryTextColor,
+                          fontWeight: AppFonts.weightMedium,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppDimensions.large),
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text:
+                            // ignore: lines_longer_than_80_chars
+                            '${widget.car.carPricing.deposit + widget.totalPrice}₺',
+                        style:
+                            context.themeData.textTheme.headlineLarge?.copyWith(
+                          color: context.theme.primaryTextColor,
+                          fontWeight: AppFonts.weightBold,
+                        ),
+                      ),
+                      const WidgetSpan(
+                        child: SizedBox(
+                          width: AppDimensions.medium,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Total to pay',
+                        style:
+                            context.themeData.textTheme.headlineLarge?.copyWith(
+                          color: context.theme.primaryTextColor,
+                          fontWeight: AppFonts.weightMedium,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
       ],
     );
   }

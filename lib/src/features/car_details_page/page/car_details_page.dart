@@ -53,6 +53,14 @@ class CarDetailsPage extends StatelessWidget {
               car: car,
               onPlanChanged: carDetailsCubit.chooseRentalPlan,
               currentRentalPlan: state.rentalPlan,
+              onRangePicked: (range) {
+                carDetailsCubit..onRangePicked(range)
+                ..calculateTotalPrice(
+                  car: car,
+                );
+              },
+              rangePicked: state.rangePicked,
+              totalPrice: state.totalPrice,
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,

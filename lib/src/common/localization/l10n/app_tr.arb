@@ -92,5 +92,8 @@
     "history": "Geçmiş",
     "settings": "Ayarlar",
     "phoneNumber": "Telefon numarası",
-    "userDetails": "Kullanıcı Ayrıntıları"
+    "userDetails": "Kullanıcı Ayrıntıları",
+    "yourCarsReadyToRoll": "Aracınız Yola Çıkmaya Hazır!",
+    "bookingDetailsAreOnTheirWayToYourInbox": "Rezervasyon bilgileriniz gelen kutunuza doğru yolda. Güvenli sürüşler ve yolculuğun tadını çıkarın!",
+    "homePage": "Ana Sayfa"
 }
