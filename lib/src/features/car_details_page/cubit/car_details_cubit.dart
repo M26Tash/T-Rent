@@ -3,10 +3,12 @@
 import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
 import 'package:t_rent/src/common/navigation/route.dart';
 import 'package:t_rent/src/common/utils/enums/rental_plan.dart';
+import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 
 part 'car_details_state.dart';
 
@@ -16,8 +18,18 @@ class CarDetailsCubit extends Cubit<CarDetailsState> {
           const CarDetailsState(
             route: CustomizedRoute(null, null),
             rentalPlan: null,
+            rangePicked: null,
+            totalPrice: 0,
           ),
         );
+
+  void onRangePicked(DateTimeRange<DateTime>? range) {
+    emit(
+      state.copyWith(
+        rangePicked: range,
+      ),
+    );
+  }
 
   void chooseRentalPlan(RentalPlan? plan) {
     log('${state.rentalPlan == plan}');
@@ -32,6 +44,37 @@ class CarDetailsCubit extends Cubit<CarDetailsState> {
         ),
       );
     }
+  }
+
+  void calculateTotalPrice({
+    required CarModel car,
+  }) {
+    final range = state.rangePicked;
+    final plan = state.rentalPlan;
+    final pricing = car.carPricing;
+    if (range == null || plan == null) return;
+
+    final duration = range.duration;
+
+    var total = 0.0;
+
+    switch (plan) {
+      case RentalPlan.hourly:
+        final hours = duration.inMinutes / 60.0;
+        total = (hours * pricing.perHour).ceilToDouble();
+
+      case RentalPlan.daily:
+        final days = (duration.inHours / 24).ceil();
+        total = days * pricing.perDay;
+
+      case RentalPlan.weekly:
+        final weeks = (duration.inDays / 7).ceil();
+        total = weeks * pricing.perWeek;
+    }
+
+    emit(
+      state.copyWith(totalPrice: total),
+    );
   }
 
   void navigateToBooking() {

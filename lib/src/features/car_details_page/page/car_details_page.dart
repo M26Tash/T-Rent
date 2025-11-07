@@ -7,18 +7,18 @@ import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/navigation/entities/auto_route_extension.dart';
 import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
-import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
 import 'package:t_rent/src/common/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 import 'package:t_rent/src/features/car_details_page/cubit/car_details_cubit.dart';
 import 'package:t_rent/src/features/car_details_page/widgets/car_details_body.dart';
 import 'package:t_rent/src/features/car_details_page/widgets/reservation_slider.dart';
 
 @RoutePage()
 class CarDetailsPage extends StatelessWidget {
-  final MockCar mockCar;
+  final CarModel car;
 
   const CarDetailsPage({
-    required this.mockCar,
+    required this.car,
     super.key,
   });
 
@@ -50,9 +50,17 @@ class CarDetailsPage extends StatelessWidget {
               title: context.locale.details,
             ),
             body: CarDetailsBody(
-              mockCar: mockCar,
+              car: car,
               onPlanChanged: carDetailsCubit.chooseRentalPlan,
               currentRentalPlan: state.rentalPlan,
+              onRangePicked: (range) {
+                carDetailsCubit..onRangePicked(range)
+                ..calculateTotalPrice(
+                  car: car,
+                );
+              },
+              rangePicked: state.rangePicked,
+              totalPrice: state.totalPrice,
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,

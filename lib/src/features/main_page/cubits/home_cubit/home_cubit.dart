@@ -8,7 +8,9 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
 import 'package:t_rent/src/common/utils/enums/car_type.dart';
-import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
+import 'package:t_rent/src/common/utils/enums/filter_tab.dart';
+import 'package:t_rent/src/common/utils/enums/sort_order.dart';
+import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 import 'package:t_rent/src/core/domain/entities/profile_model/profile_model.dart';
 import 'package:t_rent/src/core/domain/interactors/data_interactor.dart';
 
@@ -19,29 +21,36 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit(
     this._dataInteractor,
   ) : super(
-          HomeState(
-            route: const CustomizedRoute(
+          const HomeState(
+            route: CustomizedRoute(
               null,
               null,
             ),
             profile: null,
-            mockCarList: MockCarList.cars,
+            cars: null,
+            allCars: null,
             selectedCarType: CarType.all,
             searchQuery: '',
             userAddress: null,
             isAddressLoading: true,
+            filterTab: FilterTab.price,
+            sortOrder: SortOrder.descending,
           ),
         ) {
-          _initUserAddress();
+    _initUserAddress();
     _subscribeAll();
   }
 
   StreamSubscription<ProfileModel?>? _profileSubscription;
+  StreamSubscription<List<CarModel>?>? _carsSubscription;
 
   @override
   Future<void> close() {
     _profileSubscription?.cancel();
     _profileSubscription = null;
+
+    _carsSubscription?.cancel();
+    _carsSubscription = null;
 
     return super.close();
   }
@@ -51,10 +60,19 @@ class HomeCubit extends Cubit<HomeState> {
     _profileSubscription = _dataInteractor.profileStream.listen(
       _onNewProfile,
     );
+
+    _carsSubscription?.cancel();
+    _carsSubscription = _dataInteractor.carstream.listen(
+      _onNewCars,
+    );
   }
 
   Future<void> getProfile() async {
     return _dataInteractor.getProfile();
+  }
+
+  Future<void> getCars() async {
+    return _dataInteractor.getCars();
   }
 
   void _onNewProfile(ProfileModel? profile) {
@@ -63,6 +81,17 @@ class HomeCubit extends Cubit<HomeState> {
         profile: profile,
       ),
     );
+  }
+
+  void _onNewCars(List<CarModel>? cars) {
+    emit(
+      state.copyWith(
+        allCars: cars,
+        cars: cars,
+      ),
+    );
+
+    _filterCars();
   }
 
   Future<void> _initUserAddress() async {
@@ -102,7 +131,25 @@ class HomeCubit extends Cubit<HomeState> {
     return null;
   }
 
-  void selectCarType(CarType type) {
+  void onSortOrderSelect(SortOrder sortOrder) {
+    emit(
+      state.copyWith(
+        sortOrder: sortOrder,
+      ),
+    );
+    _filterCars();
+  }
+
+  void onFilterTabSelect(FilterTab tab) {
+    emit(
+      state.copyWith(
+        filterTab: tab,
+      ),
+    );
+    _filterCars();
+  }
+
+  void onCarTypeSelect(CarType type) {
     emit(
       state.copyWith(
         selectedCarType: type,
@@ -121,7 +168,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void _filterCars() {
-    final filtered = MockCarList.cars.where((car) {
+    final filtered = state.allCars?.where((car) {
       final matchesType = state.selectedCarType == CarType.all ||
           car.type == state.selectedCarType;
 
@@ -132,9 +179,34 @@ class HomeCubit extends Cubit<HomeState> {
       return matchesType && matchesSearch;
     }).toList();
 
+    if (filtered != null) {
+      int Function(CarModel, CarModel) comparator;
+
+      switch (state.filterTab) {
+        case FilterTab.price:
+          comparator = (a, b) => a.carPricing.perDay.compareTo(
+                b.carPricing.perDay,
+              );
+
+        case FilterTab.year:
+          comparator = (a, b) => a.year.compareTo(
+                b.year,
+              );
+
+        case FilterTab.mileage:
+          comparator = (a, b) => a.mileage.compareTo(
+                b.mileage,
+              );
+      }
+
+      filtered.sort((a, b) => state.sortOrder == SortOrder.ascending
+          ? comparator(a, b)
+          : comparator(b, a));
+    }
+
     emit(
       state.copyWith(
-        mockCarList: filtered,
+        cars: filtered,
       ),
     );
   }

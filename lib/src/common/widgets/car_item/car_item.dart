@@ -1,19 +1,26 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
 import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
-import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
+import 'package:t_rent/src/common/utils/enums/fuel_type.dart';
 import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
+import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
+
+
 
 class CarItem extends StatelessWidget {
   final VoidCallback onCarTap;
-  final MockCar mockCar;
+  final CarModel car;
+  final String asset;
 
   const CarItem({
     required this.onCarTap,
-    required this.mockCar,
+    required this.car,
+    required this.asset,
     super.key,
   });
 
@@ -27,7 +34,9 @@ class CarItem extends StatelessWidget {
         height: context.availableHeight * 0.27,
         width: context.availableWidth,
         decoration: BoxDecoration(
-          color: context.theme.surfaceColor,
+          color: car.fuelType == FuelType.electric
+              ? context.theme.electricSurfaceColor
+              : context.theme.surfaceColor,
           borderRadius: const BorderRadius.all(
             Radius.circular(
               AppDimensions.medium,
@@ -41,7 +50,7 @@ class CarItem extends StatelessWidget {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: mockCar.brand,
+                    text: car.brand,
                     style: context.themeData.textTheme.headlineLarge?.copyWith(
                       color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightBold,
@@ -53,7 +62,7 @@ class CarItem extends StatelessWidget {
                     ),
                   ),
                   TextSpan(
-                    text: mockCar.model,
+                    text: car.model,
                     style: context.themeData.textTheme.headlineLarge?.copyWith(
                       color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightMedium,
@@ -62,11 +71,30 @@ class CarItem extends StatelessWidget {
                 ],
               ),
             ),
-            Image.asset(
-              height: context.availableHeight,
-              width: context.availableWidth,
-              mockCar.assets.sideView,
-              fit: BoxFit.cover,
+            Center(
+              child: CachedNetworkImage(
+                imageUrl: asset,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Shimmer.fromColors(
+                  baseColor: context.theme.overlayBackgroundColor,
+                  highlightColor: context.theme.accentColor,
+                  child: Image.asset(
+                    height: context.availableHeight,
+                    width: context.availableWidth,
+                    AppAssets.audiQ7Side,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                errorWidget: (context, url, error) => const Center(
+                  child: VectorImage(
+                    height: AppDimensions.errorWidgetIconSize,
+                    width: AppDimensions.errorWidgetIconSize,
+                    svgAssetPath: AppAssets.brokenImageIcon,
+                  ),
+                ),
+                fadeInDuration: const Duration(milliseconds: 300),
+                fadeOutDuration: const Duration(milliseconds: 150),
+              ),
             ),
             Align(
               alignment: Alignment.bottomCenter,
@@ -92,14 +120,24 @@ class CarItem extends StatelessWidget {
                           color: context.theme.secondaryIconColor,
                         ),
                         const SizedBox(width: AppDimensions.medium),
-                        Text(
-                          mockCar.consumption,
-                          style: context.themeData.textTheme.headlineMedium
-                              ?.copyWith(
-                            color: context.theme.secondaryTextColor,
-                            fontWeight: AppFonts.weightMedium,
+                        if (car.fuelType != FuelType.electric)
+                          Text(
+                            '${car.fuelConsumption}L',
+                            style: context.themeData.textTheme.headlineMedium
+                                ?.copyWith(
+                              color: context.theme.secondaryTextColor,
+                              fontWeight: AppFonts.weightMedium,
+                            ),
                           ),
-                        ),
+                        if (car.fuelType == FuelType.electric)
+                          Text(
+                            '${car.fuelConsumption}kWh',
+                            style: context.themeData.textTheme.headlineMedium
+                                ?.copyWith(
+                              color: context.theme.secondaryTextColor,
+                              fontWeight: AppFonts.weightMedium,
+                            ),
+                          ),
                       ],
                     ),
                   ),
@@ -125,7 +163,7 @@ class CarItem extends StatelessWidget {
                         ),
                         const SizedBox(width: AppDimensions.medium),
                         Text(
-                          mockCar.seats,
+                          '${car.seats}',
                           style: context.themeData.textTheme.headlineMedium
                               ?.copyWith(
                             color: context.theme.secondaryTextColor,
@@ -141,7 +179,7 @@ class CarItem extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: '${mockCar.rentalPlanRate.pricePerDay}₺',
+                          text: '${car.carPricing.perDay}₺',
                           style:
                               // ignore: lines_longer_than_80_chars
                               context.themeData.textTheme.headlineLarge

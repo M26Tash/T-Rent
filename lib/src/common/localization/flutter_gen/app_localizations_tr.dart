@@ -207,7 +207,47 @@ class AppLocalizationTr extends AppLocalization {
   String get carSpecifications => 'Araç Özellikleri';
 
   @override
+  String get driveType => 'Çekiş';
+
+  @override
+  String engineValue(Object value) {
+    return '$value cc';
+  }
+
+  @override
+  String get engine => 'Motor';
+
+  @override
+  String horsepowerValue(Object value) {
+    return '$value BG';
+  }
+
+  @override
   String get horsepower => 'Beygir Gücü';
+
+  @override
+  String topSpeedValue(Object value) {
+    return '$value km/s';
+  }
+
+  @override
+  String get topSpeed => 'Azami Sürat';
+
+  @override
+  String accelerationValue(Object value) {
+    return '$value s';
+  }
+
+  @override
+  String get acceleration => 'Hızlanma';
+
+  @override
+  String torqueValue(Object value) {
+    return '$value Nm';
+  }
+
+  @override
+  String get torque => 'Tork';
 
   @override
   String get seats => 'Koltuklar';
@@ -226,9 +266,6 @@ class AppLocalizationTr extends AppLocalization {
 
   @override
   String get weekly => 'Haftalık';
-
-  @override
-  String get slideToContinue => 'Devam etmek için kaydırın';
 
   @override
   String get day => 'Gün';
@@ -283,4 +320,14 @@ class AppLocalizationTr extends AppLocalization {
 
   @override
   String get userDetails => 'Kullanıcı Ayrıntıları';
+
+  @override
+  String get yourCarsReadyToRoll => 'Aracınız Yola Çıkmaya Hazır!';
+
+  @override
+  String get bookingDetailsAreOnTheirWayToYourInbox =>
+      'Rezervasyon bilgileriniz gelen kutunuza doğru yolda. Güvenli sürüşler ve yolculuğun tadını çıkarın!';
+
+  @override
+  String get homePage => 'Ana Sayfa';
 }

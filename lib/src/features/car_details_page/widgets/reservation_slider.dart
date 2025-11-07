@@ -22,7 +22,7 @@ class ReservationSlider extends StatelessWidget {
       child: SlideAction(
         animationDuration: const Duration(milliseconds: 400),
         outerColor: context.theme.primaryColor,
-        text: context.locale.slideToContinue,
+        text: context.locale.continues,
         onSubmit: () async => onSubmit(),
       ),
     );

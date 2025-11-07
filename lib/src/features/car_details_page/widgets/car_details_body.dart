@@ -1,23 +1,35 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
 import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
+import 'package:t_rent/src/common/utils/enums/drive_type.dart';
 import 'package:t_rent/src/common/utils/enums/rental_plan.dart';
-import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
+import 'package:t_rent/src/common/utils/extensions/date_time_range_extension.dart';
+import 'package:t_rent/src/common/widgets/support_methods/support_methods.dart';
+import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
+import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 import 'package:t_rent/src/features/car_details_page/widgets/rental_plan_item.dart';
-import 'package:t_rent/src/features/car_details_page/widgets/specs_item.dart';
+import 'package:t_rent/src/features/car_details_page/widgets/specs_grid_view.dart';
 
 class CarDetailsBody extends StatefulWidget {
-  final MockCar mockCar;
+  final CarModel car;
   final ValueChanged<RentalPlan?> onPlanChanged;
   final RentalPlan? currentRentalPlan;
+  final ValueChanged<DateTimeRange<DateTime>?> onRangePicked;
+  final DateTimeRange<DateTime>? rangePicked;
+  final double totalPrice;
 
   const CarDetailsBody({
-    required this.mockCar,
+    required this.car,
     required this.onPlanChanged,
     required this.currentRentalPlan,
+    required this.onRangePicked,
+    required this.rangePicked,
+    required this.totalPrice,
     super.key,
   });
 
@@ -60,6 +72,18 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
     }
   }
 
+  Future<void> _pickRentalRange({
+    required BuildContext context,
+    required RentalPlan planType,
+    required ValueChanged<DateTimeRange<DateTime>?> onRangePicked,
+  }) async {
+    await SupportMethods.pickRentalRange(
+      context: context,
+      planType: planType,
+      onRangePicked: onRangePicked,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -81,7 +105,7 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                     ),
                   ),
                   Text(
-                    widget.mockCar.brand,
+                    widget.car.brand,
                     style: context.themeData.textTheme.headlineMedium?.copyWith(
                       color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightMedium,
@@ -96,7 +120,7 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                     ),
                   ),
                   Text(
-                    widget.mockCar.model,
+                    widget.car.model,
                     style: context.themeData.textTheme.headlineMedium?.copyWith(
                       color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightMedium,
@@ -111,7 +135,7 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                     ),
                   ),
                   Text(
-                    widget.mockCar.carYear,
+                    '${widget.car.year}',
                     style: context.themeData.textTheme.headlineMedium?.copyWith(
                       color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightMedium,
@@ -126,7 +150,7 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                     ),
                   ),
                   Text(
-                    '${widget.mockCar.rentalPlanRate.pricePerDay}₺ / ${context.locale.day}',
+                    '${widget.car.carPricing.perDay}₺ / ${context.locale.day}',
                     style: context.themeData.textTheme.headlineMedium?.copyWith(
                       color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightMedium,
@@ -137,9 +161,28 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
             ),
             SizedBox(
               width: context.availableWidth * 0.6,
-              child: Image.asset(
-                widget.mockCar.assets.frontView,
-                fit: BoxFit.contain,
+              child: CachedNetworkImage(
+                imageUrl: AppAssets.audiQ7Front,
+                // imageUrl: widget.car.carImage.frontView,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Shimmer.fromColors(
+                  baseColor: context.theme.overlayBackgroundColor,
+                  highlightColor: context.theme.accentColor,
+                  child: Image.asset(
+                    width: context.availableWidth,
+                    AppAssets.audiQ7Front,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                errorWidget: (context, url, error) => const Center(
+                  child: VectorImage(
+                    height: AppDimensions.errorWidgetIconSize,
+                    width: AppDimensions.errorWidgetIconSize,
+                    svgAssetPath: AppAssets.brokenImageIcon,
+                  ),
+                ),
+                fadeInDuration: const Duration(milliseconds: 300),
+                fadeOutDuration: const Duration(milliseconds: 150),
               ),
             ),
           ],
@@ -153,29 +196,49 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
           ),
         ),
         const SizedBox(height: AppDimensions.medium),
-        SizedBox(
-          height: AppDimensions.specsListHeight,
-          child: ListView(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            children: [
-              SpecsItem(
-                asset: AppAssets.drivingIcon,
-                specsTitle: context.locale.horsepower,
-                specsDetail: '689 HP',
+        SpecsGridView(
+          specs: [
+            SpecsItem(
+              asset: AppAssets.drivingIcon,
+              specsTitle: context.locale.driveType,
+              specsDetail: widget.car.carSpecs.driveType.toDisplayString(),
+            ),
+            SpecsItem(
+              asset: AppAssets.drivingIcon,
+              specsTitle: context.locale.engine,
+              specsDetail: context.locale.engineValue(
+                widget.car.carSpecs.engineCapacity,
               ),
-              SpecsItem(
-                asset: AppAssets.userIcon,
-                specsTitle: context.locale.seats,
-                specsDetail: '4',
+            ),
+            SpecsItem(
+              asset: AppAssets.drivingIcon,
+              specsTitle: context.locale.horsepower,
+              specsDetail: context.locale.horsepowerValue(
+                widget.car.carSpecs.horsepower,
               ),
-              SpecsItem(
-                asset: AppAssets.gasStationIcon,
-                specsTitle: context.locale.per100km,
-                specsDetail: '10.2 L',
+            ),
+            SpecsItem(
+              asset: AppAssets.drivingIcon,
+              specsTitle: context.locale.topSpeed,
+              specsDetail: context.locale.topSpeedValue(
+                widget.car.carSpecs.topSpeed,
               ),
-            ],
-          ),
+            ),
+            SpecsItem(
+              asset: AppAssets.drivingIcon,
+              specsTitle: context.locale.acceleration,
+              specsDetail: context.locale.accelerationValue(
+                widget.car.carSpecs.zeroToHundred,
+              ),
+            ),
+            SpecsItem(
+              asset: AppAssets.drivingIcon,
+              specsTitle: context.locale.torque,
+              specsDetail: context.locale.torqueValue(
+                widget.car.carSpecs.torque,
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: AppDimensions.large),
         Text(
@@ -188,13 +251,145 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
         const SizedBox(height: AppDimensions.medium),
         for (int i = 0; i < RentalPlan.values.length; i++)
           RentalPlanItem(
-            rentalPlanRate: widget.mockCar.rentalPlanRate,
-            rentalPlan: RentalPlan.values[i],
-            currentRentalPlan: widget.currentRentalPlan,
-            onPlanChanged: widget.onPlanChanged,
+            carPricing: widget.car.carPricing,
+            plan: RentalPlan.values[i],
+            currentPlan: widget.currentRentalPlan,
+            onPlanChanged: (plan) {
+              widget.onPlanChanged(plan);
+              _pickRentalRange(
+                context: context,
+                planType: plan!,
+                onRangePicked: widget.onRangePicked,
+              );
+            },
           ),
-        if (widget.currentRentalPlan != null)
-          const SizedBox(height: AppDimensions.extremeLarge),
+        const SizedBox(height: AppDimensions.large),
+        if (widget.currentRentalPlan != null && widget.rangePicked != null)
+          Container(
+            margin: const EdgeInsets.only(
+              bottom: AppDimensions.extremeLarge,
+            ),
+            padding: const EdgeInsets.all(AppDimensions.large),
+            decoration: BoxDecoration(
+              color: context.theme.surfaceColor,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(
+                  AppDimensions.large,
+                ),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Overview',
+                  style: context.themeData.textTheme.headlineLarge?.copyWith(
+                    color: context.theme.primaryTextColor,
+                    fontWeight: AppFonts.weightBold,
+                  ),
+                ),
+                const SizedBox(height: AppDimensions.large),
+                Text(
+                  widget.rangePicked?.formatRange() ?? '',
+                  style: context.themeData.textTheme.headlineSmall?.copyWith(
+                    color: context.theme.primaryTextColor,
+                    fontWeight: AppFonts.weightSemiBold,
+                  ),
+                ),
+                const SizedBox(height: AppDimensions.large),
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: '${widget.totalPrice}₺',
+                        style:
+                            context.themeData.textTheme.headlineLarge?.copyWith(
+                          color: context.theme.primaryTextColor,
+                          fontWeight: AppFonts.weightBold,
+                        ),
+                      ),
+                      const WidgetSpan(
+                        child: SizedBox(
+                          width: AppDimensions.medium,
+                        ),
+                      ),
+                      TextSpan(
+                        text:
+                            // ignore: lines_longer_than_80_chars
+                            'Per ${context.locale.days(widget.rangePicked!.duration.inDays)}',
+                        style:
+                            context.themeData.textTheme.headlineLarge?.copyWith(
+                          color: context.theme.primaryTextColor,
+                          fontWeight: AppFonts.weightMedium,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppDimensions.large),
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: '${widget.car.carPricing.deposit}₺',
+                        style:
+                            context.themeData.textTheme.headlineLarge?.copyWith(
+                          color: context.theme.primaryTextColor,
+                          fontWeight: AppFonts.weightBold,
+                        ),
+                      ),
+                      const WidgetSpan(
+                        child: SizedBox(
+                          width: AppDimensions.medium,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Per deposit',
+                        style:
+                            context.themeData.textTheme.headlineLarge?.copyWith(
+                          color: context.theme.primaryTextColor,
+                          fontWeight: AppFonts.weightMedium,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppDimensions.large),
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text:
+                            // ignore: lines_longer_than_80_chars
+                            '${widget.car.carPricing.deposit + widget.totalPrice}₺',
+                        style:
+                            context.themeData.textTheme.headlineLarge?.copyWith(
+                          color: context.theme.primaryTextColor,
+                          fontWeight: AppFonts.weightBold,
+                        ),
+                      ),
+                      const WidgetSpan(
+                        child: SizedBox(
+                          width: AppDimensions.medium,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Total to pay',
+                        style:
+                            context.themeData.textTheme.headlineLarge?.copyWith(
+                          color: context.theme.primaryTextColor,
+                          fontWeight: AppFonts.weightMedium,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
       ],
     );
   }

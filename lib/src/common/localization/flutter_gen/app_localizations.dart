@@ -461,7 +461,7 @@ abstract class AppLocalization {
   /// No description provided for @price.
   ///
   /// In en, this message translates to:
-  /// **'price'**
+  /// **'Price'**
   String get price;
 
   /// No description provided for @carSpecifications.
@@ -470,11 +470,71 @@ abstract class AppLocalization {
   /// **'Car Specifications'**
   String get carSpecifications;
 
+  /// No description provided for @driveType.
+  ///
+  /// In en, this message translates to:
+  /// **'Drive Type'**
+  String get driveType;
+
+  /// No description provided for @engineValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} cc'**
+  String engineValue(Object value);
+
+  /// No description provided for @engine.
+  ///
+  /// In en, this message translates to:
+  /// **'Engine'**
+  String get engine;
+
+  /// No description provided for @horsepowerValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} HP'**
+  String horsepowerValue(Object value);
+
   /// No description provided for @horsepower.
   ///
   /// In en, this message translates to:
   /// **'Horsepower'**
   String get horsepower;
+
+  /// No description provided for @topSpeedValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} km/h'**
+  String topSpeedValue(Object value);
+
+  /// No description provided for @topSpeed.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Speed'**
+  String get topSpeed;
+
+  /// No description provided for @accelerationValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} s'**
+  String accelerationValue(Object value);
+
+  /// No description provided for @acceleration.
+  ///
+  /// In en, this message translates to:
+  /// **'Acceleration'**
+  String get acceleration;
+
+  /// No description provided for @torqueValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} Nm'**
+  String torqueValue(Object value);
+
+  /// No description provided for @torque.
+  ///
+  /// In en, this message translates to:
+  /// **'Torque'**
+  String get torque;
 
   /// No description provided for @seats.
   ///
@@ -511,12 +571,6 @@ abstract class AppLocalization {
   /// In en, this message translates to:
   /// **'Weekly'**
   String get weekly;
-
-  /// No description provided for @slideToContinue.
-  ///
-  /// In en, this message translates to:
-  /// **'Slide to continue'**
-  String get slideToContinue;
 
   /// No description provided for @day.
   ///
@@ -607,6 +661,24 @@ abstract class AppLocalization {
   /// In en, this message translates to:
   /// **'User Details'**
   String get userDetails;
+
+  /// No description provided for @yourCarsReadyToRoll.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Car’s Ready to Roll!'**
+  String get yourCarsReadyToRoll;
+
+  /// No description provided for @bookingDetailsAreOnTheirWayToYourInbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking details are on their way to your inbox. Drive safe and enjoy the ride!'**
+  String get bookingDetailsAreOnTheirWayToYourInbox;
+
+  /// No description provided for @homePage.
+  ///
+  /// In en, this message translates to:
+  /// **'Home Page'**
+  String get homePage;
 }
 
 class _AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

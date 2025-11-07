@@ -5,20 +5,20 @@ import 'package:t_rent/src/common/constants/app_fonts.dart';
 import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/enums/rental_plan.dart';
-import 'package:t_rent/src/common/utils/mock/mock_car_list.dart';
 import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
+import 'package:t_rent/src/core/domain/entities/car_model/car_pricing.dart';
 
 class RentalPlanItem extends StatelessWidget {
   final ValueChanged<RentalPlan?> onPlanChanged;
-  final RentalPlanRate rentalPlanRate;
-  final RentalPlan rentalPlan;
-  final RentalPlan? currentRentalPlan;
+  final CarPricing carPricing;
+  final RentalPlan plan;
+  final RentalPlan? currentPlan;
 
   const RentalPlanItem({
     required this.onPlanChanged,
-    required this.rentalPlanRate,
-    required this.rentalPlan,
-    required this.currentRentalPlan,
+    required this.carPricing,
+    required this.plan,
+    required this.currentPlan,
     super.key,
   });
 
@@ -30,22 +30,14 @@ class RentalPlanItem extends StatelessWidget {
     };
   }
 
-  double rentalRateFee(RentalPlan plan) {
-    return switch (plan) {
-      RentalPlan.hourly => rentalPlanRate.pricePerHour,
-      RentalPlan.daily => rentalPlanRate.pricePerDay,
-      RentalPlan.weekly => rentalPlanRate.pricePerWeek,
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        if (rentalPlan == currentRentalPlan) {
+        if (plan == currentPlan) {
           onPlanChanged(null);
         } else {
-          onPlanChanged(rentalPlan);
+          onPlanChanged(plan);
         }
       },
       child: Container(
@@ -60,7 +52,7 @@ class RentalPlanItem extends StatelessWidget {
               AppDimensions.preLarge,
             ),
           ),
-          border: currentRentalPlan == rentalPlan
+          border: currentPlan == plan
               ? BoxBorder.all(
                   color: context.theme.accentColor,
                 )
@@ -78,14 +70,14 @@ class RentalPlanItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  rentalRateTitle(rentalPlan, context),
+                  rentalRateTitle(plan, context),
                   style: context.themeData.textTheme.headlineMedium?.copyWith(
                     color: context.theme.primaryTextColor,
                     fontWeight: AppFonts.weightBold,
                   ),
                 ),
                 Text(
-                  '${rentalRateFee(rentalPlan)}₺',
+                  '${carPricing.priceFor(plan)}₺',
                   style: context.themeData.textTheme.headlineSmall?.copyWith(
                     color: context.theme.primaryTextColor,
                     fontWeight: AppFonts.weightMedium,
@@ -100,13 +92,13 @@ class RentalPlanItem extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: currentRentalPlan == rentalPlan
+                  color: currentPlan == plan
                       ? context.theme.primaryColor
                       : context.theme.overlayBackgroundColor,
                   width: AppDimensions.extraSmall,
                 ),
               ),
-              child: currentRentalPlan == rentalPlan
+              child: currentPlan == plan
                   ? Center(
                       child: Container(
                         width: AppDimensions.innerRadioSize,

@@ -208,8 +208,8 @@ abstract final class MockCarList {
     ),
     MockCar(
       assets: CarAssets(
-        sideView: AppAssets.hyundaiStariaSide,
-        frontView: AppAssets.audiRsQ8Front,
+        sideView: AppAssets.hyundaiStariaSideTest,
+        frontView: AppAssets.hyundaiStariaFront,
       ),
       type: CarType.minivan,
       brand: 'HYUNDAI',

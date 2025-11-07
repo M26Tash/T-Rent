@@ -23,3 +23,10 @@ extension CarTypeExtension on CarType {
     }
   }
 }
+
+CarType carTypeFromString(String value) {
+  return CarType.values.firstWhere(
+    (e) => e.name.toLowerCase() == value.toLowerCase(),
+    orElse: () => CarType.sedan,
+  );
+}

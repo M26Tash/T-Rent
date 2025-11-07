@@ -70,7 +70,9 @@ void initCubits() {
       HistoryCubit.new,
     )
     ..registerFactory<RouteCubit>(
-      RouteCubit.new,
+      () => RouteCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<SettingsCubit>(
       () => SettingsCubit(
@@ -100,6 +102,8 @@ void initCubits() {
       AboutUsCubit.new,
     )
     ..registerFactory<TestCubit>(
-      TestCubit.new,
+      () => TestCubit(
+        i.get(),
+      ),
     );
 }

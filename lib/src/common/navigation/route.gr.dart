@@ -62,12 +62,12 @@ class BookingRoute extends PageRouteInfo<void> {
 /// [CarDetailsPage]
 class CarDetailsRoute extends PageRouteInfo<CarDetailsRouteArgs> {
   CarDetailsRoute({
-    required MockCar mockCar,
+    required CarModel car,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
           CarDetailsRoute.name,
-          args: CarDetailsRouteArgs(mockCar: mockCar, key: key),
+          args: CarDetailsRouteArgs(car: car, key: key),
           initialChildren: children,
         );
 
@@ -77,32 +77,32 @@ class CarDetailsRoute extends PageRouteInfo<CarDetailsRouteArgs> {
     name,
     builder: (data) {
       final args = data.argsAs<CarDetailsRouteArgs>();
-      return CarDetailsPage(mockCar: args.mockCar, key: args.key);
+      return CarDetailsPage(car: args.car, key: args.key);
     },
   );
 }
 
 class CarDetailsRouteArgs {
-  const CarDetailsRouteArgs({required this.mockCar, this.key});
+  const CarDetailsRouteArgs({required this.car, this.key});
 
-  final MockCar mockCar;
+  final CarModel car;
 
   final Key? key;
 
   @override
   String toString() {
-    return 'CarDetailsRouteArgs{mockCar: $mockCar, key: $key}';
+    return 'CarDetailsRouteArgs{car: $car, key: $key}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! CarDetailsRouteArgs) return false;
-    return mockCar == other.mockCar && key == other.key;
+    return car == other.car && key == other.key;
   }
 
   @override
-  int get hashCode => mockCar.hashCode ^ key.hashCode;
+  int get hashCode => car.hashCode ^ key.hashCode;
 }
 
 /// generated route for
