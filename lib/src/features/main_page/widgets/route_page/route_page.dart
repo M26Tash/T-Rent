@@ -27,12 +27,10 @@ class _RoutePageState extends State<RoutePage> {
   late PointAnnotationManager? _annotationManager;
   OverlayEntry? _currentOverlay;
 
-  // final List<MockCar> _cars = MockCarList.cars;
-
   @override
   void initState() {
     super.initState();
-    _routeCubit.getCars;
+    _routeCubit.getCars();
     _ensurePermissions();
   }
 
