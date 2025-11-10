@@ -9,6 +9,7 @@ import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
+import 'package:t_rent/src/core/domain/entities/car_order_model/car_order_model.dart';
 import 'package:t_rent/src/features/car_details_page/cubit/car_details_cubit.dart';
 import 'package:t_rent/src/features/car_details_page/widgets/car_details_body.dart';
 import 'package:t_rent/src/features/car_details_page/widgets/reservation_slider.dart';
@@ -54,10 +55,22 @@ class CarDetailsPage extends StatelessWidget {
               onPlanChanged: carDetailsCubit.chooseRentalPlan,
               currentRentalPlan: state.rentalPlan,
               onRangePicked: (range) {
-                carDetailsCubit..onRangePicked(range)
-                ..calculateTotalPrice(
-                  car: car,
-                );
+                carDetailsCubit
+                  ..onRangePicked(range)
+                  ..calculateTotalPrice(
+                    car: car,
+                  )
+                  ..uploadCarRent(
+                    carOrder: CarOrderModel(
+                      carId: car.id!,
+                      car: car,
+                      startDate: range!.start,
+                      endDate: range.end,
+                    ),
+                    car: car,
+                    startDate: range.start,
+                    endDate: range.end,
+                  );
               },
               rangePicked: state.rangePicked,
               totalPrice: state.totalPrice,

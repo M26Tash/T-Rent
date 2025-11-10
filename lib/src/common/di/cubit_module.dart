@@ -67,7 +67,9 @@ void initCubits() {
       ),
     )
     ..registerFactory<HistoryCubit>(
-      HistoryCubit.new,
+      () => HistoryCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<RouteCubit>(
       () => RouteCubit(
@@ -83,7 +85,9 @@ void initCubits() {
       ),
     )
     ..registerFactory<CarDetailsCubit>(
-      CarDetailsCubit.new,
+      () => CarDetailsCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<BookingCubit>(
       BookingCubit.new,

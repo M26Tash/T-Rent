@@ -11,7 +11,7 @@ final class CarSpecsMapper implements BaseMapper<CarSpecs> {
       _Fields.torque: data.torque,
       _Fields.zeroToHundred: data.zeroToHundred,
       _Fields.topSpeed: data.topSpeed,
-      _Fields.driveType: data.driveType,
+      _Fields.driveType: data.driveType.name,
     };
   }
 

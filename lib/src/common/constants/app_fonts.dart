@@ -17,6 +17,7 @@ abstract final class AppFonts {
   static const double sizeDisplayLarge = 34;
 
   static const double sizeAppBarFont = 20;
+  static const double carYearFontSize = 150;
 
   // FontWeight
   static const FontWeight weightThin = FontWeight.w100;
@@ -28,4 +29,5 @@ abstract final class AppFonts {
   static const FontWeight weightBold = FontWeight.w700;
   static const FontWeight weightExtraBold = FontWeight.w800;
   static const FontWeight weightBlack = FontWeight.w900;
+  
 }

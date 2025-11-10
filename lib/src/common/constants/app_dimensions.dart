@@ -27,6 +27,7 @@ abstract final class AppDimensions {
   static const double innerRadioSize = 12;
   static const double avatarPickRadius = 70;
   static const double errorWidgetIconSize = 48;
+  static const double carHistoryItemHeight = 180;
 }
 
 extension AvailableSize on BuildContext {

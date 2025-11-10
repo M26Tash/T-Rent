@@ -62,7 +62,7 @@ class HomeCubit extends Cubit<HomeState> {
     );
 
     _carsSubscription?.cancel();
-    _carsSubscription = _dataInteractor.carstream.listen(
+    _carsSubscription = _dataInteractor.carStream.listen(
       _onNewCars,
     );
   }
@@ -106,29 +106,29 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<String?> _getUserAddress() async {
-    final permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied ||
-        permission == LocationPermission.deniedForever) {
-      return 'Permission denied';
-    }
+    // final permission = await Geolocator.requestPermission();
+    // if (permission == LocationPermission.denied ||
+    //     permission == LocationPermission.deniedForever) {
+    //   return 'Permission denied';
+    // }
 
-    final position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
+    // final position = await Geolocator.getCurrentPosition(
+    //   desiredAccuracy: LocationAccuracy.high,
+    // );
 
-    final placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
+    // final placemarks =
+    //     await placemarkFromCoordinates(position.latitude, position.longitude);
 
-    final place = placemarks.first;
-    emit(
-      state.copyWith(
-        userAddress:
-            // ignore: lines_longer_than_80_chars
-            '${place.administrativeArea}, ${place.subAdministrativeArea}, ${place.street}, ${place.postalCode}',
-        isAddressLoading: true,
-      ),
-    );
-    return null;
+    // final place = placemarks.first;
+    // emit(
+    //   state.copyWith(
+    //     userAddress:
+    //         // ignore: lines_longer_than_80_chars
+    //         '${place.administrativeArea}, ${place.subAdministrativeArea}, ${place.street}, ${place.postalCode}',
+    //     isAddressLoading: true,
+    //   ),
+    // );
+    // return null;
   }
 
   void onSortOrderSelect(SortOrder sortOrder) {

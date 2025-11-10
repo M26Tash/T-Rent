@@ -11,7 +11,7 @@ final class ProfileMapper implements BaseMapper<ProfileModel> {
       _Fields.avatarUrl: data.avatarUrl,
       _Fields.email: data.email,
       _Fields.updatedAt: data.updatedAt,
-      _Fields.dateOfBirth: data.dateOfBirth,
+      _Fields.dateOfBirth: data.dateOfBirth?.toIso8601String(),
     };
   }
 
@@ -26,7 +26,9 @@ final class ProfileMapper implements BaseMapper<ProfileModel> {
       updatedAt: json[_Fields.updatedAt],
       dateOfBirth: json[_Fields.dateOfBirth] == null
           ? null
-          : DateTime.tryParse(json[_Fields.dateOfBirth]),
+          : DateTime.tryParse(
+              json[_Fields.dateOfBirth],
+            ),
     );
   }
 }

@@ -9,12 +9,16 @@ import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
 import 'package:t_rent/src/common/navigation/route.dart';
 import 'package:t_rent/src/common/utils/enums/rental_plan.dart';
 import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
+import 'package:t_rent/src/core/domain/entities/car_order_model/car_order_model.dart';
+import 'package:t_rent/src/core/domain/interactors/data_interactor.dart';
 
 part 'car_details_state.dart';
 
 class CarDetailsCubit extends Cubit<CarDetailsState> {
-  CarDetailsCubit()
-      : super(
+  final DataInteractor _dataInteractor;
+  CarDetailsCubit(
+    this._dataInteractor,
+  ) : super(
           const CarDetailsState(
             route: CustomizedRoute(null, null),
             rentalPlan: null,
@@ -22,6 +26,20 @@ class CarDetailsCubit extends Cubit<CarDetailsState> {
             totalPrice: 0,
           ),
         );
+
+  Future<void> uploadCarRent({
+    required CarOrderModel carOrder,
+    required CarModel car,
+    required DateTime startDate,
+    required DateTime endDate,
+  }) async {
+    return _dataInteractor.uploadCarRent(
+      carOrder: carOrder,
+      car: car,
+      startDate: startDate,
+      endDate: endDate,
+    );
+  }
 
   void onRangePicked(DateTimeRange<DateTime>? range) {
     emit(
