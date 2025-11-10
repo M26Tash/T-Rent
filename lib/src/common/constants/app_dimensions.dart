@@ -28,6 +28,8 @@ abstract final class AppDimensions {
   static const double avatarPickRadius = 70;
   static const double errorWidgetIconSize = 48;
   static const double carHistoryItemHeight = 180;
+  static const double locationShimmerHeight = 20;
+  static const double locationShimmerWidth = 150;
 }
 
 extension AvailableSize on BuildContext {

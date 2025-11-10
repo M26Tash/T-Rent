@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                     FilterTab.values[index],
                   ),
                   onSearchChanged: homeCubit.updateSearchQuery,
-                  userAddress: state.userAddress ?? 'NOT FOUND',
+                  userAddress: state.userAddress,
                 ),
               ),
             ),
