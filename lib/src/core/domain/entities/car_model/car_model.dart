@@ -23,6 +23,7 @@ final class CarModel extends DomainObject {
   final CarPricing carPricing;
   final CarImage carImage;
   final CarCoordinates carCoordinates;
+  final String? carMotorRevAsset;
 
   @override
   List<Object?> get props => [
@@ -41,6 +42,7 @@ final class CarModel extends DomainObject {
         carPricing,
         carImage,
         carCoordinates,
+        carMotorRevAsset,
       ];
 
   const CarModel({
@@ -59,6 +61,7 @@ final class CarModel extends DomainObject {
     required this.carImage,
     required this.carCoordinates,
     this.id,
+    this.carMotorRevAsset,
   });
 
   @override
@@ -79,6 +82,7 @@ final class CarModel extends DomainObject {
       carPricing: carPricing,
       carImage: carImage,
       carCoordinates: carCoordinates,
+      carMotorRevAsset: carMotorRevAsset,
     );
   }
 }

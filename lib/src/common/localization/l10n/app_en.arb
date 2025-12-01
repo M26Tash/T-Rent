@@ -95,5 +95,6 @@
     "userDetails": "User Details",
     "yourCarsReadyToRoll": "Your Car’s Ready to Roll!",
     "bookingDetailsAreOnTheirWayToYourInbox": "Booking details are on their way to your inbox. Drive safe and enjoy the ride!",
-    "homePage": "Home Page"
+    "homePage": "Home Page",
+    "youHaventBookAnyCarsYet": "You haven’t booked any cars yet. Start your first rental and see it appear here!"
 }

@@ -330,4 +330,8 @@ class AppLocalizationTr extends AppLocalization {
 
   @override
   String get homePage => 'Ana Sayfa';
+
+  @override
+  String get youHaventBookAnyCarsYet =>
+      'Henüz herhangi bir araç rezervasyonu yapmadınız. İlk kiralamanızı başlatın ve burada görün!';
 }

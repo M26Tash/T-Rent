@@ -56,7 +56,11 @@ final class DataRepository implements IDataRepository {
   }
 
   @override
-  Future<void> getCarRentHistory() async {
-    return _dataSource.getCarRentHistory();
+  Future<void> getCarRentHistory({
+    int? carId,
+  }) async {
+    return _dataSource.getCarRentHistory(
+      carId: carId,
+    );
   }
 }

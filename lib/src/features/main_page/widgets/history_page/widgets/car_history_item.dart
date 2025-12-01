@@ -9,6 +9,7 @@ import 'package:t_rent/src/common/constants/app_fonts.dart';
 import 'package:t_rent/src/common/constants/font_family.dart';
 import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
+import 'package:t_rent/src/common/utils/enums/fuel_type.dart';
 import 'package:t_rent/src/common/utils/extensions/date_time_extension.dart';
 import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
 import 'package:t_rent/src/core/domain/entities/car_order_model/car_order_model.dart';
@@ -31,7 +32,9 @@ class CarHistoryItem extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: AppDimensions.large),
         padding: const EdgeInsets.all(AppDimensions.large),
         decoration: BoxDecoration(
-          color: context.theme.surfaceColor,
+          color: carOrder.car.fuelType == FuelType.electric
+              ? context.theme.electricSurfaceColor
+              : context.theme.surfaceColor,
           borderRadius: const BorderRadius.all(
             Radius.circular(
               AppDimensions.preLarge,

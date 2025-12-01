@@ -87,6 +87,7 @@ void initCubits() {
     ..registerFactory<CarDetailsCubit>(
       () => CarDetailsCubit(
         i.get(),
+        i.get(),
       ),
     )
     ..registerFactory<BookingCubit>(

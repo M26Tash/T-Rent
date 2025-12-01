@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_redundant_argument_values
 
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
@@ -10,22 +11,67 @@ import 'package:t_rent/src/common/navigation/route.dart';
 import 'package:t_rent/src/common/utils/enums/rental_plan.dart';
 import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 import 'package:t_rent/src/core/domain/entities/car_order_model/car_order_model.dart';
+import 'package:t_rent/src/core/domain/interactors/car_audio_interactor.dart';
 import 'package:t_rent/src/core/domain/interactors/data_interactor.dart';
 
 part 'car_details_state.dart';
 
 class CarDetailsCubit extends Cubit<CarDetailsState> {
   final DataInteractor _dataInteractor;
+  final CarAudioInteractor _audioInteractor;
+
   CarDetailsCubit(
     this._dataInteractor,
+    this._audioInteractor,
   ) : super(
           const CarDetailsState(
-            route: CustomizedRoute(null, null),
+            route: CustomizedRoute(
+              null,
+              null,
+            ),
             rentalPlan: null,
             rangePicked: null,
             totalPrice: 0,
+            bookedRanges: null,
           ),
-        );
+        ) {
+    _subscribeAll();
+  }
+
+  StreamSubscription<List<CarOrderModel>?>? _carRentHistorySubscription;
+
+  @override
+  Future<void> close() {
+    _carRentHistorySubscription?.cancel();
+    _carRentHistorySubscription = null;
+
+    return super.close();
+  }
+
+  void _subscribeAll() {
+    _carRentHistorySubscription?.cancel();
+    _carRentHistorySubscription = _dataInteractor.carRentHistoryStream.listen(
+      _onNewCarRentHistory,
+    );
+  }
+
+  Future<void> playRev({required String revAsset}) async {
+    return _audioInteractor.playRev(
+      revAsset: revAsset,
+    );
+  }
+
+  Future<void> stopRev() async {
+    return _audioInteractor.stopRev();
+  }
+
+  Future<void> getCarRentHistory({
+    required int carId,
+  }) async {
+    return _dataInteractor.getCarRentHistory(
+      carId: carId,
+    );
+  }
 
   Future<void> uploadCarRent({
     required CarOrderModel carOrder,
@@ -38,6 +84,22 @@ class CarDetailsCubit extends Cubit<CarDetailsState> {
       car: car,
       startDate: startDate,
       endDate: endDate,
+    );
+  }
+
+  void _onNewCarRentHistory(List<CarOrderModel>? carRentHistory) {
+    final bookedRanges = carRentHistory!
+        .where((order) => order.startDate != null && order.endDate != null)
+        .map((order) => DateTimeRange(
+              start: order.startDate!,
+              end: order.endDate!,
+            ))
+        .toList();
+
+    emit(
+      state.copyWith(
+        bookedRanges: bookedRanges,
+      ),
     );
   }
 

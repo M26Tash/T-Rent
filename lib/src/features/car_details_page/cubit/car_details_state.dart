@@ -5,6 +5,7 @@ class CarDetailsState extends Equatable {
   final RentalPlan? rentalPlan;
   final DateTimeRange<DateTime>? rangePicked;
   final double totalPrice;
+  final List<DateTimeRange>? bookedRanges;
 
   @override
   List<Object?> get props => [
@@ -12,6 +13,7 @@ class CarDetailsState extends Equatable {
         rentalPlan,
         rangePicked,
         totalPrice,
+        bookedRanges,
       ];
 
   const CarDetailsState({
@@ -19,6 +21,7 @@ class CarDetailsState extends Equatable {
     required this.rentalPlan,
     required this.rangePicked,
     required this.totalPrice,
+    required this.bookedRanges,
   });
 
   CarDetailsState copyWith({
@@ -26,12 +29,14 @@ class CarDetailsState extends Equatable {
     RentalPlan? rentalPlan,
     DateTimeRange<DateTime>? rangePicked,
     double? totalPrice,
+    List<DateTimeRange>? bookedRanges,
   }) {
     return CarDetailsState(
       route: route ?? this.route,
       rentalPlan: rentalPlan ?? this.rentalPlan,
       rangePicked: rangePicked ?? this.rangePicked,
       totalPrice: totalPrice ?? this.totalPrice,
+      bookedRanges: bookedRanges ?? this.bookedRanges,
     );
   }
 }

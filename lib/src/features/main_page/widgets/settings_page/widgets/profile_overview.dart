@@ -33,7 +33,10 @@ class ProfileOverview extends StatelessWidget {
           CircleAvatar(
             radius: 30,
             backgroundColor: context.theme.surfaceColor,
-            backgroundImage: AssetImage(profileModel.avatarUrl ?? ''),
+            backgroundImage: NetworkImage(
+              profileModel.avatarUrl ??
+                  'https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-PNG-Photos.png',
+            ),
           ),
           const SizedBox(width: AppDimensions.medium),
           Column(

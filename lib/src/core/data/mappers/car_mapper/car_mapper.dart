@@ -55,7 +55,6 @@ final class CarMapper implements BaseMapper<CarModel> {
         json[_Fields.fuelType],
       ),
       fuelConsumption: (json[_Fields.fuelConsumption] as num).toDouble(),
-      // fuelConsumption: json[_Fields.fuelConsumption],
       seats: json[_Fields.seats],
       doors: json[_Fields.doors],
       mileage: (json[_Fields.mileage] as num).toDouble(),
@@ -71,6 +70,7 @@ final class CarMapper implements BaseMapper<CarModel> {
       carCoordinates: CarCoordinatesMapper().fromJson(
         json[_Fields.carCoordinates],
       ),
+      carMotorRevAsset: json[_Fields.carMotorRevAsset],
     );
   }
 }
@@ -91,4 +91,5 @@ abstract final class _Fields {
   static const String carPricing = 'car_pricing';
   static const String carImage = 'car_image';
   static const String carCoordinates = 'car_coordinates';
+  static const String carMotorRevAsset = 'car_motor_rev';
 }

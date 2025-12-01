@@ -25,5 +25,7 @@ abstract interface class IDataSource {
     required DateTime endDate,
   });
 
-  Future<void> getCarRentHistory();
+  Future<void> getCarRentHistory({
+    int? carId,
+  });
 }

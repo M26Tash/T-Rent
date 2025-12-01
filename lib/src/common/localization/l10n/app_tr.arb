@@ -95,5 +95,6 @@
     "userDetails": "Kullanıcı Ayrıntıları",
     "yourCarsReadyToRoll": "Aracınız Yola Çıkmaya Hazır!",
     "bookingDetailsAreOnTheirWayToYourInbox": "Rezervasyon bilgileriniz gelen kutunuza doğru yolda. Güvenli sürüşler ve yolculuğun tadını çıkarın!",
-    "homePage": "Ana Sayfa"
+    "homePage": "Ana Sayfa",
+    "youHaventBookAnyCarsYet": "Henüz herhangi bir araç rezervasyonu yapmadınız. İlk kiralamanızı başlatın ve burada görün!"
 }

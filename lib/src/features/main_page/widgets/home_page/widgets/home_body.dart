@@ -159,8 +159,7 @@ class HomeBody extends StatelessWidget {
                       car: car,
                     ),
             car: car,
-            asset: AppAssets.audiQ7Side,
-            // asset: car.carImage.sideView,
+            asset: car.carImage.sideView,
           ),
       ],
     );

@@ -17,6 +17,7 @@ const _chineseWhite = Color(0xFFE0E0E0);
 const _darkCharcoal = Color(0xFF2C2E30);
 const _chineseSilver = Color(0xFFCCCCCC);
 const _inchworm = Color(0xFFB9FF66);
+const _inchwormDark = Color(0xFFa4d963);
 
 const _transparent = Color(0x00000000);
 
@@ -53,6 +54,7 @@ const lightTheme = TRentTheme(
   accentTextColor: _blood,
   hintTextColor: _philippineGray,
   buttonTextColor: _white,
+  specsTextColor: _white,
   profileNameColor: _white,
   profileEmailColor: _chineseWhite,
   activeTabTextColor: _white,
@@ -72,7 +74,7 @@ const darkTheme = TRentTheme(
   backgroundColor: _darkJungleGreen,
   surfaceColor: _darkCharcoal,
   overlayBackgroundColor: _outerSpace,
-  electricSurfaceColor: _inchworm,
+  electricSurfaceColor: _inchwormDark,
   primaryColor: _rosewood,
   accentColor: _blood,
   primaryIconColor: _white,
@@ -88,6 +90,7 @@ const darkTheme = TRentTheme(
   accentTextColor: _blood,
   hintTextColor: _philippineGray,
   buttonTextColor: _white,
+  specsTextColor: _white,
   profileNameColor: _white,
   profileEmailColor: _chineseWhite,
   activeTabTextColor: _white,
@@ -101,166 +104,6 @@ const darkTheme = TRentTheme(
   warningColor: _metallicOrange,
   borderColor: _philippineGray,
 );
-
-// const _eerieBlack = Color(0xFF161622);
-// const _white = Color(0xFFFFFFFF);
-// const _romanSilver = Color(0xFF7E848D);
-// const _philipineGray = Color(0xFF8B8B94);
-// const _quickSilver = Color(0xFFA2A2A7);
-// const _ = Color(0xFF);
-// const _ = Color(0xFF);
-// const _ = Color(0xFF);
-
-// const _transparent = Color(0x00000000);
-
-// const lightTheme = TRentTheme(
-//   isDark: false,
-//   backgroundColor: _white,
-//   surfaceColor: _transparent,
-//   primaryColor: _policeBlue,
-//   secondaryColor: _silverSand,
-//   accentColor: _acidGreen,
-//   errorColor: _transparent,
-//   successColor: _transparent,
-//   warningColor: _transparent,
-//   borderColor: _transparent,
-//   primaryIconColor: _transparent,
-//   secondaryIconColor: _transparent,
-//   transparent: _transparent,
-//   primaryTextColor: _eerieBlack,
-//   secondaryTextColor: _policeBlue,
-//   fontFamily: FontFamily.carmeFamily,
-//   statusBarTheme: Brightness.dark,
-//   navigationBarBrightness: Brightness.light,
-// );
-
-// const darkTheme = TRentTheme(
-//   isDark: true,
-//   backgroundColor: _black,
-//   surfaceColor: _transparent,
-//   primaryColor: _darkSkyBlue,
-//   secondaryColor: _arsenic,
-//   accentColor: _pear,
-//   errorColor: _transparent,
-//   successColor: _transparent,
-//   warningColor: _transparent,
-//   borderColor: _transparent,
-//   primaryIconColor: _transparent,
-//   secondaryIconColor: _transparent,
-//   transparent: _transparent,
-//   primaryTextColor: _chineeseWhite,
-//   secondaryTextColor: _darkSkyBlue,
-//   fontFamily: FontFamily.carmeFamily,
-//   statusBarTheme: Brightness.dark,
-//   navigationBarBrightness: Brightness.light,
-// );
-
-// const _eerieBlack = Color(0xFF1F1F1F);
-// const _white = Color(0xFFffffff);
-// const _policeBlue = Color(0xFF325B67);
-// const _silverSand = Color(0xFFB5C4C2);
-// const _acidGreen = Color(0xFFC1CA1C);
-
-// const _chineeseWhite = Color(0xFFE0E0E0);
-// const _black = Color(0xFF000000);
-// const _darkSkyBlue = Color(0xFF98C1CD);
-// const _arsenic = Color(0xFF3B4A48);
-// const _pear = Color(0xFFDBE335);
-
-// const _transparent = Color(0x00000000);
-
-// const lightTheme = TRentTheme(
-//   isDark: false,
-//   backgroundColor: _white,
-//   surfaceColor: _transparent,
-//   primaryColor: _policeBlue,
-//   secondaryColor: _silverSand,
-//   accentColor: _acidGreen,
-//   errorColor: _transparent,
-//   successColor: _transparent,
-//   warningColor: _transparent,
-//   borderColor: _transparent,
-//   primaryIconColor: _transparent,
-//   secondaryIconColor: _transparent,
-//   transparent: _transparent,
-//   primaryTextColor: _eerieBlack,
-//   secondaryTextColor: _policeBlue,
-//   fontFamily: FontFamily.carmeFamily,
-//   statusBarTheme: Brightness.dark,
-//   navigationBarBrightness: Brightness.light,
-// );
-
-// const darkTheme = TRentTheme(
-//   isDark: true,
-//   backgroundColor: _black,
-//   surfaceColor: _transparent,
-//   primaryColor: _darkSkyBlue,
-//   secondaryColor: _arsenic,
-//   accentColor: _pear,
-//   errorColor: _transparent,
-//   successColor: _transparent,
-//   warningColor: _transparent,
-//   borderColor: _transparent,
-//   primaryIconColor: _transparent,
-//   secondaryIconColor: _transparent,
-//   transparent: _transparent,
-//   primaryTextColor: _chineeseWhite,
-//   secondaryTextColor: _darkSkyBlue,
-//   fontFamily: FontFamily.carmeFamily,
-//   statusBarTheme: Brightness.dark,
-//   navigationBarBrightness: Brightness.light,
-// );
-
-// const _papayaWhip = Color(0xFFFDF0D5);
-// const _white = Color(0xFFFFFFFF);
-// const _lava = Color(0xFFC1121F);
-// const _prussianBlue = Color(0xFF003049);
-// const _maroon = Color(0xFF780000);
-// const _maastrichtBlue = Color(0xFF001D2D);
-// const _policeBlue = Color(0xFF334E66);
-// const _chineseWhite = Color(0xFFE0E0E0);
-// const _creuleanForest = Color(0xFF669BBC);
-// const _marigold = Color(0xFFF5A623);
-
-// const lightTheme = TRentTheme(
-//   isDark: false,
-//   backgroundColor: _papayaWhip,
-//   surfaceColor: _white,
-//   primaryColor: _lava,
-//   secondaryColor: _creuleanForest,
-//   errorColor: _lava,
-//   successColor: _creuleanForest,
-//   warningColor: _marigold,
-//   borderColor: _chineseWhite,
-//   primaryIconColor: _white,
-//   secondaryIconColor: _white,
-//   transparent: _transparent,
-//   primaryTextColor: _prussianBlue,
-//   secondaryTextColor: _maroon,
-//   fontFamily: FontFamily.robotoFamily,
-//   statusBarTheme: Brightness.dark,
-//   navigationBarBrightness: Brightness.light,
-// );
-
-// const darkTheme = TRentTheme(
-//   isDark: true,
-//   backgroundColor: _prussianBlue,
-//   surfaceColor: _maastrichtBlue,
-//   primaryColor: _lava,
-//   secondaryColor: _creuleanForest,
-//   errorColor: _lava,
-//   successColor: _creuleanForest,
-//   warningColor: _papayaWhip,
-//   borderColor: _policeBlue,
-//   primaryIconColor: _white,
-//   secondaryIconColor: _white,
-//   transparent: _transparent,
-//   primaryTextColor: _papayaWhip,
-//   secondaryTextColor: _maroon,
-//   fontFamily: FontFamily.robotoFamily,
-//   statusBarTheme: Brightness.dark,
-//   navigationBarBrightness: Brightness.dark,
-// );
 
 ThemeData generateThemeData(TRentTheme theme) {
   return ThemeData(

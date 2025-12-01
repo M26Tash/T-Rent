@@ -63,13 +63,13 @@ class _SpecsItem extends StatelessWidget {
         children: [
           VectorImage(
             svgAssetPath: asset,
-            color: context.theme.tertiaryIconColor,
+            color: context.theme.whiteIconColor,
           ),
           Flexible(
             child: Text(
               specsDetail,
               style: context.themeData.textTheme.displaySmall?.copyWith(
-                color: context.theme.tertiaryTextColor,
+                color: context.theme.specsTextColor,
                 fontWeight: AppFonts.weightBold,
               ),
               softWrap: true,
@@ -80,7 +80,7 @@ class _SpecsItem extends StatelessWidget {
               specsTitle,
               style: context.themeData.textTheme.headlineSmall?.copyWith(
                 fontSize: AppFonts.sizeTitleMedium,
-                color: context.theme.tertiaryTextColor,
+                color: context.theme.specsTextColor,
               ),
               softWrap: true,
             ),

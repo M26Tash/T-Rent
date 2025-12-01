@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/cubit_scope/cubit_scope.dart';
+import 'package:t_rent/src/common/di/injector.dart';
 import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/navigation/entities/auto_route_extension.dart';
 import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
@@ -15,13 +16,29 @@ import 'package:t_rent/src/features/car_details_page/widgets/car_details_body.da
 import 'package:t_rent/src/features/car_details_page/widgets/reservation_slider.dart';
 
 @RoutePage()
-class CarDetailsPage extends StatelessWidget {
+class CarDetailsPage extends StatefulWidget {
   final CarModel car;
 
   const CarDetailsPage({
     required this.car,
     super.key,
   });
+
+  @override
+  State<CarDetailsPage> createState() => _CarDetailsPageState();
+}
+
+class _CarDetailsPageState extends State<CarDetailsPage> {
+  final CarDetailsCubit _carDetailsCubit = i.get<CarDetailsCubit>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _carDetailsCubit.getCarRentHistory(
+      carId: widget.car.id!,
+    );
+  }
 
   void _listener(BuildContext context, CarDetailsState state) {
     if (state.route.type == TypeRoute.pop) {
@@ -43,6 +60,17 @@ class CarDetailsPage extends StatelessWidget {
         listenWhen: _listenWhen,
         builder: (context, state) {
           final carDetailsCubit = CubitScope.of<CarDetailsCubit>(context);
+
+          if (state.bookedRanges == null) {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(
+                  color: context.theme.primaryColor,
+                ),
+              ),
+            );
+          }
+
           return Scaffold(
             backgroundColor: context.theme.backgroundColor,
             appBar: CustomAppBar(
@@ -51,29 +79,34 @@ class CarDetailsPage extends StatelessWidget {
               title: context.locale.details,
             ),
             body: CarDetailsBody(
-              car: car,
+              car: widget.car,
               onPlanChanged: carDetailsCubit.chooseRentalPlan,
               currentRentalPlan: state.rentalPlan,
+              bookedRanges: state.bookedRanges!,
               onRangePicked: (range) {
                 carDetailsCubit
                   ..onRangePicked(range)
                   ..calculateTotalPrice(
-                    car: car,
+                    car: widget.car,
                   )
                   ..uploadCarRent(
                     carOrder: CarOrderModel(
-                      carId: car.id!,
-                      car: car,
+                      carId: widget.car.id!,
+                      car: widget.car,
                       startDate: range!.start,
                       endDate: range.end,
                     ),
-                    car: car,
+                    car: widget.car,
                     startDate: range.start,
                     endDate: range.end,
                   );
               },
               rangePicked: state.rangePicked,
               totalPrice: state.totalPrice,
+              onRevTapDown: () => carDetailsCubit.playRev(
+                revAsset: widget.car.carMotorRevAsset!,
+              ),
+              onRevTapUp: carDetailsCubit.stopRev,
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,

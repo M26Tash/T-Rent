@@ -103,7 +103,10 @@ class DataSource implements IDataSource {
     }
 
     try {
-      final response = await supabase.from('profiles').select();
+      final response = await supabase.from('profiles').select().eq(
+            'id',
+            userid,
+          );
 
       if (response.isNotEmpty) {
         final profile =
@@ -180,10 +183,8 @@ class DataSource implements IDataSource {
     }
 
     try {
-      // await supabase.from('cars').insert(carsDb);
-
       final response = await supabase.from('cars').select();
-      CoreLogger.warningLog('$response');
+
       if (response.isNotEmpty) {
         final cars =
             response.map((item) => CarMapper().fromJson(item)).toList();
@@ -240,28 +241,37 @@ class DataSource implements IDataSource {
   }
 
   @override
-  Future<void> getCarRentHistory() async {
-    if (_cachedCarRentHistory != null) {
+  Future<void> getCarRentHistory({int? carId}) async {
+    if (carId == null && _cachedCarRentHistory != null) {
       _carRentHistorySubject.add(_cachedCarRentHistory);
       CoreLogger.warningLog('Serving cached car rent history');
+      return;
     }
 
     try {
-      final response = await supabase
+      final base = supabase
           .from('car_rent_history')
           .select('*, cars(*)')
-          .eq('user_id', supabase.auth.currentUser!.id)
-          .order('created_at', ascending: false);
+          .eq('user_id', supabase.auth.currentUser!.id);
 
-      final carOrdersHistory = response.map((e) {
+      final response = carId == null
+          ? await base.order('created_at', ascending: false)
+          : await base
+              .eq('car_id', carId)
+              .order('created_at', ascending: false);
+
+      final rows = (response as List).cast<Map<String, dynamic>>();
+
+      final carOrdersHistory = rows.map((e) {
         final order = CarOrderMapper().fromJson(e);
 
-        final totalDays = order.endDate != null && order.startDate != null
+        final totalDays = (order.startDate != null && order.endDate != null)
             ? order.endDate!.difference(order.startDate!).inDays
             : null;
 
-        final totalPrice =
-            totalDays != null ? totalDays * order.car.carPricing.perDay : null;
+        final totalPrice = (totalDays != null)
+            ? totalDays * order.car.carPricing.perDay
+            : null;
 
         return order.copyWith(
           totalDays: totalDays,
@@ -269,18 +279,23 @@ class DataSource implements IDataSource {
         );
       }).toList();
 
-      if (response.isNotEmpty) {
-        _cachedCarRentHistory = carOrdersHistory;
-
+      if (carOrdersHistory.isNotEmpty) {
+        if (carId == null) {
+          _cachedCarRentHistory = carOrdersHistory;
+        }
         _carRentHistorySubject.add(carOrdersHistory);
+      } else {
+        _carRentHistorySubject.add(<CarOrderModel>[]);
       }
-    } on StorageException catch (e) {
-      CoreLogger.errorLog(
-        'getCarRentHistory()',
-        params: {
-          'Caught error': e.message,
-        },
-      );
+    } on PostgrestException catch (e) {
+      CoreLogger.errorLog('getCarRentHistory()',
+          params: {'error': e.message, 'carId': carId});
+    } on StorageException catch (e, st) {
+      CoreLogger.errorLog('getCarRentHistory()', params: {
+        'error': e.toString(),
+        'carId': carId,
+        'stack': st.toString()
+      });
     }
   }
 }

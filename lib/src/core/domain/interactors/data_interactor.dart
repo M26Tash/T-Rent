@@ -46,7 +46,11 @@ final class DataInteractor {
     );
   }
 
-  Future<void> getCarRentHistory() async {
-    return _dataRepository.getCarRentHistory();
+  Future<void> getCarRentHistory({
+    int? carId,
+  }) async {
+    return _dataRepository.getCarRentHistory(
+      carId: carId,
+    );
   }
 }

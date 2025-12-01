@@ -31,6 +31,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: context.theme.backgroundColor,
       elevation: AppDimensions.none,
       titleSpacing: AppDimensions.none,
+      scrolledUnderElevation: AppDimensions.none,
       leadingWidth: svgAssetPath == null ? AppDimensions.none : null,
       leading: svgAssetPath == null
           ? const SizedBox()
