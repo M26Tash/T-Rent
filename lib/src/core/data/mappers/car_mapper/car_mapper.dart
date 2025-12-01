@@ -16,9 +16,9 @@ final class CarMapper implements BaseMapper<CarModel> {
       _Fields.brand: data.brand,
       _Fields.model: data.model,
       _Fields.year: data.year,
-      _Fields.type: data.type,
-      _Fields.transmissionType: data.transmissionType,
-      _Fields.fuelType: data.fuelType,
+      _Fields.type: data.type.name,
+      _Fields.transmissionType: data.transmissionType.name,
+      _Fields.fuelType: data.fuelType.name,
       _Fields.fuelConsumption: data.fuelConsumption,
       _Fields.seats: data.seats,
       _Fields.doors: data.doors,
@@ -55,7 +55,6 @@ final class CarMapper implements BaseMapper<CarModel> {
         json[_Fields.fuelType],
       ),
       fuelConsumption: (json[_Fields.fuelConsumption] as num).toDouble(),
-      // fuelConsumption: json[_Fields.fuelConsumption],
       seats: json[_Fields.seats],
       doors: json[_Fields.doors],
       mileage: (json[_Fields.mileage] as num).toDouble(),
@@ -71,6 +70,7 @@ final class CarMapper implements BaseMapper<CarModel> {
       carCoordinates: CarCoordinatesMapper().fromJson(
         json[_Fields.carCoordinates],
       ),
+      carMotorRevAsset: json[_Fields.carMotorRevAsset],
     );
   }
 }
@@ -91,4 +91,5 @@ abstract final class _Fields {
   static const String carPricing = 'car_pricing';
   static const String carImage = 'car_image';
   static const String carCoordinates = 'car_coordinates';
+  static const String carMotorRevAsset = 'car_motor_rev';
 }

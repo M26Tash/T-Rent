@@ -679,6 +679,12 @@ abstract class AppLocalization {
   /// In en, this message translates to:
   /// **'Home Page'**
   String get homePage;
+
+  /// No description provided for @youHaventBookAnyCarsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven’t booked any cars yet. Start your first rental and see it appear here!'**
+  String get youHaventBookAnyCarsYet;
 }
 
 class _AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

@@ -131,6 +131,21 @@ abstract final class SupportMethods {
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
       helpText: 'Select your date of birth',
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            datePickerTheme: DatePickerThemeData(
+              rangeSelectionBackgroundColor:
+                  context.theme.accentColor.withOpacity(.5),
+              rangePickerBackgroundColor: context.theme.primaryColor,
+              rangeSelectionOverlayColor: WidgetStatePropertyAll(
+                context.theme.accentColor.withOpacity(.5),
+              ),
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
 
     if (picked != null) {
@@ -142,8 +157,20 @@ abstract final class SupportMethods {
     required BuildContext context,
     required RentalPlan planType,
     required ValueChanged<DateTimeRange?> onRangePicked,
+    List<DateTimeRange>? bookedRanges,
   }) async {
     final now = DateTime.now();
+
+    bool isRangeAvailable(DateTimeRange range) {
+      if (bookedRanges == null) return true;
+      for (final booked in bookedRanges) {
+        if (!(range.end.isBefore(booked.start) ||
+            range.start.isAfter(booked.end))) {
+          return false;
+        }
+      }
+      return true;
+    }
 
     if (planType != RentalPlan.hourly) {
       final pickedRange = await showDateRangePicker(
@@ -156,15 +183,30 @@ abstract final class SupportMethods {
         lastDate: now.add(const Duration(days: 365)),
         helpText: 'Select rental period',
         saveText: 'Confirm',
+        selectableDayPredicate: (day, selectedStartDay, selectedEndDay) {
+          for (final booked in bookedRanges!) {
+            if (!day.isBefore(booked.start) && !day.isAfter(booked.end)) {
+              return false;
+            }
+          }
+          return true;
+        },
       );
 
       if (!context.mounted) return;
 
       if (pickedRange != null) {
+        if (!isRangeAvailable(pickedRange)) {
+          await context.showErrorSnackBar(
+            'Selected range overlaps with existing bookings.',
+          );
+          return;
+        }
+
         if (planType == RentalPlan.weekly) {
           final days = pickedRange.duration.inDays;
           if (days % 7 != 0) {
-            context.showErrorSnackBar(
+            await context.showErrorSnackBar(
               'Weekly plan must be in full weeks (7 days).',
             );
             return;
@@ -183,7 +225,6 @@ abstract final class SupportMethods {
       lastDate: now.add(const Duration(days: 30)),
       helpText: 'Select rental date',
     );
-
     if (selectedDate == null || !context.mounted) return;
 
     final startTime = await showTimePicker(
@@ -207,7 +248,6 @@ abstract final class SupportMethods {
       startTime.hour,
       startTime.minute,
     );
-
     final endDateTime = DateTime(
       selectedDate.year,
       selectedDate.month,
@@ -226,8 +266,17 @@ abstract final class SupportMethods {
       return;
     }
 
+    final pickedRange = DateTimeRange(start: startDateTime, end: endDateTime);
+    if (!isRangeAvailable(pickedRange)) {
+      if (!context.mounted) return;
+      await context.showErrorSnackBar(
+        'Selected time overlaps with existing bookings.',
+      );
+      return;
+    }
+
     if (!context.mounted) return;
-    onRangePicked(DateTimeRange(start: startDateTime, end: endDateTime));
+    onRangePicked(pickedRange);
   }
 
   static Future<void> showBottomSheet({

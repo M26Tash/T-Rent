@@ -329,4 +329,8 @@ class AppLocalizationEn extends AppLocalization {
 
   @override
   String get homePage => 'Home Page';
+
+  @override
+  String get youHaventBookAnyCarsYet =>
+      'You haven’t booked any cars yet. Start your first rental and see it appear here!';
 }

@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, avoid_catches_without_on_clauses
 
 import 'dart:async';
 
@@ -62,7 +62,7 @@ class HomeCubit extends Cubit<HomeState> {
     );
 
     _carsSubscription?.cancel();
-    _carsSubscription = _dataInteractor.carstream.listen(
+    _carsSubscription = _dataInteractor.carStream.listen(
       _onNewCars,
     );
   }
@@ -106,29 +106,82 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   Future<String?> _getUserAddress() async {
-    final permission = await Geolocator.requestPermission();
-    if (permission == LocationPermission.denied ||
-        permission == LocationPermission.deniedForever) {
-      return 'Permission denied';
+    try {
+      emit(
+        state.copyWith(
+          isAddressLoading: true,
+        ),
+      );
+
+      final permission = await Geolocator.requestPermission();
+
+      if (permission == LocationPermission.denied ||
+          permission == LocationPermission.deniedForever) {
+        emit(state.copyWith(isAddressLoading: false));
+        return 'Permission denied';
+      }
+
+      final position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.lowest,
+        timeLimit: const Duration(
+          seconds: 5,
+        ),
+      );
+
+      final placemarksFuture = placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+
+      final placemarks = await placemarksFuture;
+
+      if (placemarks.isEmpty) {
+        emit(state.copyWith(isAddressLoading: false));
+        return 'Address not found';
+      }
+
+      final place = placemarks.first;
+
+      emit(
+        state.copyWith(
+          userAddress: '${place.administrativeArea ?? ''}, '
+              '${place.subAdministrativeArea ?? ''}, '
+              '${place.street ?? ''}, '
+              '${place.postalCode ?? ''}',
+          isAddressLoading: false,
+        ),
+      );
+
+      return null;
+    } on TimeoutException {
+      emit(
+        state.copyWith(
+          isAddressLoading: false,
+        ),
+      );
+      return 'Location request timed out';
+    } on PermissionDeniedException {
+      emit(
+        state.copyWith(
+          isAddressLoading: false,
+        ),
+      );
+      return 'Location permission denied';
+    } on LocationServiceDisabledException {
+      emit(
+        state.copyWith(
+          isAddressLoading: false,
+        ),
+      );
+      return 'Location services are disabled';
+    } catch (e) {
+      emit(
+        state.copyWith(
+          isAddressLoading: false,
+        ),
+      );
+      return 'Failed to get address: $e';
     }
-
-    final position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
-
-    final placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
-
-    final place = placemarks.first;
-    emit(
-      state.copyWith(
-        userAddress:
-            // ignore: lines_longer_than_80_chars
-            '${place.administrativeArea}, ${place.subAdministrativeArea}, ${place.street}, ${place.postalCode}',
-        isAddressLoading: true,
-      ),
-    );
-    return null;
   }
 
   void onSortOrderSelect(SortOrder sortOrder) {

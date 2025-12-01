@@ -49,6 +49,9 @@ abstract final class AppAssets {
   static const String moneyIcon = '${_assetsVectors}money_icon.svg';
   static const String eyeIcon = '${_assetsVectors}eye_icon.svg';
   static const String eyeOffIcon = '${_assetsVectors}eye_off_icon.svg';
+  static const String musicIcon = '${_assetsVectors}music_icon.svg';
+  static const String gasPressIcon = '${_assetsVectors}gas_press_icon.svg';
+  static const String gasReleaseIcon = '${_assetsVectors}gas_release_icon.svg';
 
   // Navigation Panel Icons
   static const String homeIcon = '${_assetsVectors}home_icon.svg';
@@ -85,9 +88,13 @@ abstract final class AppAssets {
   static const String vintageIllustrationBg =
       '${_assetsImages}vintage_illustration_bg.png';
 
+  // Audios
+  static const String mclaren720SRev = '${_assetsAudio}mclaren_720S_rev.mp3';
+
   // Folder Paths
   static const String _assetsFolder = 'assets/';
   static const String _assetsVectors = '${_assetsFolder}vectors/';
   static const String _assetsImages = '${_assetsFolder}images/';
   static const String _assetsLottie = '${_assetsFolder}lottie/';
+  static const String _assetsAudio = '${_assetsFolder}audio/';
 }

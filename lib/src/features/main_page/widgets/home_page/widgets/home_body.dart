@@ -1,5 +1,8 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
@@ -24,7 +27,7 @@ class HomeBody extends StatelessWidget {
   final ValueChanged<int> onSortOrderTabTap;
   final ValueChanged<int> onFilterTabTap;
   final ValueChanged<String> onSearchChanged;
-  final String userAddress;
+  final String? userAddress;
 
   const HomeBody({
     required this.profile,
@@ -78,13 +81,35 @@ class HomeBody extends StatelessWidget {
                       color: context.theme.primaryTextColor,
                     ),
                   ),
-                  Text(
-                    userAddress,
-                    style: context.themeData.textTheme.headlineSmall?.copyWith(
-                      color: context.theme.primaryTextColor,
-                      fontWeight: AppFonts.weightMedium,
-                    ),
-                    softWrap: true,
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 300),
+                    child: userAddress == null
+                        ? Shimmer.fromColors(
+                            key: const ValueKey('shimmer'),
+                            baseColor: context.theme.surfaceColor,
+                            highlightColor:
+                                context.theme.primaryColor.withOpacity(0.4),
+                            child: Container(
+                              height: AppDimensions.locationShimmerHeight,
+                              width: AppDimensions.locationShimmerWidth,
+                              decoration: BoxDecoration(
+                                color: context.theme.surfaceColor,
+                                borderRadius: BorderRadius.circular(
+                                  AppDimensions.small,
+                                ),
+                              ),
+                            ),
+                          )
+                        : Text(
+                            userAddress!,
+                            key: const ValueKey('address'),
+                            style: context.themeData.textTheme.headlineSmall
+                                ?.copyWith(
+                              color: context.theme.primaryTextColor,
+                              fontWeight: AppFonts.weightMedium,
+                            ),
+                            softWrap: true,
+                          ),
                   ),
                 ],
               ),
@@ -134,8 +159,7 @@ class HomeBody extends StatelessWidget {
                       car: car,
                     ),
             car: car,
-            asset: AppAssets.audiQ7Side,
-            // asset: car.carImage.sideView,
+            asset: car.carImage.sideView,
           ),
       ],
     );

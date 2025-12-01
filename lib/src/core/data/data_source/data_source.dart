@@ -3,14 +3,12 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:t_rent/src/common/utils/enums/car_type.dart';
-import 'package:t_rent/src/common/utils/enums/drive_type.dart';
-import 'package:t_rent/src/common/utils/enums/fuel_type.dart';
-import 'package:t_rent/src/common/utils/enums/transmission_type.dart';
 import 'package:t_rent/src/core/data/data_source/interfaces/i_data_source.dart';
 import 'package:t_rent/src/core/data/mappers/car_mapper/car_mapper.dart';
+import 'package:t_rent/src/core/data/mappers/car_order_mapper/car_order_mapper.dart';
 import 'package:t_rent/src/core/data/mappers/profile_mapper/profile_mapper.dart';
 import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
+import 'package:t_rent/src/core/domain/entities/car_order_model/car_order_model.dart';
 import 'package:t_rent/src/core/domain/entities/profile_model/profile_model.dart';
 import 'package:t_rent/src/core/domain/utils/core_logger.dart';
 
@@ -19,10 +17,14 @@ class DataSource implements IDataSource {
 
   final BehaviorSubject<ProfileModel?> _profileSubject = BehaviorSubject();
   final BehaviorSubject<List<CarModel>?> _carsSubject = BehaviorSubject();
+  final BehaviorSubject<List<CarOrderModel>?> _carRentHistorySubject =
+      BehaviorSubject();
 
   ProfileModel? _cachedProfile;
 
   List<CarModel>? _cachedCars;
+
+  List<CarOrderModel>? _cachedCarRentHistory;
 
   String get userid => supabase.auth.currentUser!.id;
 
@@ -30,7 +32,11 @@ class DataSource implements IDataSource {
   Stream<ProfileModel?> get profileStream => _profileSubject;
 
   @override
-  Stream<List<CarModel>?> get carstream => _carsSubject;
+  Stream<List<CarModel>?> get carStream => _carsSubject;
+
+  @override
+  Stream<List<CarOrderModel>?> get carRentHistoryStream =>
+      _carRentHistorySubject;
 
   @override
   Future<void> updateProfile(ProfileModel profile) async {
@@ -97,7 +103,10 @@ class DataSource implements IDataSource {
     }
 
     try {
-      final response = await supabase.from('profiles').select();
+      final response = await supabase.from('profiles').select().eq(
+            'id',
+            userid,
+          );
 
       if (response.isNotEmpty) {
         final profile =
@@ -174,10 +183,8 @@ class DataSource implements IDataSource {
     }
 
     try {
-      // await supabase.from('cars').insert(carsDb);
-
       final response = await supabase.from('cars').select();
-      CoreLogger.warningLog('$response');
+
       if (response.isNotEmpty) {
         final cars =
             response.map((item) => CarMapper().fromJson(item)).toList();
@@ -207,41 +214,88 @@ class DataSource implements IDataSource {
       );
     }
   }
-}
 
-final Map<String, Object> carsDb = {
-  'brand': 'ZEEKR',
-  'model': '001 Performance',
-  'year': 2025,
-  'type': CarType.hatchback.name,
-  'transmission_type': TransmissionType.automatic.name,
-  'fuel_type': FuelType.electric.name,
-  'fuel_consumption': 18.5,
-  'seats': 5,
-  'doors': 5,
-  'mileage': 1293,
-  'car_specs': {
-    'engine_capacity': 0,
-    'horsepower': 537,
-    'torque': 686,
-    'zero_to_hundred': 3.9,
-    'top_speed': 200,
-    'drive_type': DriveType.awd.name,
-  },
-  'car_pricing': {
-    'per_hour': 3500,
-    'per_day': 11000,
-    'per_week': 75000,
-    'deposit': 130000,
-  },
-  'car_image': {
-    'side_view':
-        'https://drive.google.com/uc?export=view&id=1HmX09PSJLmV3_bSsW5xJ81k0_9Rg8n1_',
-    'front_view':
-        'https://drive.google.com/uc?export=view&id=1FNNJshJ6YUYauLCKXAZLadg7V9283w0M',
-  },
-  'car_coordinates': {
-    'latitude': 41.134512,
-    'longitude': 29.062161,
-  },
-};
+  @override
+  Future<void> uploadCarRent({
+    required CarOrderModel carOrder,
+    required CarModel car,
+    required DateTime startDate,
+    required DateTime endDate,
+  }) async {
+    try {
+      final newCarOrder = carOrder.copyWith(
+        userId: supabase.auth.currentUser?.id,
+      );
+
+      await supabase.from('car_rent_history').insert(
+            CarOrderMapper().toJson(newCarOrder),
+          );
+    } on StorageException catch (e) {
+      CoreLogger.errorLog(
+        'uploadCarRent()',
+        params: {
+          'Caught error': e.message,
+        },
+      );
+    }
+  }
+
+  @override
+  Future<void> getCarRentHistory({int? carId}) async {
+    if (carId == null && _cachedCarRentHistory != null) {
+      _carRentHistorySubject.add(_cachedCarRentHistory);
+      CoreLogger.warningLog('Serving cached car rent history');
+      return;
+    }
+
+    try {
+      final base = supabase
+          .from('car_rent_history')
+          .select('*, cars(*)')
+          .eq('user_id', supabase.auth.currentUser!.id);
+
+      final response = carId == null
+          ? await base.order('created_at', ascending: false)
+          : await base
+              .eq('car_id', carId)
+              .order('created_at', ascending: false);
+
+      final rows = (response as List).cast<Map<String, dynamic>>();
+
+      final carOrdersHistory = rows.map((e) {
+        final order = CarOrderMapper().fromJson(e);
+
+        final totalDays = (order.startDate != null && order.endDate != null)
+            ? order.endDate!.difference(order.startDate!).inDays
+            : null;
+
+        final totalPrice = (totalDays != null)
+            ? totalDays * order.car.carPricing.perDay
+            : null;
+
+        return order.copyWith(
+          totalDays: totalDays,
+          totalPrice: totalPrice,
+        );
+      }).toList();
+
+      if (carOrdersHistory.isNotEmpty) {
+        if (carId == null) {
+          _cachedCarRentHistory = carOrdersHistory;
+        }
+        _carRentHistorySubject.add(carOrdersHistory);
+      } else {
+        _carRentHistorySubject.add(<CarOrderModel>[]);
+      }
+    } on PostgrestException catch (e) {
+      CoreLogger.errorLog('getCarRentHistory()',
+          params: {'error': e.message, 'carId': carId});
+    } on StorageException catch (e, st) {
+      CoreLogger.errorLog('getCarRentHistory()', params: {
+        'error': e.toString(),
+        'carId': carId,
+        'stack': st.toString()
+      });
+    }
+  }
+}

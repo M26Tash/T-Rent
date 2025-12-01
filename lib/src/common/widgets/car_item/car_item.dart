@@ -10,8 +10,6 @@ import 'package:t_rent/src/common/utils/enums/fuel_type.dart';
 import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
 import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 
-
-
 class CarItem extends StatelessWidget {
   final VoidCallback onCarTap;
   final CarModel car;
@@ -75,6 +73,7 @@ class CarItem extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: asset,
                 fit: BoxFit.cover,
+                width: context.availableWidth,
                 placeholder: (context, url) => Shimmer.fromColors(
                   baseColor: context.theme.overlayBackgroundColor,
                   highlightColor: context.theme.accentColor,

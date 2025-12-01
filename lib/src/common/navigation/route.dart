@@ -25,7 +25,7 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
           page: SplashRoute.page,
-          // initial: true,
+          initial: true,
         ),
         AutoRoute(
           page: AuthRoute.page,
@@ -35,14 +35,13 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: MainRoute.page,
-          initial: true,
+          // initial: true,
         ),
         AutoRoute(
           page: ForgotPasswordRoute.page,
         ),
         AutoRoute(
           page: UserDetailsRoute.page,
-          // initial: true,
         ),
         AutoRoute(
           page: CarDetailsRoute.page,
@@ -61,7 +60,6 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: TestRoute.page,
-          // initial: true,
         ),
       ];
 }

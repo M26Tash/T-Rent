@@ -10,6 +10,7 @@ import 'package:t_rent/src/common/utils/enums/drive_type.dart';
 import 'package:t_rent/src/common/utils/enums/rental_plan.dart';
 import 'package:t_rent/src/common/utils/extensions/date_time_range_extension.dart';
 import 'package:t_rent/src/common/widgets/support_methods/support_methods.dart';
+import 'package:t_rent/src/common/widgets/vector_button/vector_button.dart';
 import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
 import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 import 'package:t_rent/src/features/car_details_page/widgets/rental_plan_item.dart';
@@ -22,6 +23,9 @@ class CarDetailsBody extends StatefulWidget {
   final ValueChanged<DateTimeRange<DateTime>?> onRangePicked;
   final DateTimeRange<DateTime>? rangePicked;
   final double totalPrice;
+  final List<DateTimeRange> bookedRanges;
+  final VoidCallback onRevTapUp;
+  final VoidCallback onRevTapDown;
 
   const CarDetailsBody({
     required this.car,
@@ -30,6 +34,9 @@ class CarDetailsBody extends StatefulWidget {
     required this.onRangePicked,
     required this.rangePicked,
     required this.totalPrice,
+    required this.bookedRanges,
+    required this.onRevTapUp,
+    required this.onRevTapDown,
     super.key,
   });
 
@@ -76,11 +83,13 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
     required BuildContext context,
     required RentalPlan planType,
     required ValueChanged<DateTimeRange<DateTime>?> onRangePicked,
+    required List<DateTimeRange>? bookedRanges,
   }) async {
     await SupportMethods.pickRentalRange(
       context: context,
       planType: planType,
       onRangePicked: onRangePicked,
+      bookedRanges: bookedRanges,
     );
   }
 
@@ -159,31 +168,47 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                 ],
               ),
             ),
-            SizedBox(
-              width: context.availableWidth * 0.6,
-              child: CachedNetworkImage(
-                imageUrl: AppAssets.audiQ7Front,
-                // imageUrl: widget.car.carImage.frontView,
-                fit: BoxFit.cover,
-                placeholder: (context, url) => Shimmer.fromColors(
-                  baseColor: context.theme.overlayBackgroundColor,
-                  highlightColor: context.theme.accentColor,
-                  child: Image.asset(
-                    width: context.availableWidth,
-                    AppAssets.audiQ7Front,
+            Stack(
+              children: [
+                SizedBox(
+                  width: context.availableWidth * 0.6,
+                  child: CachedNetworkImage(
+                    imageUrl: widget.car.carImage.frontView,
                     fit: BoxFit.cover,
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor: context.theme.overlayBackgroundColor,
+                      highlightColor: context.theme.accentColor,
+                      child: Image.asset(
+                        width: context.availableWidth,
+                        AppAssets.audiQ7Front,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => const Center(
+                      child: VectorImage(
+                        height: AppDimensions.errorWidgetIconSize,
+                        width: AppDimensions.errorWidgetIconSize,
+                        svgAssetPath: AppAssets.brokenImageIcon,
+                      ),
+                    ),
+                    fadeInDuration: const Duration(milliseconds: 300),
+                    fadeOutDuration: const Duration(milliseconds: 150),
                   ),
                 ),
-                errorWidget: (context, url, error) => const Center(
-                  child: VectorImage(
-                    height: AppDimensions.errorWidgetIconSize,
-                    width: AppDimensions.errorWidgetIconSize,
-                    svgAssetPath: AppAssets.brokenImageIcon,
+                if (widget.car.carMotorRevAsset != null)
+                  Positioned(
+                    right: 0,
+                    top: 40,
+                    child: VectorButton(
+                      onTapDown: widget.onRevTapDown,
+                      onTapUp: widget.onRevTapUp,
+                      buttonColor: context.theme.primaryColor,
+                      iconColor: context.theme.tertiaryIconColor,
+                      svgAssetPath: AppAssets.gasReleaseIcon,
+                      pressedSvgAssetPath: AppAssets.gasPressIcon,
+                    ),
                   ),
-                ),
-                fadeInDuration: const Duration(milliseconds: 300),
-                fadeOutDuration: const Duration(milliseconds: 150),
-              ),
+              ],
             ),
           ],
         ),
@@ -257,10 +282,10 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
             onPlanChanged: (plan) {
               widget.onPlanChanged(plan);
               _pickRentalRange(
-                context: context,
-                planType: plan!,
-                onRangePicked: widget.onRangePicked,
-              );
+                  context: context,
+                  planType: plan!,
+                  onRangePicked: widget.onRangePicked,
+                  bookedRanges: widget.bookedRanges);
             },
           ),
         const SizedBox(height: AppDimensions.large),

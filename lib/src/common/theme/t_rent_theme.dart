@@ -34,6 +34,7 @@ final class TRentTheme extends Equatable {
   final Color accentTextColor;
   final Color hintTextColor;
   final Color buttonTextColor;
+  final Color specsTextColor;
 
   final Color profileNameColor;
   final Color profileEmailColor;
@@ -74,6 +75,7 @@ final class TRentTheme extends Equatable {
         accentTextColor,
         hintTextColor,
         buttonTextColor,
+        specsTextColor,
         profileNameColor,
         profileEmailColor,
         activeTabTextColor,
@@ -109,6 +111,7 @@ final class TRentTheme extends Equatable {
     required this.accentTextColor,
     required this.hintTextColor,
     required this.buttonTextColor,
+    required this.specsTextColor,
     required this.profileNameColor,
     required this.profileEmailColor,
     required this.activeTabTextColor,

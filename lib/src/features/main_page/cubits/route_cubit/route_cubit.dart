@@ -36,7 +36,7 @@ class RouteCubit extends Cubit<RouteState> {
 
   void _subscribeAll() {
     _carsSubscription?.cancel();
-    _carsSubscription = _dataInteractor.carstream.listen(
+    _carsSubscription = _dataInteractor.carStream.listen(
       _onNewCars,
     );
   }
