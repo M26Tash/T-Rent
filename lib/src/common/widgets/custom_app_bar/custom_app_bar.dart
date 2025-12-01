@@ -35,9 +35,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leadingWidth: svgAssetPath == null ? AppDimensions.none : null,
       leading: svgAssetPath == null
           ? const SizedBox()
-          : VectorButton(
-              onTap: onLeadingTap,
-              svgAssetPath: svgAssetPath!,
+          : Padding(
+              padding: const EdgeInsets.only(left: AppDimensions.small),
+              child: VectorButton(
+                onTap: onLeadingTap,
+                svgAssetPath: svgAssetPath!,
+              ),
             ),
       title: Text(
         title ?? '',

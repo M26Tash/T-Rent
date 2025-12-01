@@ -40,11 +40,4 @@ final class AuthInteractor {
     return _authRepository.signOut();
   }
 
-  // Future<void> resetPassword({
-  //   required String email,
-  // }) async {
-  //   return _authRepository.resetPassword(
-  //     email: email,
-  //   );
-  // }
 }

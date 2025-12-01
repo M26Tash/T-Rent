@@ -20,6 +20,4 @@ abstract interface class IAuthRepository {
   });
 
   Future<void> signOut();
-
-  // Future<void> resetPassword({required String email});
 }

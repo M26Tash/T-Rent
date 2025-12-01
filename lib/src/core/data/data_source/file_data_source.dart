@@ -35,10 +35,7 @@ final class FileDataSource implements IFileDataSource {
 
   @override
   Future<void> capturePhoto() async {
-    try {
-      // final picker = ImagePicker();
-      // final photo = await picker.pickImage(source: ImageSource.camera);
-    } on PlatformException catch (e) {
+    try {} on PlatformException catch (e) {
       CoreLogger.errorLog(
         'capturePhoto()',
         params: {

@@ -48,6 +48,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
     emit(
       state.copyWith(
         currentPageIndex: 0,
+        route: const CustomizedRoute.pop(),
       ),
     );
   }

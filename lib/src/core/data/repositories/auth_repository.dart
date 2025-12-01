@@ -48,10 +48,4 @@ final class AuthRepository implements IAuthRepository {
     return _authDataSource.signOut();
   }
 
-  // @override
-  // Future<void> resetPassword({required String email}) async {
-  //   return _authDataSource.resetPassword(
-  //     email: email,
-  //   );
-  // }
 }

@@ -21,5 +21,4 @@ abstract interface class IAuthDataSource {
 
   Future<void> signOut();
 
-  // Future<void> resetPassword({required String email});
 }

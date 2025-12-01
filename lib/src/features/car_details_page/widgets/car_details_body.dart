@@ -307,7 +307,7 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Overview',
+                  context.locale.overview,
                   style: context.themeData.textTheme.headlineLarge?.copyWith(
                     color: context.theme.primaryTextColor,
                     fontWeight: AppFonts.weightBold,
@@ -315,7 +315,9 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                 ),
                 const SizedBox(height: AppDimensions.large),
                 Text(
-                  widget.rangePicked?.formatRange() ?? '',
+                  widget.rangePicked
+                          ?.formatRange(locale: context.locale.localeName) ??
+                      '',
                   style: context.themeData.textTheme.headlineSmall?.copyWith(
                     color: context.theme.primaryTextColor,
                     fontWeight: AppFonts.weightSemiBold,
@@ -340,9 +342,8 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                         ),
                       ),
                       TextSpan(
-                        text:
-                            // ignore: lines_longer_than_80_chars
-                            'Per ${context.locale.days(widget.rangePicked!.duration.inDays)}',
+                        text: context.locale
+                            .perDays(widget.rangePicked!.duration.inDays),
                         style:
                             context.themeData.textTheme.headlineLarge?.copyWith(
                           color: context.theme.primaryTextColor,
@@ -371,7 +372,7 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                         ),
                       ),
                       TextSpan(
-                        text: 'Per deposit',
+                        text: context.locale.perDeposit,
                         style:
                             context.themeData.textTheme.headlineLarge?.copyWith(
                           color: context.theme.primaryTextColor,
@@ -402,7 +403,7 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                         ),
                       ),
                       TextSpan(
-                        text: 'Total to pay',
+                        text: context.locale.totalToPay,
                         style:
                             context.themeData.textTheme.headlineLarge?.copyWith(
                           color: context.theme.primaryTextColor,
