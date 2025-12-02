@@ -79,7 +79,7 @@ class _VectorButtonState extends State<VectorButton> {
             child: AnimatedSwitcher(
               duration: const Duration(milliseconds: 100),
               child: VectorImage(
-                key: ValueKey(isPressed), // important for AnimatedSwitcher
+                key: ValueKey(isPressed),
                 svgAssetPath: isPressed && widget.pressedSvgAssetPath != null
                     ? widget.pressedSvgAssetPath!
                     : widget.svgAssetPath,
@@ -90,36 +90,5 @@ class _VectorButtonState extends State<VectorButton> {
         ),
       ),
     );
-
-    // return Material(
-    //   color: Colors.transparent,
-    //   child: CupertinoButton(
-    //     color: buttonColor ?? context.theme.surfaceColor,
-    //     padding: EdgeInsets.zero,
-    //     onPressed: onTap,
-    //     borderRadius: BorderRadius.all(
-    //       Radius.circular(
-    //         cornerRadius ?? AppDimensions.extraLarge,
-    //       ),
-    //     ),
-    //     child: Container(
-    //       padding: innerPadding ??
-    //           const EdgeInsets.all(
-    //             AppDimensions.large,
-    //           ),
-    //       decoration: BoxDecoration(
-    //         borderRadius: BorderRadius.all(
-    //           Radius.circular(
-    //             cornerRadius ?? AppDimensions.extraLarge,
-    //           ),
-    //         ),
-    //       ),
-    //       child: VectorImage(
-    //         svgAssetPath: svgAssetPath,
-    //         color: iconColor ?? context.theme.primaryIconColor,
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }

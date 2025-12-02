@@ -685,6 +685,30 @@ abstract class AppLocalization {
   /// In en, this message translates to:
   /// **'You haven’t booked any cars yet. Start your first rental and see it appear here!'**
   String get youHaventBookAnyCarsYet;
+
+  /// No description provided for @overview.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get overview;
+
+  /// No description provided for @perDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Per {count, plural, =0{0 days} one{{count} day} other{{count} days}}'**
+  String perDays(num count);
+
+  /// No description provided for @perDeposit.
+  ///
+  /// In en, this message translates to:
+  /// **'Per deposit'**
+  String get perDeposit;
+
+  /// No description provided for @totalToPay.
+  ///
+  /// In en, this message translates to:
+  /// **'Totatl to pay'**
+  String get totalToPay;
 }
 
 class _AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

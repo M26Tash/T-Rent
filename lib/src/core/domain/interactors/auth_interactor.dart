@@ -36,15 +36,27 @@ final class AuthInteractor {
     );
   }
 
+  Future<void> resetPassword({
+    required String email,
+  }) async {
+    return _authRepository.resetPassword(
+      email: email,
+    );
+  }
+
+  Future<void> verifyOtpAndPasswd({
+    required String email,
+    required String password,
+    required String otpCode,
+  }) async {
+    return _authRepository.verifyOtpAndPasswd(
+      email: email,
+      password: password,
+      otpCode: otpCode,
+    );
+  }
+
   Future<void> signOut() async {
     return _authRepository.signOut();
   }
-
-  // Future<void> resetPassword({
-  //   required String email,
-  // }) async {
-  //   return _authRepository.resetPassword(
-  //     email: email,
-  //   );
-  // }
 }

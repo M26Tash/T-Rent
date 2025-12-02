@@ -19,7 +19,15 @@ abstract interface class IAuthDataSource {
     required String password,
   });
 
-  Future<void> signOut();
+  Future<void> resetPassword({
+    required String email,
+  });
 
-  // Future<void> resetPassword({required String email});
+  Future<void> verifyOtpAndPasswd({
+    required String email,
+    required String password,
+    required String otpCode,
+  });
+
+  Future<void> signOut();
 }

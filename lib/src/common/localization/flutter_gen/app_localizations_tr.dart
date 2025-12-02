@@ -334,4 +334,25 @@ class AppLocalizationTr extends AppLocalization {
   @override
   String get youHaventBookAnyCarsYet =>
       'Henüz herhangi bir araç rezervasyonu yapmadınız. İlk kiralamanızı başlatın ve burada görün!';
+
+  @override
+  String get overview => 'Genel Bakış';
+
+  @override
+  String perDays(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count gün',
+      one: '$count gün',
+      zero: '0 gün',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get perDeposit => 'Depozito';
+
+  @override
+  String get totalToPay => 'Ödenecek tutar';
 }
