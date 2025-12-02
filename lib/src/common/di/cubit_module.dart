@@ -52,7 +52,9 @@ void initCubits() {
       ),
     )
     ..registerFactory<ForgotPasswordCubit>(
-      ForgotPasswordCubit.new,
+      () => ForgotPasswordCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<UserDetailsCubit>(
       () => UserDetailsCubit(

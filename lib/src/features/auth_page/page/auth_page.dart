@@ -52,7 +52,8 @@ class AuthPage extends StatelessWidget {
   bool _listenWhen(AuthState prev, AuthState current) {
     return prev.route.type == null && current.route.type != null ||
         prev.signInExceptionMessage != current.signInExceptionMessage ||
-        prev.registerInExceptionMessage != current.registerInExceptionMessage;
+        prev.registerInExceptionMessage != current.registerInExceptionMessage ||
+        prev.currentSession != current.currentSession;
   }
 
   @override

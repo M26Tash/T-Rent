@@ -34,6 +34,8 @@ class ForgotPasswordPage extends StatelessWidget {
             body: ForgotPasswordBody(
               cubit: cubit,
               currentPageIndex: state.currentPageIndex,
+              email: state.email ?? '',
+              password: state.password ?? '',
             ),
           );
         },

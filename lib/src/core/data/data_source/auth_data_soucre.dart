@@ -84,6 +84,54 @@ class AuthDataSource implements IAuthDataSource {
   }
 
   @override
+  Future<void> resetPassword({
+    required String email,
+  }) async {
+    try {
+      supabase.auth.resetPasswordForEmail(
+        email,
+      );
+    } on AuthException catch (e) {
+      CoreLogger.errorLog(
+        'resetPassword()',
+        params: {
+          'Caught error': e.message,
+        },
+      );
+    }
+  }
+
+  @override
+  Future<void> verifyOtpAndPasswd({
+    required String email,
+    required String password,
+    required String otpCode,
+  }) async {
+    try {
+      await supabase.auth.verifyOTP(
+        type: OtpType.email,
+        email: email,
+        token: otpCode,
+      );
+
+      if (supabase.auth.currentSession != null) {
+        supabase.auth.updateUser(
+          UserAttributes(
+            password: password,
+          ),
+        );
+      }
+    } on AuthException catch (e) {
+      CoreLogger.errorLog(
+        'resetPassword()',
+        params: {
+          'Caught error': e.message,
+        },
+      );
+    }
+  }
+
+  @override
   Future<void> signOut() async {
     try {
       await supabase.auth.signOut();

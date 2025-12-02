@@ -10,10 +10,14 @@ import 'package:t_rent/src/features/forgot_password_page/widgets/reset_flow_bodi
 class ForgotPasswordBody extends StatefulWidget {
   final ForgotPasswordCubit cubit;
   final int currentPageIndex;
+  final String email;
+  final String password;
 
   const ForgotPasswordBody({
     required this.cubit,
     required this.currentPageIndex,
+    required this.email,
+    required this.password,
     super.key,
   });
 
@@ -67,7 +71,7 @@ class _ForgotPasswordBodyState extends State<ForgotPasswordBody> {
     super.didUpdateWidget(oldWidget);
 
     final page = widget.cubit.state.currentPageIndex;
-    
+
     if (_pageController.hasClients &&
         _pageController.page?.toInt() != page &&
         _pageController.page?.toInt() != 2) {
@@ -97,13 +101,26 @@ class _ForgotPasswordBodyState extends State<ForgotPasswordBody> {
             EmailBody(
               emailFormKey: _emailFormKey,
               emailController: _emailController,
-              onContinueTap: widget.cubit.nextPage,
+              onContinueTap: () {
+                widget.cubit
+                  ..nextPage()
+                  ..updateEmail(
+                    _emailController.text.trim(),
+                  );
+              },
               emailValidator: (email) => _authValidators.validateEmail(email!),
             ),
             PasswordBody(
               passwordFormKey: _passwordFormKey,
               passwordController: _passwordController,
-              onContinueTap: widget.cubit.nextPage,
+              onContinueTap: () {
+                widget.cubit
+                  ..nextPage()
+                  ..updatePassword(
+                    _passwordController.text.trim(),
+                  )
+                  ..resetPassword(email: widget.email);
+              },
               onPreviousTap: widget.cubit.previousPage,
               passwordValidator: (passwd) =>
                   _authValidators.validatePassword(passwd!),
@@ -111,9 +128,13 @@ class _ForgotPasswordBodyState extends State<ForgotPasswordBody> {
             OtpBody(
               pinFormKey: _otpFormKey,
               pinController: _pinController,
-              onVerifyTap: () {},
+              onVerifyTap: () => widget.cubit.verifyOtpAndPasswd(
+                email: widget.email,
+                password: widget.password,
+                otpCode: _pinController.text.trim(),
+              ),
               onCancelTap: widget.cubit.resetFlow,
-              otpValidator: (otp) => _authValidators.validateEmail(otp!),
+              otpValidator: (otp) {},
             ),
           ],
         ),

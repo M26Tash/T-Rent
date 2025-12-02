@@ -44,8 +44,29 @@ final class AuthRepository implements IAuthRepository {
   }
 
   @override
+  Future<void> resetPassword({
+    required String email,
+  }) async {
+    return _authDataSource.resetPassword(
+      email: email,
+    );
+  }
+
+  @override
+  Future<void> verifyOtpAndPasswd({
+    required String email,
+    required String password,
+    required String otpCode,
+  }) async {
+    return _authDataSource.verifyOtpAndPasswd(
+      email: email,
+      password: password,
+      otpCode: otpCode,
+    );
+  }
+
+  @override
   Future<void> signOut() async {
     return _authDataSource.signOut();
   }
-
 }
