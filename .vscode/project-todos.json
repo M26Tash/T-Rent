@@ -1,12 +1,22 @@
 [
   {
-    "id": "1762357951085",
-    "text": "Check locale",
+    "id": "1769714093563",
+    "text": "Secondary color on tab bar is not good",
     "completed": false
   },
   {
-    "id": "1762357948747",
-    "text": "Fix theme",
+    "id": "1769714054235",
+    "text": "Update Details UI",
+    "completed": false
+  },
+  {
+    "id": "1769714031530",
+    "text": "Add About us page",
+    "completed": false
+  },
+  {
+    "id": "1769713922325",
+    "text": "After login it doesn redirect to home page",
     "completed": false
   }
 ]
