@@ -94,7 +94,7 @@ const darkTheme = TRentTheme(
   profileNameColor: _white,
   profileEmailColor: _chineseWhite,
   activeTabTextColor: _white,
-  inActiveTabTextColor: _blood,
+  inActiveTabTextColor: _philippineGray,
   shadowColor: _chineseWhite,
   fontFamily: FontFamily.montserratFamily,
   statusBarTheme: Brightness.dark,
