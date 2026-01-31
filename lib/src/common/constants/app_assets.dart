@@ -9,6 +9,7 @@ abstract final class AppAssets {
   static const String arrowUpIcon = '${_assetsVectors}arrow_up_icon.svg';
 
   static const String searchIcon = '${_assetsVectors}search_icon.svg';
+  static const String favoriteIcon = '${_assetsVectors}favorite_icon.svg';
 
   //? Cars photo (just for testing)
   static const String audiRsQ8Side = '${_assetsImages}audi_rs_q8_side.png';

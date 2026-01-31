@@ -179,10 +179,8 @@ class CarItem extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: '${car.carPricing.perDay}₺',
-                          style:
-                              // ignore: lines_longer_than_80_chars
-                              context.themeData.textTheme.headlineLarge
-                                  ?.copyWith(
+                          style: context.themeData.textTheme.headlineLarge
+                              ?.copyWith(
                             color: context.theme.primaryTextColor,
                             fontWeight: AppFonts.weightBold,
                           ),

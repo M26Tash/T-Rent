@@ -30,6 +30,7 @@ abstract final class AppDimensions {
   static const double carHistoryItemHeight = 180;
   static const double locationShimmerHeight = 20;
   static const double locationShimmerWidth = 150;
+  static const double kDetailsBottomNavigationBarHeight = 90;
 }
 
 extension AvailableSize on BuildContext {

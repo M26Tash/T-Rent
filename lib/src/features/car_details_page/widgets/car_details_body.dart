@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
@@ -6,6 +8,7 @@ import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
 import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
+import 'package:t_rent/src/common/utils/enums/car_type.dart';
 import 'package:t_rent/src/common/utils/enums/drive_type.dart';
 import 'package:t_rent/src/common/utils/enums/rental_plan.dart';
 import 'package:t_rent/src/common/utils/extensions/date_time_range_extension.dart';
@@ -175,13 +178,15 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
                   child: CachedNetworkImage(
                     imageUrl: widget.car.carImage.frontView,
                     fit: BoxFit.cover,
-                    placeholder: (context, url) => Shimmer.fromColors(
-                      baseColor: context.theme.overlayBackgroundColor,
-                      highlightColor: context.theme.accentColor,
-                      child: Image.asset(
-                        width: context.availableWidth,
-                        AppAssets.audiQ7Front,
-                        fit: BoxFit.cover,
+                    placeholder: (context, url) => Center(
+                      child: Shimmer.fromColors(
+                        baseColor: context.theme.overlayBackgroundColor,
+                        highlightColor: context.theme.accentColor,
+                        child: Image.asset(
+                          width: context.availableWidth,
+                          AppAssets.audiQ7Front,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     errorWidget: (context, url, error) => const Center(
@@ -265,157 +270,157 @@ class _CarDetailsBodyState extends State<CarDetailsBody> {
             ),
           ],
         ),
-        const SizedBox(height: AppDimensions.large),
-        Text(
-          context.locale.rentalPlan,
-          style: context.themeData.textTheme.headlineLarge?.copyWith(
-            color: context.theme.primaryTextColor,
-            fontWeight: AppFonts.weightBold,
-          ),
-        ),
-        const SizedBox(height: AppDimensions.medium),
-        for (int i = 0; i < RentalPlan.values.length; i++)
-          RentalPlanItem(
-            carPricing: widget.car.carPricing,
-            plan: RentalPlan.values[i],
-            currentPlan: widget.currentRentalPlan,
-            onPlanChanged: (plan) {
-              widget.onPlanChanged(plan);
-              _pickRentalRange(
-                  context: context,
-                  planType: plan!,
-                  onRangePicked: widget.onRangePicked,
-                  bookedRanges: widget.bookedRanges);
-            },
-          ),
-        const SizedBox(height: AppDimensions.large),
-        if (widget.currentRentalPlan != null && widget.rangePicked != null)
-          Container(
-            margin: const EdgeInsets.only(
-              bottom: AppDimensions.extremeLarge,
-            ),
-            padding: const EdgeInsets.all(AppDimensions.large),
-            decoration: BoxDecoration(
-              color: context.theme.surfaceColor,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(
-                  AppDimensions.large,
-                ),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  context.locale.overview,
-                  style: context.themeData.textTheme.headlineLarge?.copyWith(
-                    color: context.theme.primaryTextColor,
-                    fontWeight: AppFonts.weightBold,
-                  ),
-                ),
-                const SizedBox(height: AppDimensions.large),
-                Text(
-                  widget.rangePicked
-                          ?.formatRange(locale: context.locale.localeName) ??
-                      '',
-                  style: context.themeData.textTheme.headlineSmall?.copyWith(
-                    color: context.theme.primaryTextColor,
-                    fontWeight: AppFonts.weightSemiBold,
-                  ),
-                ),
-                const SizedBox(height: AppDimensions.large),
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: '${widget.totalPrice}₺',
-                        style:
-                            context.themeData.textTheme.headlineLarge?.copyWith(
-                          color: context.theme.primaryTextColor,
-                          fontWeight: AppFonts.weightBold,
-                        ),
-                      ),
-                      const WidgetSpan(
-                        child: SizedBox(
-                          width: AppDimensions.medium,
-                        ),
-                      ),
-                      TextSpan(
-                        text: context.locale
-                            .perDays(widget.rangePicked!.duration.inDays),
-                        style:
-                            context.themeData.textTheme.headlineLarge?.copyWith(
-                          color: context.theme.primaryTextColor,
-                          fontWeight: AppFonts.weightMedium,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: AppDimensions.large),
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: '${widget.car.carPricing.deposit}₺',
-                        style:
-                            context.themeData.textTheme.headlineLarge?.copyWith(
-                          color: context.theme.primaryTextColor,
-                          fontWeight: AppFonts.weightBold,
-                        ),
-                      ),
-                      const WidgetSpan(
-                        child: SizedBox(
-                          width: AppDimensions.medium,
-                        ),
-                      ),
-                      TextSpan(
-                        text: context.locale.perDeposit,
-                        style:
-                            context.themeData.textTheme.headlineLarge?.copyWith(
-                          color: context.theme.primaryTextColor,
-                          fontWeight: AppFonts.weightMedium,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: AppDimensions.large),
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text:
-                            // ignore: lines_longer_than_80_chars
-                            '${widget.car.carPricing.deposit + widget.totalPrice}₺',
-                        style:
-                            context.themeData.textTheme.headlineLarge?.copyWith(
-                          color: context.theme.primaryTextColor,
-                          fontWeight: AppFonts.weightBold,
-                        ),
-                      ),
-                      const WidgetSpan(
-                        child: SizedBox(
-                          width: AppDimensions.medium,
-                        ),
-                      ),
-                      TextSpan(
-                        text: context.locale.totalToPay,
-                        style:
-                            context.themeData.textTheme.headlineLarge?.copyWith(
-                          color: context.theme.primaryTextColor,
-                          fontWeight: AppFonts.weightMedium,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+        // const SizedBox(height: AppDimensions.large),
+        // Text(
+        //   context.locale.rentalPlan,
+        //   style: context.themeData.textTheme.headlineLarge?.copyWith(
+        //     color: context.theme.primaryTextColor,
+        //     fontWeight: AppFonts.weightBold,
+        //   ),
+        // ),
+        // const SizedBox(height: AppDimensions.medium),
+        // for (int i = 0; i < RentalPlan.values.length; i++)
+        //   RentalPlanItem(
+        //     carPricing: widget.car.carPricing,
+        //     plan: RentalPlan.values[i],
+        //     currentPlan: widget.currentRentalPlan,
+        //     onPlanChanged: (plan) {
+        //       widget.onPlanChanged(plan);
+        //       _pickRentalRange(
+        //           context: context,
+        //           planType: plan!,
+        //           onRangePicked: widget.onRangePicked,
+        //           bookedRanges: widget.bookedRanges);
+        //     },
+        //   ),
+        // const SizedBox(height: AppDimensions.large),
+        // if (widget.currentRentalPlan != null && widget.rangePicked != null)
+        //   Container(
+        //     margin: const EdgeInsets.only(
+        //       bottom: AppDimensions.extremeLarge,
+        //     ),
+        //     padding: const EdgeInsets.all(AppDimensions.large),
+        //     decoration: BoxDecoration(
+        //       color: context.theme.surfaceColor,
+        //       borderRadius: const BorderRadius.all(
+        //         Radius.circular(
+        //           AppDimensions.large,
+        //         ),
+        //       ),
+        //     ),
+        //     child: Column(
+        //       crossAxisAlignment: CrossAxisAlignment.start,
+        //       children: [
+        //         Text(
+        //           context.locale.overview,
+        //           style: context.themeData.textTheme.headlineLarge?.copyWith(
+        //             color: context.theme.primaryTextColor,
+        //             fontWeight: AppFonts.weightBold,
+        //           ),
+        //         ),
+        //         const SizedBox(height: AppDimensions.large),
+        //         Text(
+        //           widget.rangePicked
+        //                   ?.formatRange(locale: context.locale.localeName) ??
+        //               '',
+        //           style: context.themeData.textTheme.headlineSmall?.copyWith(
+        //             color: context.theme.primaryTextColor,
+        //             fontWeight: AppFonts.weightSemiBold,
+        //           ),
+        //         ),
+        //         const SizedBox(height: AppDimensions.large),
+        //         RichText(
+        //           textAlign: TextAlign.center,
+        //           text: TextSpan(
+        //             children: [
+        //               TextSpan(
+        //                 text: '${widget.totalPrice}₺',
+        //                 style:
+        //                     context.themeData.textTheme.headlineLarge?.copyWith(
+        //                   color: context.theme.primaryTextColor,
+        //                   fontWeight: AppFonts.weightBold,
+        //                 ),
+        //               ),
+        //               const WidgetSpan(
+        //                 child: SizedBox(
+        //                   width: AppDimensions.medium,
+        //                 ),
+        //               ),
+        //               TextSpan(
+        //                 text: context.locale
+        //                     .perDays(widget.rangePicked!.duration.inDays),
+        //                 style:
+        //                     context.themeData.textTheme.headlineLarge?.copyWith(
+        //                   color: context.theme.primaryTextColor,
+        //                   fontWeight: AppFonts.weightMedium,
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //         const SizedBox(height: AppDimensions.large),
+        //         RichText(
+        //           textAlign: TextAlign.center,
+        //           text: TextSpan(
+        //             children: [
+        //               TextSpan(
+        //                 text: '${widget.car.carPricing.deposit}₺',
+        //                 style:
+        //                     context.themeData.textTheme.headlineLarge?.copyWith(
+        //                   color: context.theme.primaryTextColor,
+        //                   fontWeight: AppFonts.weightBold,
+        //                 ),
+        //               ),
+        //               const WidgetSpan(
+        //                 child: SizedBox(
+        //                   width: AppDimensions.medium,
+        //                 ),
+        //               ),
+        //               TextSpan(
+        //                 text: context.locale.perDeposit,
+        //                 style:
+        //                     context.themeData.textTheme.headlineLarge?.copyWith(
+        //                   color: context.theme.primaryTextColor,
+        //                   fontWeight: AppFonts.weightMedium,
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //         const SizedBox(height: AppDimensions.large),
+        //         RichText(
+        //           textAlign: TextAlign.center,
+        //           text: TextSpan(
+        //             children: [
+        //               TextSpan(
+        //                 text:
+        //                     // ignore: lines_longer_than_80_chars
+        //                     '${widget.car.carPricing.deposit + widget.totalPrice}₺',
+        //                 style:
+        //                     context.themeData.textTheme.headlineLarge?.copyWith(
+        //                   color: context.theme.primaryTextColor,
+        //                   fontWeight: AppFonts.weightBold,
+        //                 ),
+        //               ),
+        //               const WidgetSpan(
+        //                 child: SizedBox(
+        //                   width: AppDimensions.medium,
+        //                 ),
+        //               ),
+        //               TextSpan(
+        //                 text: context.locale.totalToPay,
+        //                 style:
+        //                     context.themeData.textTheme.headlineLarge?.copyWith(
+        //                   color: context.theme.primaryTextColor,
+        //                   fontWeight: AppFonts.weightMedium,
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
       ],
     );
   }
