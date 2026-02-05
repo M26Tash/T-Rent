@@ -17,7 +17,7 @@ class HistoryState extends Equatable {
 
   HistoryState copyWith({
     CustomizedRoute? route,
-    List<CarOrderModel>? carRentHistory
+    List<CarOrderModel>? carRentHistory,
   }) {
     return HistoryState(
       route: route ?? this.route,

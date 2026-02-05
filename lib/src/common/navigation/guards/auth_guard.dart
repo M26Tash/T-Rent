@@ -14,7 +14,7 @@ class AuthGuard extends AutoRouteGuard {
         resolver.redirectUntil(UserDetailsRoute(
           email: session.user.email ?? '',
           fullName: '',
-        ));
+        ),);
       } else {
         resolver.redirectUntil(const MainRoute());
       }

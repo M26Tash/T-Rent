@@ -1,15 +1,13 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
-import 'package:t_rent/src/common/navigation/route.dart';
 
-part 'splash_state.dart';
+part 'confirmation_state.dart';
 
-class SplashCubit extends Cubit<SplashState> {
-  SplashCubit()
+class ConfirmationCubit extends Cubit<ConfirmationState> {
+  ConfirmationCubit()
       : super(
-          const SplashState(
+          const ConfirmationState(
             route: CustomizedRoute(
               null,
               null,
@@ -17,14 +15,10 @@ class SplashCubit extends Cubit<SplashState> {
           ),
         );
 
-  void navigateToAuth() {
+  void navigateBack() {
     emit(
       state.copyWith(
-        route: const CustomizedRoute(
-          TypeRoute.navigateTo,
-          AuthRoute(),
-          shouldClearStack: true,
-        ),
+        route: const CustomizedRoute.pop(),
       ),
     );
   }

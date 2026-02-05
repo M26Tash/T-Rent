@@ -171,10 +171,12 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
                       ),
                     ),
                     CustomButton(
-                      padding: EdgeInsets.all(AppDimensions.medium),
+                      padding: const EdgeInsets.all(AppDimensions.medium),
                       buttonText: 'Book Now',
-                      onTap: () {},
-                    )
+                      onTap: () => carDetailsCubit.navigateToBooking(
+                        car: widget.car,
+                      ),
+                    ),
                   ],
                 ),
               ),

@@ -289,13 +289,13 @@ class DataSource implements IDataSource {
       }
     } on PostgrestException catch (e) {
       CoreLogger.errorLog('getCarRentHistory()',
-          params: {'error': e.message, 'carId': carId});
+          params: {'error': e.message, 'carId': carId},);
     } on StorageException catch (e, st) {
       CoreLogger.errorLog('getCarRentHistory()', params: {
         'error': e.toString(),
         'carId': carId,
-        'stack': st.toString()
-      });
+        'stack': st.toString(),
+      },);
     }
   }
 }

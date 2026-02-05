@@ -1,5 +1,4 @@
 //
-// ignore_for_file: unused_field
 
 abstract final class AppAssets {
   // Arrows paths

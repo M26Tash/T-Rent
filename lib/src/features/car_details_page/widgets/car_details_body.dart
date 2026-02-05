@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -8,15 +7,12 @@ import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
 import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
-import 'package:t_rent/src/common/utils/enums/car_type.dart';
 import 'package:t_rent/src/common/utils/enums/drive_type.dart';
 import 'package:t_rent/src/common/utils/enums/rental_plan.dart';
-import 'package:t_rent/src/common/utils/extensions/date_time_range_extension.dart';
 import 'package:t_rent/src/common/widgets/support_methods/support_methods.dart';
 import 'package:t_rent/src/common/widgets/vector_button/vector_button.dart';
 import 'package:t_rent/src/common/widgets/vector_image/vector_image.dart';
 import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
-import 'package:t_rent/src/features/car_details_page/widgets/rental_plan_item.dart';
 import 'package:t_rent/src/features/car_details_page/widgets/specs_grid_view.dart';
 
 class CarDetailsBody extends StatefulWidget {

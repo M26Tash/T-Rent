@@ -48,8 +48,8 @@ class CarDetailsCubit extends Cubit<CarDetailsState> {
     return super.close();
   }
 
-  void _subscribeAll() {
-    _carRentHistorySubscription?.cancel();
+  Future<void> _subscribeAll() async {
+    await _carRentHistorySubscription?.cancel();
     _carRentHistorySubscription = _dataInteractor.carRentHistoryStream.listen(
       _onNewCarRentHistory,
     );
@@ -90,10 +90,12 @@ class CarDetailsCubit extends Cubit<CarDetailsState> {
   void _onNewCarRentHistory(List<CarOrderModel>? carRentHistory) {
     final bookedRanges = carRentHistory!
         .where((order) => order.startDate != null && order.endDate != null)
-        .map((order) => DateTimeRange(
-              start: order.startDate!,
-              end: order.endDate!,
-            ))
+        .map(
+          (order) => DateTimeRange(
+            start: order.startDate!,
+            end: order.endDate!,
+          ),
+        )
         .toList();
 
     emit(
@@ -157,12 +159,16 @@ class CarDetailsCubit extends Cubit<CarDetailsState> {
     );
   }
 
-  void navigateToBooking() {
+  void navigateToBooking({
+    required CarModel car,
+  }) {
     emit(
       state.copyWith(
-        route: const CustomizedRoute(
+        route: CustomizedRoute(
           TypeRoute.navigateTo,
-          BookingRoute(),
+          BookingRoute(
+            car: car,
+          ),
         ),
       ),
     );

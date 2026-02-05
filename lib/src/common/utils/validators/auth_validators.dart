@@ -22,7 +22,7 @@ class AuthValidators {
 
     if (value.isEmpty) {
       return context.locale.emailCannotBeEmpty;
-    } else if (isValid == false) {
+    } else if (!isValid) {
       return context.locale.pleaseEnterAValidEmailAddress;
     }
 

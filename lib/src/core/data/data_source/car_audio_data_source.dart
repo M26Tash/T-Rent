@@ -1,9 +1,9 @@
-import 'package:just_audio/just_audio.dart';
+// import 'package:just_audio/just_audio.dart';
 import 'package:t_rent/src/core/data/data_source/interfaces/i_car_audio_data_source.dart';
 import 'package:t_rent/src/core/domain/utils/core_logger.dart';
 
 class CarAudioDataSource implements ICarAudioDataSource {
-  final AudioPlayer _player = AudioPlayer();
+  // final AudioPlayer _player = AudioPlayer();
   bool _isRevving = false;
 
   @override
@@ -11,28 +11,29 @@ class CarAudioDataSource implements ICarAudioDataSource {
     required String revAsset,
   }) async {
     try {
-      if (_isRevving) {
-        await _player.seek(const Duration(seconds: 2));
-        await _player.play();
-        return;
-      }
+      // if (_isRevving) {
+      //   await _player.seek(const Duration(seconds: 2));
+      //   await _player.play();
+      //   return;
+      // }
 
-      _isRevving = true;
-      await _player.setUrl(revAsset);
-      await _player.play();
+      // _isRevving = true;
+      // await _player.setUrl(revAsset);
+      // await _player.play();
 
-      _player.playerStateStream.listen((state) async {
-        if (state.processingState == ProcessingState.completed && _isRevving) {
-          await _player.setLoopMode(LoopMode.one);
-          await _player.seek(
-            const Duration(
-              seconds: 2,
-            ),
-          );
-          await _player.play();
-        }
-      });
-    } on PlayerException catch (e) {
+      // _player.playerStateStream.listen((state) async {
+      //   if (state.processingState == ProcessingState.completed && _isRevving) {
+      //     await _player.setLoopMode(LoopMode.one);
+      //     await _player.seek(
+      //       const Duration(
+      //         seconds: 2,
+      //       ),
+      //     );
+      //     await _player.play();
+      //   }
+      // });
+    } catch (e) {
+    // } on PlayerException catch (e) {
       CoreLogger.errorLog(
         'playRev()',
         params: {'Error playing rev': e},
@@ -43,20 +44,21 @@ class CarAudioDataSource implements ICarAudioDataSource {
   @override
   Future<void> stopRev() async {
     try {
-      _isRevving = false;
+    //   _isRevving = false;
 
-      for (double v = 1; v >= 0; v -= 0.1) {
-        await _player.setVolume(v);
-        await Future.delayed(
-          const Duration(
-            milliseconds: 50,
-          ),
-        );
-      }
+    //   for (double v = 1; v >= 0; v -= 0.1) {
+    //     await _player.setVolume(v);
+    //     await Future.delayed(
+    //       const Duration(
+    //         milliseconds: 50,
+    //       ),
+    //     );
+    //   }
 
-      await _player.stop();
-      await _player.setVolume(1);
-    } on PlayerException catch (e) {
+    //   await _player.stop();
+    //   await _player.setVolume(1);
+    } catch (e) {
+    // } on PlayerException catch (e) {
       CoreLogger.errorLog(
         'stopRev()',
         params: {'Error stopping rev': e},

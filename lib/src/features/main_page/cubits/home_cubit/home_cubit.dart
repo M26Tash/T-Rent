@@ -254,7 +254,7 @@ class HomeCubit extends Cubit<HomeState> {
 
       filtered.sort((a, b) => state.sortOrder == SortOrder.ascending
           ? comparator(a, b)
-          : comparator(b, a));
+          : comparator(b, a),);
     }
 
     emit(

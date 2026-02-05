@@ -3,7 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
+// import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
@@ -19,25 +19,25 @@ import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 abstract final class SupportMethods {
   static Future<OverlayEntry?> showCarOverlay({
     required BuildContext context,
-    required MapboxMap mapboxMap,
+    // required MapboxMap mapboxMap,
     required CarModel car,
     Duration autoHideDuration = const Duration(seconds: 2),
   }) async {
-    final screenCoord = await mapboxMap.pixelForCoordinate(
-      Point(
-        coordinates: Position(
-          car.carCoordinates.longitude,
-          car.carCoordinates.latitude,
-        ),
-      ),
-    );
+    // final screenCoord = await mapboxMap.pixelForCoordinate(
+    //   Point(
+    //     coordinates: Position(
+    //       car.carCoordinates.longitude,
+    //       car.carCoordinates.latitude,
+    //     ),
+    //   ),
+    // );
 
     if (!context.mounted) return null;
 
     final overlay = OverlayEntry(
       builder: (ctx) => Positioned(
-        left: screenCoord.x - 75,
-        top: screenCoord.y - 120,
+        // left: screenCoord.x - 75,
+        // top: screenCoord.y - 120,
         child: FadeTransitionOverlay(
           child: Container(
             width: AppDimensions.overlayWidth,
@@ -50,7 +50,7 @@ abstract final class SupportMethods {
                   color: ctx.theme.shadowColor.withOpacity(0.3),
                   blurRadius: 6,
                   offset: const Offset(0, 2),
-                )
+                ),
               ],
             ),
             child: Column(

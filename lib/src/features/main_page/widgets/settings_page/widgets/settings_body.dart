@@ -100,7 +100,7 @@ class SettingsBody extends StatelessWidget {
               subtitle: context.locale.lightOrDarkYourChoice,
               suffix: CupertinoSwitch(
                 thumbIcon: WidgetStatePropertyAll(
-                  isDarkThemeEnabled == true
+                  isDarkThemeEnabled
                       ? const Icon(
                           Icons.dark_mode_rounded,
                         )
