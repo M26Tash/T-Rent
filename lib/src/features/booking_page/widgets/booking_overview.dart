@@ -35,7 +35,7 @@ class BookingOverview extends StatelessWidget {
                 ),
               ),
               Text(
-                '${selectedStart?.formatMMMDD()}',
+                '${selectedStart?.formatFullDate()}',
                 style: context.themeData.textTheme.headlineMedium?.copyWith(
                   color: context.theme.accentTextColor,
                   fontWeight: AppFonts.weightBold,
@@ -54,7 +54,7 @@ class BookingOverview extends StatelessWidget {
                 ),
               ),
               Text(
-                selectedEnd?.formatMMMDD() ?? 'Not picked yet',
+                selectedEnd?.formatFullDate() ?? 'Not picked yet',
                 style: context.themeData.textTheme.headlineMedium?.copyWith(
                   color: context.theme.accentTextColor,
                   fontWeight: AppFonts.weightBold,

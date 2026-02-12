@@ -109,48 +109,49 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       emit(
         state.copyWith(
-          isAddressLoading: true,
+          // isAddressLoading: true,
+          userAddress: 'Beşiktaş',
         ),
       );
 
-      final permission = await Geolocator.requestPermission();
+      // final permission = await Geolocator.requestPermission();
 
-      if (permission == LocationPermission.denied ||
-          permission == LocationPermission.deniedForever) {
-        emit(state.copyWith(isAddressLoading: false));
-        return 'Permission denied';
-      }
+      // if (permission == LocationPermission.denied ||
+      //     permission == LocationPermission.deniedForever) {
+      //   emit(state.copyWith(isAddressLoading: false));
+      //   return 'Permission denied';
+      // }
 
-      final position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.lowest,
-        timeLimit: const Duration(
-          seconds: 5,
-        ),
-      );
+      // final position = await Geolocator.getCurrentPosition(
+      //   desiredAccuracy: LocationAccuracy.lowest,
+      //   timeLimit: const Duration(
+      //     seconds: 5,
+      //   ),
+      // );
 
-      final placemarksFuture = placemarkFromCoordinates(
-        position.latitude,
-        position.longitude,
-      );
+      // final placemarksFuture = placemarkFromCoordinates(
+      //   position.latitude,
+      //   position.longitude,
+      // );
 
-      final placemarks = await placemarksFuture;
+      // final placemarks = await placemarksFuture;
 
-      if (placemarks.isEmpty) {
-        emit(state.copyWith(isAddressLoading: false));
-        return 'Address not found';
-      }
+      // if (placemarks.isEmpty) {
+      //   emit(state.copyWith(isAddressLoading: false));
+      //   return 'Address not found';
+      // }
 
-      final place = placemarks.first;
+      // final place = placemarks.first;
 
-      emit(
-        state.copyWith(
-          userAddress: '${place.administrativeArea ?? ''}, '
-              '${place.subAdministrativeArea ?? ''}, '
-              '${place.street ?? ''}, '
-              '${place.postalCode ?? ''}',
-          isAddressLoading: false,
-        ),
-      );
+      // emit(
+      //   state.copyWith(
+      //     userAddress: '${place.administrativeArea ?? ''}, '
+      //         '${place.subAdministrativeArea ?? ''}, '
+      //         '${place.street ?? ''}, '
+      //         '${place.postalCode ?? ''}',
+      //     isAddressLoading: false,
+      //   ),
+      // );
 
       return null;
     } on TimeoutException {
@@ -252,9 +253,11 @@ class HomeCubit extends Cubit<HomeState> {
               );
       }
 
-      filtered.sort((a, b) => state.sortOrder == SortOrder.ascending
-          ? comparator(a, b)
-          : comparator(b, a),);
+      filtered.sort(
+        (a, b) => state.sortOrder == SortOrder.ascending
+            ? comparator(a, b)
+            : comparator(b, a),
+      );
     }
 
     emit(

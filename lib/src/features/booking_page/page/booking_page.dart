@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/cubit_scope/cubit_scope.dart';
+import 'package:t_rent/src/common/di/injector.dart';
 import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/navigation/entities/auto_route_extension.dart';
 import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
@@ -15,13 +17,27 @@ import 'package:t_rent/src/features/booking_page/widgets/booking_body.dart';
 import 'package:t_rent/src/features/booking_page/widgets/custom_time_picker_widgets/time_picker_selection.dart';
 
 @RoutePage()
-class BookingPage extends StatelessWidget {
+class BookingPage extends StatefulWidget {
   final CarModel car;
 
   const BookingPage({
     required this.car,
     super.key,
   });
+
+  @override
+  State<BookingPage> createState() => _BookingPageState();
+}
+
+class _BookingPageState extends State<BookingPage> {
+  final BookingCubit _bookingCubit = i.get<BookingCubit>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _bookingCubit.setCarModel(widget.car);
+  }
 
   Future<void> _listener(BuildContext context, BookingState state) async {
     if (state.route.type == TypeRoute.pop) {
@@ -31,12 +47,14 @@ class BookingPage extends StatelessWidget {
     }
 
     if (state.selectedStart != null && state.selectedEnd != null) {
-      _timePickerBottomSheet(
-        context: context,
-        cubit: CubitScope.of<BookingCubit>(context),
-        state: state,
-        car: car,
-      );
+      if (context.mounted) {
+        _timePickerBottomSheet(
+          context: context,
+          cubit: CubitScope.of<BookingCubit>(context),
+          state: state,
+          car: widget.car,
+        );
+      }
     }
   }
 
@@ -73,6 +91,7 @@ class BookingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CubitScope<BookingCubit>(
       child: BlocConsumer<BookingCubit, BookingState>(
+        // bloc: _bookingCubit,
         listener: _listener,
         listenWhen: _listenWhen,
         builder: (context, state) {
@@ -88,7 +107,7 @@ class BookingPage extends StatelessWidget {
             body: SafeArea(
               child: BookingBody(
                 onHomePageTap: () => bookingCubit.navigateToConfirmationPage(
-                  car: car,
+                  car: widget.car,
                 ),
                 selectedStart: state.selectedStart,
                 selectedEnd: state.selectedEnd,

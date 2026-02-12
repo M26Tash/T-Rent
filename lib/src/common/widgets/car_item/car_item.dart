@@ -15,10 +15,21 @@ class CarItem extends StatelessWidget {
   final CarModel car;
   final String asset;
 
+  // ignore: lines_longer_than_80_chars
+  /// The [header] parameter is set to null by the defualt. All widgets that assing to header will be used as {Row(children:header)}
+  final List<Widget>? header;
+  // ignore: lines_longer_than_80_chars
+  /// The [footer] parameter is set to null by the defualt. All widgets that assing to footer will be used as {Row(children:footer)}
+  final List<Widget>? footer;
+  final List<BoxShadow>? boxShadow;
+
   const CarItem({
     required this.onCarTap,
     required this.car,
     required this.asset,
+    this.header,
+    this.footer,
+    this.boxShadow,
     super.key,
   });
 
@@ -40,34 +51,42 @@ class CarItem extends StatelessWidget {
               AppDimensions.medium,
             ),
           ),
+          boxShadow: boxShadow,
         ),
         child: Stack(
           children: [
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: car.brand,
-                    style: context.themeData.textTheme.headlineLarge?.copyWith(
-                      color: context.theme.primaryTextColor,
-                      fontWeight: AppFonts.weightBold,
+            Row(
+              children: header ??
+                  [
+                    RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: car.brand,
+                            style: context.themeData.textTheme.headlineLarge
+                                ?.copyWith(
+                              color: context.theme.primaryTextColor,
+                              fontWeight: AppFonts.weightBold,
+                            ),
+                          ),
+                          const WidgetSpan(
+                            child: SizedBox(
+                              width: AppDimensions.medium,
+                            ),
+                          ),
+                          TextSpan(
+                            text: car.model,
+                            style: context.themeData.textTheme.headlineLarge
+                                ?.copyWith(
+                              color: context.theme.primaryTextColor,
+                              fontWeight: AppFonts.weightMedium,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const WidgetSpan(
-                    child: SizedBox(
-                      width: AppDimensions.medium,
-                    ),
-                  ),
-                  TextSpan(
-                    text: car.model,
-                    style: context.themeData.textTheme.headlineLarge?.copyWith(
-                      color: context.theme.primaryTextColor,
-                      fontWeight: AppFonts.weightMedium,
-                    ),
-                  ),
-                ],
-              ),
+                  ],
             ),
             Center(
               child: CachedNetworkImage(
@@ -98,123 +117,126 @@ class CarItem extends StatelessWidget {
             Align(
               alignment: Alignment.bottomCenter,
               child: Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: AppDimensions.small,
-                      horizontal: AppDimensions.medium,
-                    ),
-                    decoration: BoxDecoration(
-                      color: context.theme.backgroundColor,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(
-                          AppDimensions.large,
+                children: footer ??
+                    [
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppDimensions.small,
+                          horizontal: AppDimensions.medium,
                         ),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        VectorImage(
-                          svgAssetPath: AppAssets.gasStationIcon,
-                          color: context.theme.secondaryIconColor,
-                        ),
-                        const SizedBox(width: AppDimensions.medium),
-                        if (car.fuelType != FuelType.electric)
-                          Text(
-                            '${car.fuelConsumption}L',
-                            style: context.themeData.textTheme.headlineMedium
-                                ?.copyWith(
-                              color: context.theme.secondaryTextColor,
-                              fontWeight: AppFonts.weightMedium,
+                        decoration: BoxDecoration(
+                          color: context.theme.backgroundColor,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(
+                              AppDimensions.large,
                             ),
                           ),
-                        if (car.fuelType == FuelType.electric)
-                          Text(
-                            '${car.fuelConsumption}kWh',
-                            style: context.themeData.textTheme.headlineMedium
-                                ?.copyWith(
-                              color: context.theme.secondaryTextColor,
-                              fontWeight: AppFonts.weightMedium,
+                        ),
+                        child: Row(
+                          children: [
+                            VectorImage(
+                              svgAssetPath: AppAssets.gasStationIcon,
+                              color: context.theme.secondaryIconColor,
                             ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: AppDimensions.medium),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: AppDimensions.small,
-                      horizontal: AppDimensions.medium,
-                    ),
-                    decoration: BoxDecoration(
-                      color: context.theme.backgroundColor,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(
-                          AppDimensions.large,
+                            const SizedBox(width: AppDimensions.medium),
+                            if (car.fuelType != FuelType.electric)
+                              Text(
+                                '${car.fuelConsumption}L',
+                                style: context
+                                    .themeData.textTheme.headlineMedium
+                                    ?.copyWith(
+                                  color: context.theme.secondaryTextColor,
+                                  fontWeight: AppFonts.weightMedium,
+                                ),
+                              ),
+                            if (car.fuelType == FuelType.electric)
+                              Text(
+                                '${car.fuelConsumption}kWh',
+                                style: context
+                                    .themeData.textTheme.headlineMedium
+                                    ?.copyWith(
+                                  color: context.theme.secondaryTextColor,
+                                  fontWeight: AppFonts.weightMedium,
+                                ),
+                              ),
+                          ],
                         ),
                       ),
-                    ),
-                    child: Row(
-                      children: [
-                        VectorImage(
-                          svgAssetPath: AppAssets.userIcon,
-                          color: context.theme.secondaryIconColor,
+                      const SizedBox(width: AppDimensions.medium),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppDimensions.small,
+                          horizontal: AppDimensions.medium,
                         ),
-                        const SizedBox(width: AppDimensions.medium),
-                        Text(
-                          '${car.seats}',
-                          style: context.themeData.textTheme.headlineMedium
-                              ?.copyWith(
-                            color: context.theme.secondaryTextColor,
-                            fontWeight: AppFonts.weightMedium,
+                        decoration: BoxDecoration(
+                          color: context.theme.backgroundColor,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(
+                              AppDimensions.large,
+                            ),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  const Spacer(),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: '${car.carPricing.perDay}₺',
-                          style: context.themeData.textTheme.headlineLarge
-                              ?.copyWith(
-                            color: context.theme.primaryTextColor,
-                            fontWeight: AppFonts.weightBold,
-                          ),
+                        child: Row(
+                          children: [
+                            VectorImage(
+                              svgAssetPath: AppAssets.userIcon,
+                              color: context.theme.secondaryIconColor,
+                            ),
+                            const SizedBox(width: AppDimensions.medium),
+                            Text(
+                              '${car.seats}',
+                              style: context.themeData.textTheme.headlineMedium
+                                  ?.copyWith(
+                                color: context.theme.secondaryTextColor,
+                                fontWeight: AppFonts.weightMedium,
+                              ),
+                            ),
+                          ],
                         ),
-                        const WidgetSpan(
-                          child: SizedBox(
-                            width: AppDimensions.small,
-                          ),
+                      ),
+                      const Spacer(),
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: '${car.carPricing.perDay}₺',
+                              style: context.themeData.textTheme.headlineLarge
+                                  ?.copyWith(
+                                color: context.theme.primaryTextColor,
+                                fontWeight: AppFonts.weightBold,
+                              ),
+                            ),
+                            const WidgetSpan(
+                              child: SizedBox(
+                                width: AppDimensions.small,
+                              ),
+                            ),
+                            TextSpan(
+                              text: '/',
+                              style: context.themeData.textTheme.headlineMedium
+                                  ?.copyWith(
+                                color: context.theme.primaryTextColor,
+                                fontWeight: AppFonts.weightMedium,
+                              ),
+                            ),
+                            const WidgetSpan(
+                              child: SizedBox(
+                                width: AppDimensions.small,
+                              ),
+                            ),
+                            TextSpan(
+                              text: context.locale.day,
+                              style: context.themeData.textTheme.headlineMedium
+                                  ?.copyWith(
+                                color: context.theme.primaryTextColor,
+                                fontWeight: AppFonts.weightMedium,
+                              ),
+                            ),
+                          ],
                         ),
-                        TextSpan(
-                          text: '/',
-                          style: context.themeData.textTheme.headlineMedium
-                              ?.copyWith(
-                            color: context.theme.primaryTextColor,
-                            fontWeight: AppFonts.weightMedium,
-                          ),
-                        ),
-                        const WidgetSpan(
-                          child: SizedBox(
-                            width: AppDimensions.small,
-                          ),
-                        ),
-                        TextSpan(
-                          text: context.locale.day,
-                          style: context.themeData.textTheme.headlineMedium
-                              ?.copyWith(
-                            color: context.theme.primaryTextColor,
-                            fontWeight: AppFonts.weightMedium,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                      ),
+                    ],
               ),
             ),
           ],

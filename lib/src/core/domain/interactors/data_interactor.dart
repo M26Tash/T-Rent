@@ -34,13 +34,11 @@ final class DataInteractor {
 
   Future<void> uploadCarRent({
     required CarOrderModel carOrder,
-    required CarModel car,
     required DateTime startDate,
     required DateTime endDate,
   }) async {
     return _dataRepository.uploadCarRent(
       carOrder: carOrder,
-      car: car,
       startDate: startDate,
       endDate: endDate,
     );

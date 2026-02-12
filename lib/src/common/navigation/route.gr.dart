@@ -135,18 +135,77 @@ class CarDetailsRouteArgs {
 
 /// generated route for
 /// [ConfirmationPage]
-class ConfirmationRoute extends PageRouteInfo<void> {
-  const ConfirmationRoute({List<PageRouteInfo>? children})
-      : super(ConfirmationRoute.name, initialChildren: children);
+class ConfirmationRoute extends PageRouteInfo<ConfirmationRouteArgs> {
+  ConfirmationRoute({
+    required CarModel car,
+    required DateTime selectedStart,
+    required DateTime selectedEnd,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ConfirmationRoute.name,
+          args: ConfirmationRouteArgs(
+            car: car,
+            selectedStart: selectedStart,
+            selectedEnd: selectedEnd,
+            key: key,
+          ),
+          initialChildren: children,
+        );
 
   static const String name = 'ConfirmationRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const ConfirmationPage();
+      final args = data.argsAs<ConfirmationRouteArgs>();
+      return ConfirmationPage(
+        car: args.car,
+        selectedStart: args.selectedStart,
+        selectedEnd: args.selectedEnd,
+        key: args.key,
+      );
     },
   );
+}
+
+class ConfirmationRouteArgs {
+  const ConfirmationRouteArgs({
+    required this.car,
+    required this.selectedStart,
+    required this.selectedEnd,
+    this.key,
+  });
+
+  final CarModel car;
+
+  final DateTime selectedStart;
+
+  final DateTime selectedEnd;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ConfirmationRouteArgs{car: $car, selectedStart: $selectedStart, selectedEnd: $selectedEnd, key: $key}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ConfirmationRouteArgs) return false;
+    return car == other.car &&
+        selectedStart == other.selectedStart &&
+        selectedEnd == other.selectedEnd &&
+        key == other.key;
+  }
+
+  @override
+  int get hashCode =>
+      car.hashCode ^
+      selectedStart.hashCode ^
+      selectedEnd.hashCode ^
+      key.hashCode;
 }
 
 /// generated route for

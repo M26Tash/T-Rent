@@ -30,9 +30,18 @@ class BookingCubit extends Cubit<BookingState> {
             months: [],
             startTime: null,
             endTime: null,
+            car: null,
           ),
         ) {
     generateMonths(dateStart, dateEnd);
+  }
+
+  void setCarModel(CarModel car) {
+    emit(
+      state.copyWith(
+        car: car,
+      ),
+    );
   }
 
   // void updateTimes({TimeOfDay? start, TimeOfDay? end}) {
@@ -170,9 +179,9 @@ class BookingCubit extends Cubit<BookingState> {
         route: CustomizedRoute(
           TypeRoute.navigateTo,
           ConfirmationRoute(
-            // car: car,
-            // selectedStart: state.selectedStart!,
-            // selectedEnd: state.selectedEnd!,
+            car: car,
+            selectedStart: state.selectedStart!,
+            selectedEnd: state.selectedEnd!,
           ),
           shouldClearStack: true,
         ),

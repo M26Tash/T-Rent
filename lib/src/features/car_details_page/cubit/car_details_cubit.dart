@@ -75,13 +75,11 @@ class CarDetailsCubit extends Cubit<CarDetailsState> {
 
   Future<void> uploadCarRent({
     required CarOrderModel carOrder,
-    required CarModel car,
     required DateTime startDate,
     required DateTime endDate,
   }) async {
     return _dataInteractor.uploadCarRent(
       carOrder: carOrder,
-      car: car,
       startDate: startDate,
       endDate: endDate,
     );
@@ -162,6 +160,7 @@ class CarDetailsCubit extends Cubit<CarDetailsState> {
   void navigateToBooking({
     required CarModel car,
   }) {
+    print('$car');
     emit(
       state.copyWith(
         route: CustomizedRoute(

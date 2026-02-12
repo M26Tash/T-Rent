@@ -186,6 +186,7 @@ class DataSource implements IDataSource {
       final response = await supabase.from('cars').select();
 
       if (response.isNotEmpty) {
+
         final cars =
             response.map((item) => CarMapper().fromJson(item)).toList();
 
@@ -218,7 +219,6 @@ class DataSource implements IDataSource {
   @override
   Future<void> uploadCarRent({
     required CarOrderModel carOrder,
-    required CarModel car,
     required DateTime startDate,
     required DateTime endDate,
   }) async {
@@ -288,14 +288,19 @@ class DataSource implements IDataSource {
         _carRentHistorySubject.add(<CarOrderModel>[]);
       }
     } on PostgrestException catch (e) {
-      CoreLogger.errorLog('getCarRentHistory()',
-          params: {'error': e.message, 'carId': carId},);
+      CoreLogger.errorLog(
+        'getCarRentHistory()',
+        params: {'error': e.message, 'carId': carId},
+      );
     } on StorageException catch (e, st) {
-      CoreLogger.errorLog('getCarRentHistory()', params: {
-        'error': e.toString(),
-        'carId': carId,
-        'stack': st.toString(),
-      },);
+      CoreLogger.errorLog(
+        'getCarRentHistory()',
+        params: {
+          'error': e.toString(),
+          'carId': carId,
+          'stack': st.toString(),
+        },
+      );
     }
   }
 }

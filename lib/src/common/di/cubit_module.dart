@@ -110,7 +110,9 @@ void initCubits() {
       AboutUsCubit.new,
     )
     ..registerFactory<ConfirmationCubit>(
-      ConfirmationCubit.new,
+      () => ConfirmationCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<TestCubit>(
       () => TestCubit(

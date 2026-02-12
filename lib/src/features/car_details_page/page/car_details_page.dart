@@ -107,7 +107,6 @@ class _CarDetailsPageState extends State<CarDetailsPage> {
                       startDate: range!.start,
                       endDate: range.end,
                     ),
-                    car: widget.car,
                     startDate: range.start,
                     endDate: range.end,
                   );

@@ -20,7 +20,6 @@ abstract interface class IDataRepository {
 
   Future<void> uploadCarRent({
     required CarOrderModel carOrder,
-    required CarModel car,
     required DateTime startDate,
     required DateTime endDate,
   });

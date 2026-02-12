@@ -70,7 +70,8 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CubitScope<NavigationPanelCubit>(
+    return CubitScope<NavigationPanelCubit>.value(
+      value: _navigationalPanelCubit,
       child: BlocConsumer<NavigationPanelCubit, NavigationPanelState>(
         bloc: _navigationalPanelCubit,
         listener: _listener,

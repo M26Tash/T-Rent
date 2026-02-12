@@ -26,7 +26,7 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
           page: SplashRoute.page,
-        //  initial: true,
+         initial: true,
         ),
         AutoRoute(
           page: AuthRoute.page,
@@ -62,7 +62,7 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: ConfirmationRoute.page,
-          initial: true,
+          // initial: true,
         ),
         AutoRoute(
           page: TestRoute.page,

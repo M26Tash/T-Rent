@@ -69,7 +69,11 @@ class TimePickerSelection extends StatelessWidget {
         const SizedBox(height: AppDimensions.large),
         CustomButton(
           buttonText: 'Confirm',
-          onTap: () => cubit.navigateToConfirmationPage,
+          onTap: () {
+            print('TAP');
+
+            cubit.navigateToConfirmationPage(car: car);
+          },
         ),
       ],
     );

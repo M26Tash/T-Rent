@@ -91,6 +91,14 @@ abstract final class AppAssets {
   // Audios
   static const String mclaren720SRev = '${_assetsAudio}mclaren_720S_rev.mp3';
 
+  // Car Specs Icons
+  static const String driveIcon = '${_assetsVectors}drive_icon.svg';
+  static const String engineIcon = '${_assetsVectors}engine_icon.svg';
+  static const String powerIcon = '${_assetsVectors}power_icon.svg';
+  static const String speedIcon = '${_assetsVectors}speed_icon.svg';
+  static const String timerIcon = '${_assetsVectors}timer_icon.svg';
+  static const String torqueIcon = '${_assetsVectors}torque_icon.svg';
+
   // Folder Paths
   static const String _assetsFolder = 'assets/';
   static const String _assetsVectors = '${_assetsFolder}vectors/';

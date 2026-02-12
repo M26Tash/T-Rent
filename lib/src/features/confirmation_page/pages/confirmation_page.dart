@@ -4,22 +4,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/cubit_scope/cubit_scope.dart';
 import 'package:t_rent/src/common/navigation/entities/auto_route_extension.dart';
+import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
+import 'package:t_rent/src/common/navigation/route.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
+import 'package:t_rent/src/core/domain/entities/car_order_model/car_order_model.dart';
 import 'package:t_rent/src/features/confirmation_page/cubit/confirmation_cubit.dart';
 import 'package:t_rent/src/features/confirmation_page/widgets/confirmation_body.dart';
 
 @RoutePage()
 class ConfirmationPage extends StatelessWidget {
-  // final CarModel car;
-  // final DateTime selectedStart;
-  // final DateTime selectedEnd;
+  final CarModel car;
+  final DateTime selectedStart;
+  final DateTime selectedEnd;
 
   const ConfirmationPage({
-    // required this.car,
-    // required this.selectedStart,
-    // required this.selectedEnd,
+    required this.car,
+    required this.selectedStart,
+    required this.selectedEnd,
     super.key,
   });
 
@@ -27,9 +30,20 @@ class ConfirmationPage extends StatelessWidget {
     if (state.route.type != null) {
       context.navigateToRoute(state.route);
     }
+
+    if (state.isConfirmed) {
+      context.navigateToRoute(
+        const CustomizedRoute(
+          TypeRoute.navigateTo,
+          MainRoute(),
+          // shouldClearStack: true,
+        ),
+      );
+    }
   }
 
   bool _listenWhen(ConfirmationState prev, ConfirmationState current) {
+    if (!prev.isConfirmed && current.isConfirmed) return true;
     return prev.route.type == null && current.route.type != null;
   }
 
@@ -41,6 +55,17 @@ class ConfirmationPage extends StatelessWidget {
         listenWhen: _listenWhen,
         builder: (context, state) {
           final cubit = CubitScope.of<ConfirmationCubit>(context);
+
+          if (state.totalPrice == null) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              cubit.calculateTotalAmount(
+                selectedStart: selectedStart,
+                selectedEnd: selectedEnd,
+                carPricing: car.carPricing,
+              );
+            });
+          }
+
           return Scaffold(
             backgroundColor: context.theme.backgroundColor,
             appBar: CustomAppBar(
@@ -49,7 +74,20 @@ class ConfirmationPage extends StatelessWidget {
               title: 'Confirmation',
             ),
             body: ConfirmationBody(
-              // car: Car,
+              car: car,
+              selectedStart: selectedStart,
+              selectedEnd: selectedEnd,
+              totalPrice: state.totalPrice ?? 0,
+              onConfirm: () async => cubit.uploadCarRent(
+                carOrder: CarOrderModel(
+                  carId: car.id ?? 0,
+                  car: car,
+                  startDate: selectedStart,
+                  endDate: selectedEnd,
+                ),
+                startDate: selectedStart,
+                endDate: selectedEnd,
+              ),
             ),
           );
         },
