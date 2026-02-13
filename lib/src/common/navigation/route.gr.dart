@@ -44,18 +44,46 @@ class AuthRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [BookingPage]
-class BookingRoute extends PageRouteInfo<void> {
-  const BookingRoute({List<PageRouteInfo>? children})
-      : super(BookingRoute.name, initialChildren: children);
+class BookingRoute extends PageRouteInfo<BookingRouteArgs> {
+  BookingRoute({required CarModel car, Key? key, List<PageRouteInfo>? children})
+      : super(
+          BookingRoute.name,
+          args: BookingRouteArgs(car: car, key: key),
+          initialChildren: children,
+        );
 
   static const String name = 'BookingRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const BookingPage();
+      final args = data.argsAs<BookingRouteArgs>();
+      return BookingPage(car: args.car, key: args.key);
     },
   );
+}
+
+class BookingRouteArgs {
+  const BookingRouteArgs({required this.car, this.key});
+
+  final CarModel car;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'BookingRouteArgs{car: $car, key: $key}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! BookingRouteArgs) return false;
+    return car == other.car && key == other.key;
+  }
+
+  @override
+  int get hashCode => car.hashCode ^ key.hashCode;
 }
 
 /// generated route for
@@ -103,6 +131,81 @@ class CarDetailsRouteArgs {
 
   @override
   int get hashCode => car.hashCode ^ key.hashCode;
+}
+
+/// generated route for
+/// [ConfirmationPage]
+class ConfirmationRoute extends PageRouteInfo<ConfirmationRouteArgs> {
+  ConfirmationRoute({
+    required CarModel car,
+    required DateTime selectedStart,
+    required DateTime selectedEnd,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ConfirmationRoute.name,
+          args: ConfirmationRouteArgs(
+            car: car,
+            selectedStart: selectedStart,
+            selectedEnd: selectedEnd,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ConfirmationRoute';
+
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ConfirmationRouteArgs>();
+      return ConfirmationPage(
+        car: args.car,
+        selectedStart: args.selectedStart,
+        selectedEnd: args.selectedEnd,
+        key: args.key,
+      );
+    },
+  );
+}
+
+class ConfirmationRouteArgs {
+  const ConfirmationRouteArgs({
+    required this.car,
+    required this.selectedStart,
+    required this.selectedEnd,
+    this.key,
+  });
+
+  final CarModel car;
+
+  final DateTime selectedStart;
+
+  final DateTime selectedEnd;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ConfirmationRouteArgs{car: $car, selectedStart: $selectedStart, selectedEnd: $selectedEnd, key: $key}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ConfirmationRouteArgs) return false;
+    return car == other.car &&
+        selectedStart == other.selectedStart &&
+        selectedEnd == other.selectedEnd &&
+        key == other.key;
+  }
+
+  @override
+  int get hashCode =>
+      car.hashCode ^
+      selectedStart.hashCode ^
+      selectedEnd.hashCode ^
+      key.hashCode;
 }
 
 /// generated route for

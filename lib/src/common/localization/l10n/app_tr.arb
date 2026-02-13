@@ -100,5 +100,14 @@
     "overview": "Genel Bakış",
     "perDays": "{count, plural, =0{0 gün} one{{count} gün} other{{count} gün}}",
     "perDeposit": "Depozito",
-    "totalToPay": "Ödenecek tutar"
+    "totalToPay": "Ödenecek tutar",
+    "bookNow": "Rezervasyon Yap",
+    "selectTimes": "Teslim Alma ve Teslim Etme Saatini Seçin",
+    "pickUp": "Teslim alma",
+    "returns": "Teslim etme",
+    "notPickedYet": "Henüz seçilmedi",
+    "noAvailableTime": "Uygun zaman yok",
+    "returnTime": "Teslim etme zamanı",
+    "confirm": "Onayla",
+    "mileage": "Kilometre"
 }

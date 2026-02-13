@@ -71,6 +71,8 @@ final class CarMapper implements BaseMapper<CarModel> {
         json[_Fields.carCoordinates],
       ),
       carMotorRevAsset: json[_Fields.carMotorRevAsset],
+      starReview: (json[_Fields.starReview] as num).toDouble(),
+      isFavorite: json[_Fields.isFavorite],
     );
   }
 }
@@ -92,4 +94,6 @@ abstract final class _Fields {
   static const String carImage = 'car_image';
   static const String carCoordinates = 'car_coordinates';
   static const String carMotorRevAsset = 'car_motor_rev';
+  static const String starReview = 'star_review';
+  static const String isFavorite = 'is_favorite';
 }

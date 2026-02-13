@@ -355,4 +355,31 @@ class AppLocalizationTr extends AppLocalization {
 
   @override
   String get totalToPay => 'Ödenecek tutar';
+
+  @override
+  String get bookNow => 'Rezervasyon Yap';
+
+  @override
+  String get selectTimes => 'Teslim Alma ve Teslim Etme Saatini Seçin';
+
+  @override
+  String get pickUp => 'Teslim alma';
+
+  @override
+  String get returns => 'Teslim etme';
+
+  @override
+  String get notPickedYet => 'Henüz seçilmedi';
+
+  @override
+  String get noAvailableTime => 'Uygun zaman yok';
+
+  @override
+  String get returnTime => 'Teslim etme zamanı';
+
+  @override
+  String get confirm => 'Onayla';
+
+  @override
+  String get mileage => 'Kilometre';
 }

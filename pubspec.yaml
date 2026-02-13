@@ -3,7 +3,7 @@ description: "A new Flutter project."
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 1.0.2+2
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -15,16 +15,16 @@ dependencies:
   cupertino_icons: ^1.0.8
   
   intl: ^0.20.2
-  get_it: ^8.2.0
+  get_it: ^9.2.0
   equatable: ^2.0.7
-  auto_route: ^10.1.2
+  auto_route: ^11.1.0
   flutter_bloc: ^9.1.1
   logger: ^2.6.2
   email_validator: ^3.0.0
-  pinput: ^5.0.2
+  pinput: ^6.0.2
   svg_flutter: ^0.0.1
   latlong2: ^0.9.1
-  mapbox_maps_flutter: ^2.11.0
+  # mapbox_maps_flutter: ^2.18.0
   geolocator: ^14.0.2
   flutter_dotenv: ^6.0.0
   slide_to_act: ^2.0.2
@@ -40,7 +40,8 @@ dependencies:
   http: ^1.5.0
   cached_network_image: ^3.4.1
   shimmer: ^3.0.0
-  just_audio: ^0.10.5
+  slide_action: ^0.0.2
+  # just_audio: ^0.10.5
   
 dev_dependencies:
   flutter_test:
@@ -49,8 +50,8 @@ dev_dependencies:
   flutter_localizations:
     sdk: flutter
 
-  very_good_analysis: ^9.0.0
-  flutter_lints: ^5.0.0
+  very_good_analysis: ^10.1.0
+  flutter_lints: ^6.0.0
   dart_code_metrics_presets: ^2.26.1
 
   auto_route_generator: ^10.2.4

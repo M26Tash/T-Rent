@@ -7,6 +7,7 @@ import 'package:t_rent/src/features/app/cubit/app_cubit.dart';
 import 'package:t_rent/src/features/auth_page/cubit/auth_cubit.dart';
 import 'package:t_rent/src/features/booking_page/cubit/booking_cubit.dart';
 import 'package:t_rent/src/features/car_details_page/cubit/car_details_cubit.dart';
+import 'package:t_rent/src/features/confirmation_page/cubit/confirmation_cubit.dart';
 import 'package:t_rent/src/features/forgot_password_page/cubit/forgot_password_cubit.dart';
 import 'package:t_rent/src/features/help_page/cubit/help_cubit.dart';
 import 'package:t_rent/src/features/main_page/cubits/history_cubit/history_cubit.dart';
@@ -31,7 +32,9 @@ void initSharedCubits() {
       ),
     )
     ..registerSingleton<NavigationPanelCubit>(
-      NavigationPanelCubit(),
+      NavigationPanelCubit(
+        i.get(),
+      ),
     );
 }
 
@@ -93,7 +96,9 @@ void initCubits() {
       ),
     )
     ..registerFactory<BookingCubit>(
-      BookingCubit.new,
+      () => BookingCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<MyAccountCubit>(
       () => MyAccountCubit(
@@ -107,6 +112,11 @@ void initCubits() {
     )
     ..registerFactory<AboutUsCubit>(
       AboutUsCubit.new,
+    )
+    ..registerFactory<ConfirmationCubit>(
+      () => ConfirmationCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<TestCubit>(
       () => TestCubit(

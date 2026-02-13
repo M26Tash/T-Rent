@@ -6,6 +6,8 @@ import 'package:t_rent/src/common/cubit_scope/cubit_scope.dart';
 import 'package:t_rent/src/common/di/injector.dart';
 import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/navigation/entities/auto_route_extension.dart';
+import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
+import 'package:t_rent/src/common/navigation/route.dart';
 import 'package:t_rent/src/common/shared_cubits/navigation_panel_cubit/navigation_panel_cubit.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/widgets/custom_app_bar/custom_app_bar.dart';
@@ -50,14 +52,26 @@ class _MainPageState extends State<MainPage> {
     if (state.route.type != null) {
       context.navigateToRoute(state.route);
     }
+
+    if (state.currentSession == null) {
+      context.navigateToRoute(
+        const CustomizedRoute(
+          TypeRoute.navigateTo,
+          AuthRoute(),
+        ),
+      );
+    }
   }
 
   bool _listenWhen(
     NavigationPanelState prev,
     NavigationPanelState current,
   ) {
-    return prev.navigationIndex != current.navigationIndex ||
-        prev.route.type == null && current.route.type != null;
+    if (prev.navigationIndex != current.navigationIndex) return true;
+    if (prev.currentSession == null && current.currentSession == null) {
+      return true;
+    }
+    return prev.route.type == null && current.route.type != null;
   }
 
   String? _appBarTitle(int pageIndex) => switch (pageIndex) {
@@ -70,7 +84,8 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CubitScope<NavigationPanelCubit>(
+    return CubitScope<NavigationPanelCubit>.value(
+      value: _navigationalPanelCubit,
       child: BlocConsumer<NavigationPanelCubit, NavigationPanelState>(
         bloc: _navigationalPanelCubit,
         listener: _listener,

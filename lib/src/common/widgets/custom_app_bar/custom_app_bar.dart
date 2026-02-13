@@ -38,6 +38,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           : Padding(
               padding: const EdgeInsets.only(left: AppDimensions.small),
               child: VectorButton(
+                buttonColor: context.theme.transparent,
                 onTap: onLeadingTap,
                 svgAssetPath: svgAssetPath!,
               ),

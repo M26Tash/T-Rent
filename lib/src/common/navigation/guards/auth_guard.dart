@@ -11,10 +11,12 @@ class AuthGuard extends AutoRouteGuard {
       final String? fullName = session.user.userMetadata?['full_name'];
 
       if (fullName == null || fullName.isEmpty) {
-        resolver.redirectUntil(UserDetailsRoute(
-          email: session.user.email ?? '',
-          fullName: '',
-        ));
+        resolver.redirectUntil(
+          UserDetailsRoute(
+            email: session.user.email ?? '',
+            fullName: '',
+          ),
+        );
       } else {
         resolver.redirectUntil(const MainRoute());
       }

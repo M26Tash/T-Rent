@@ -354,4 +354,31 @@ class AppLocalizationEn extends AppLocalization {
 
   @override
   String get totalToPay => 'Totatl to pay';
+
+  @override
+  String get bookNow => 'Book Now';
+
+  @override
+  String get selectTimes => 'Select Pick-up & Return Time';
+
+  @override
+  String get pickUp => 'Pick-Up';
+
+  @override
+  String get returns => 'Return';
+
+  @override
+  String get notPickedYet => 'Not picked yet';
+
+  @override
+  String get noAvailableTime => 'No available time';
+
+  @override
+  String get returnTime => 'Return Time';
+
+  @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get mileage => 'Mileage';
 }

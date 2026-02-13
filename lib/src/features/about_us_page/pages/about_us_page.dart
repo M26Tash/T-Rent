@@ -15,9 +15,9 @@ import 'package:t_rent/src/features/about_us_page/widgets/about_us_body.dart';
 class AboutUsPage extends StatelessWidget {
   const AboutUsPage({super.key});
 
-  void _listener(BuildContext context, AboutUsState state) {
+  Future<void> _listener(BuildContext context, AboutUsState state) async {
     if (state.route.type == TypeRoute.pop) {
-      context.maybePop();
+      await context.maybePop();
     } else if (state.route.type != null) {
       context.navigateToRoute(state.route);
     }

@@ -116,18 +116,6 @@ class DataSource implements IDataSource {
 
         _profileSubject.add(profile.first);
       }
-
-      supabase
-          .channel('profiles_channel')
-          .onPostgresChanges(
-            event: PostgresChangeEvent.all,
-            schema: 'public',
-            table: 'profiles',
-            callback: (payload) {
-              getProfile();
-            },
-          )
-          .subscribe();
     } on PostgrestException catch (e) {
       CoreLogger.errorLog(
         'getProfile()',
@@ -193,18 +181,6 @@ class DataSource implements IDataSource {
 
         _carsSubject.add(cars);
       }
-
-      supabase
-          .channel('cars_channel')
-          .onPostgresChanges(
-            event: PostgresChangeEvent.all,
-            schema: 'public',
-            table: 'cars',
-            callback: (payload) {
-              getCars();
-            },
-          )
-          .subscribe();
     } on StorageException catch (e) {
       CoreLogger.errorLog(
         'getCars()',
@@ -216,9 +192,31 @@ class DataSource implements IDataSource {
   }
 
   @override
+  Future<void> updateFavoriteStatus({
+    required int carId,
+    required bool isFavorite,
+  }) async {
+    try {
+      await supabase
+          .from('cars')
+          .update({'is_favorite': isFavorite}).eq('id', carId);
+    } on PostgrestException catch (e) {
+      CoreLogger.errorLog(
+        'updateFavoriteStatus()',
+        params: {
+          'carId': carId,
+          'targetValue': isFavorite,
+          'error': e.message,
+        },
+      );
+
+      rethrow;
+    }
+  }
+
+  @override
   Future<void> uploadCarRent({
     required CarOrderModel carOrder,
-    required CarModel car,
     required DateTime startDate,
     required DateTime endDate,
   }) async {
@@ -288,14 +286,19 @@ class DataSource implements IDataSource {
         _carRentHistorySubject.add(<CarOrderModel>[]);
       }
     } on PostgrestException catch (e) {
-      CoreLogger.errorLog('getCarRentHistory()',
-          params: {'error': e.message, 'carId': carId});
+      CoreLogger.errorLog(
+        'getCarRentHistory()',
+        params: {'error': e.message, 'carId': carId},
+      );
     } on StorageException catch (e, st) {
-      CoreLogger.errorLog('getCarRentHistory()', params: {
-        'error': e.toString(),
-        'carId': carId,
-        'stack': st.toString()
-      });
+      CoreLogger.errorLog(
+        'getCarRentHistory()',
+        params: {
+          'error': e.toString(),
+          'carId': carId,
+          'stack': st.toString(),
+        },
+      );
     }
   }
 }

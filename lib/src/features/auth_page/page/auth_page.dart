@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_rent/src/common/cubit_scope/cubit_scope.dart';
 import 'package:t_rent/src/common/navigation/entities/auto_route_extension.dart';
+import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
+import 'package:t_rent/src/common/navigation/route.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/utils/extensions/context_extension.dart';
 import 'package:t_rent/src/features/auth_page/cubit/auth_cubit.dart';
@@ -47,13 +49,41 @@ class AuthPage extends StatelessWidget {
         state.registerInExceptionMessage!,
       );
     }
+
+    if (state.currentSession != null) {
+      final String? fullName =
+          state.currentSession?.user.userMetadata?['full_name'];
+
+      if (fullName == null || fullName.isEmpty) {
+        context.navigateToRoute(
+          CustomizedRoute(
+            TypeRoute.navigateTo,
+            UserDetailsRoute(
+              email: state.currentSession?.user.email ?? '',
+              fullName: '',
+            ),
+          ),
+        );
+      } else {
+        context.navigateToRoute(
+          const CustomizedRoute(
+            TypeRoute.navigateTo,
+            MainRoute(),
+          ),
+        );
+      }
+    }
   }
 
   bool _listenWhen(AuthState prev, AuthState current) {
-    return prev.route.type == null && current.route.type != null ||
-        prev.signInExceptionMessage != current.signInExceptionMessage ||
-        prev.registerInExceptionMessage != current.registerInExceptionMessage ||
-        prev.currentSession != current.currentSession;
+    if (prev.signInExceptionMessage != current.signInExceptionMessage) {
+      return true;
+    }
+    if (prev.registerInExceptionMessage != current.registerInExceptionMessage) {
+      return true;
+    }
+    if (prev.currentSession != current.currentSession) return true;
+    return prev.route.type == null && current.route.type != null;
   }
 
   @override

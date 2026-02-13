@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use, avoid_catches_without_on_clauses
+// ignore_for_file: avoid_catches_without_on_clauses
 
 import 'dart:async';
 
@@ -37,7 +37,7 @@ class HomeCubit extends Cubit<HomeState> {
             sortOrder: SortOrder.descending,
           ),
         ) {
-    _initUserAddress();
+    initUserAddress();
     _subscribeAll();
   }
 
@@ -55,13 +55,13 @@ class HomeCubit extends Cubit<HomeState> {
     return super.close();
   }
 
-  void _subscribeAll() {
+  Future<void> _subscribeAll() async {
     _profileSubscription?.cancel();
     _profileSubscription = _dataInteractor.profileStream.listen(
       _onNewProfile,
     );
 
-    _carsSubscription?.cancel();
+    await _carsSubscription?.cancel();
     _carsSubscription = _dataInteractor.carStream.listen(
       _onNewCars,
     );
@@ -94,93 +94,82 @@ class HomeCubit extends Cubit<HomeState> {
     _filterCars();
   }
 
-  Future<void> _initUserAddress() async {
-    final fetchedAddress = await _getUserAddress();
+  Future<String> _getFormattedAddress() async {
+    final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) throw Exception('Location services are disabled');
 
-    emit(
-      state.copyWith(
-        userAddress: fetchedAddress,
-        isAddressLoading: false,
-      ),
-    );
-  }
-
-  Future<String?> _getUserAddress() async {
-    try {
-      emit(
-        state.copyWith(
-          isAddressLoading: true,
-        ),
-      );
-
-      final permission = await Geolocator.requestPermission();
-
-      if (permission == LocationPermission.denied ||
-          permission == LocationPermission.deniedForever) {
-        emit(state.copyWith(isAddressLoading: false));
-        return 'Permission denied';
+    var permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        throw Exception('Permission denied');
       }
+    }
 
-      final position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.lowest,
-        timeLimit: const Duration(
-          seconds: 5,
-        ),
+    if (permission == LocationPermission.deniedForever) {
+      throw Exception('Permissions are permanently denied');
+    }
+
+    try {
+      var position = await Geolocator.getLastKnownPosition();
+
+      position ??= await Geolocator.getCurrentPosition(
+        // ignore: deprecated_member_use
+        desiredAccuracy: LocationAccuracy.low,
+        // ignore: deprecated_member_use
+        timeLimit: const Duration(seconds: 10),
       );
 
-      final placemarksFuture = placemarkFromCoordinates(
+      final placemarks = await placemarkFromCoordinates(
         position.latitude,
         position.longitude,
       );
 
-      final placemarks = await placemarksFuture;
+      if (placemarks.isEmpty) throw Exception('Address not found');
 
-      if (placemarks.isEmpty) {
-        emit(state.copyWith(isAddressLoading: false));
-        return 'Address not found';
-      }
-
-      final place = placemarks.first;
-
-      emit(
-        state.copyWith(
-          userAddress: '${place.administrativeArea ?? ''}, '
-              '${place.subAdministrativeArea ?? ''}, '
-              '${place.street ?? ''}, '
-              '${place.postalCode ?? ''}',
-          isAddressLoading: false,
-        ),
-      );
-
-      return null;
+      final p = placemarks.first;
+      return '${p.administrativeArea ?? ''}, ${p.subAdministrativeArea ?? ''}';
     } on TimeoutException {
-      emit(
-        state.copyWith(
-          isAddressLoading: false,
-        ),
+      final lastPos = await Geolocator.getLastKnownPosition();
+      if (lastPos != null) {
+        final placemarks =
+            await placemarkFromCoordinates(lastPos.latitude, lastPos.longitude);
+        if (placemarks.isNotEmpty) {
+          final p = placemarks.first;
+          // ignore: lines_longer_than_80_chars
+          return '${p.administrativeArea ?? ''}, ${p.subAdministrativeArea ?? ''}';
+        }
+      }
+      throw Exception(
+        'Location request timed out. Please check your GPS signal.',
       );
-      return 'Location request timed out';
-    } on PermissionDeniedException {
-      emit(
-        state.copyWith(
-          isAddressLoading: false,
-        ),
-      );
-      return 'Location permission denied';
-    } on LocationServiceDisabledException {
-      emit(
-        state.copyWith(
-          isAddressLoading: false,
-        ),
-      );
-      return 'Location services are disabled';
+    }
+  }
+
+  Future<void> initUserAddress() async {
+    if (isClosed) return;
+
+    emit(state.copyWith(isAddressLoading: true));
+
+    try {
+      final address = await _getFormattedAddress();
+      if (!isClosed) {
+        emit(
+          state.copyWith(
+            userAddress: address,
+            isAddressLoading: false,
+          ),
+        );
+      }
     } catch (e) {
-      emit(
-        state.copyWith(
-          isAddressLoading: false,
-        ),
-      );
-      return 'Failed to get address: $e';
+      if (!isClosed) {
+        emit(
+          state.copyWith(
+            userAddress: e.toString(),
+            isAddressLoading: false,
+          ),
+        );
+      }
     }
   }
 
@@ -252,9 +241,11 @@ class HomeCubit extends Cubit<HomeState> {
               );
       }
 
-      filtered.sort((a, b) => state.sortOrder == SortOrder.ascending
-          ? comparator(a, b)
-          : comparator(b, a));
+      filtered.sort(
+        (a, b) => state.sortOrder == SortOrder.ascending
+            ? comparator(a, b)
+            : comparator(b, a),
+      );
     }
 
     emit(

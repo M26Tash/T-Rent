@@ -43,15 +43,24 @@ final class DataRepository implements IDataRepository {
   @override
   Future<void> uploadCarRent({
     required CarOrderModel carOrder,
-    required CarModel car,
     required DateTime startDate,
     required DateTime endDate,
   }) async {
     return _dataSource.uploadCarRent(
       carOrder: carOrder,
-      car: car,
       startDate: startDate,
       endDate: endDate,
+    );
+  }
+
+  @override
+  Future<void> updateFavoriteStatus({
+    required int carId,
+    required bool isFavorite,
+  }) async {
+    return _dataSource.updateFavoriteStatus(
+      carId: carId,
+      isFavorite: isFavorite,
     );
   }
 

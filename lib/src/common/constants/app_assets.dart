@@ -1,5 +1,4 @@
 //
-// ignore_for_file: unused_field
 
 abstract final class AppAssets {
   // Arrows paths
@@ -9,6 +8,7 @@ abstract final class AppAssets {
   static const String arrowUpIcon = '${_assetsVectors}arrow_up_icon.svg';
 
   static const String searchIcon = '${_assetsVectors}search_icon.svg';
+  static const String favoriteIcon = '${_assetsVectors}favorite_icon.svg';
 
   //? Cars photo (just for testing)
   static const String audiRsQ8Side = '${_assetsImages}audi_rs_q8_side.png';
@@ -90,6 +90,14 @@ abstract final class AppAssets {
 
   // Audios
   static const String mclaren720SRev = '${_assetsAudio}mclaren_720S_rev.mp3';
+
+  // Car Specs Icons
+  static const String driveIcon = '${_assetsVectors}drive_icon.svg';
+  static const String engineIcon = '${_assetsVectors}engine_icon.svg';
+  static const String powerIcon = '${_assetsVectors}power_icon.svg';
+  static const String speedIcon = '${_assetsVectors}speed_icon.svg';
+  static const String timerIcon = '${_assetsVectors}timer_icon.svg';
+  static const String torqueIcon = '${_assetsVectors}torque_icon.svg';
 
   // Folder Paths
   static const String _assetsFolder = 'assets/';

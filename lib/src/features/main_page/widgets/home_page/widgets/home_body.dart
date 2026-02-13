@@ -66,6 +66,7 @@ class HomeBody extends StatelessWidget {
               backgroundColor: context.theme.surfaceColor,
               radius: AppDimensions.smallAvatarRadius,
               backgroundImage: NetworkImage(
+                // Temporary
                 profile.avatarUrl ??
                     'https://www.pngplay.com/wp-content/uploads/12/User-Avatar-Profile-PNG-Photos.png',
               ),
@@ -117,7 +118,7 @@ class HomeBody extends StatelessWidget {
             VectorButton(
               onTap: () {},
               svgAssetPath: AppAssets.notificationIcon,
-            )
+            ),
           ],
         ),
         const SizedBox(height: AppDimensions.large),
@@ -159,7 +160,6 @@ class HomeBody extends StatelessWidget {
                       car: car,
                     ),
             car: car,
-            asset: car.carImage.sideView,
           ),
       ],
     );

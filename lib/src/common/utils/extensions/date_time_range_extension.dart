@@ -8,7 +8,7 @@ extension DateTimeRangeExtension on DateTimeRange {
   }) {
     final dateFormat = DateFormat(
       pattern,
-      locale
+      locale,
     );
     final startStr = dateFormat.format(start);
     final endStr = dateFormat.format(end);
