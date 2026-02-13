@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
@@ -15,12 +14,14 @@ class MonthWidget extends StatelessWidget {
   final DateTime month;
   final DateTime? selectedStart;
   final DateTime? selectedEnd;
+  final List<DateTimeRange> bookedRanges;
   final ValueChanged<DateTime> onDayTap;
 
   const MonthWidget({
     required this.month,
     required this.selectedStart,
     required this.selectedEnd,
+    required this.bookedRanges,
     required this.onDayTap,
     super.key,
   });
@@ -41,6 +42,7 @@ class MonthWidget extends StatelessWidget {
           month: month,
           selectedStart: selectedStart,
           selectedEnd: selectedEnd,
+          bookedRanges: bookedRanges,
           onDayTap: onDayTap,
         ),
         const SizedBox(height: AppDimensions.extraLarge),

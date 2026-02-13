@@ -18,6 +18,11 @@ abstract interface class IDataRepository {
 
   Future<void> getCars();
 
+  Future<void> updateFavoriteStatus({
+    required int carId,
+    required bool isFavorite,
+  });
+
   Future<void> uploadCarRent({
     required CarOrderModel carOrder,
     required DateTime startDate,

@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
 import 'package:t_rent/src/common/constants/app_assets.dart';
 import 'package:t_rent/src/common/cubit_scope/cubit_scope.dart';
 import 'package:t_rent/src/common/di/injector.dart';
@@ -76,7 +75,7 @@ class _BookingPageState extends State<BookingPage> {
   }) async {
     await SupportMethods.showBottomSheet(
       context: context,
-      sheetTitle: 'Select Pick-up & Return Time',
+      sheetTitle: context.locale.selectTimes,
       useRootNavigator: true,
       useCloseButton: false,
       child: TimePickerSelection(
@@ -95,8 +94,8 @@ class _BookingPageState extends State<BookingPage> {
         listener: _listener,
         listenWhen: _listenWhen,
         builder: (context, state) {
-          final bookingCubit = CubitScope.of<BookingCubit>(context);
-
+          final bookingCubit = CubitScope.of<BookingCubit>(context)
+            ..getCarRentHistory(carId: widget.car.id!);
           return Scaffold(
             backgroundColor: context.theme.backgroundColor,
             appBar: CustomAppBar(
@@ -111,6 +110,7 @@ class _BookingPageState extends State<BookingPage> {
                 ),
                 selectedStart: state.selectedStart,
                 selectedEnd: state.selectedEnd,
+                bookedRanges: state.bookedRanges ?? [],
                 onDayTap: bookingCubit.onDayTap,
                 months: state.months,
               ),

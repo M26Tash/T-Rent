@@ -46,49 +46,46 @@ class ConfirmationCubit extends Cubit<ConfirmationState> {
     required DateTime selectedEnd,
     required CarPricing carPricing,
   }) {
-    final double deposit = carPricing.deposit;
-    final double perWeek = carPricing.perWeek;
-    final double perDay = carPricing.perDay;
-    final double perHour = carPricing.perHour;
+    final deposit = carPricing.deposit;
+    final perWeek = carPricing.perWeek;
+    final perDay = carPricing.perDay;
+    final perHour = carPricing.perHour;
 
-    final Duration duration = selectedEnd.difference(selectedStart);
+    final duration = selectedEnd.difference(selectedStart);
 
     if (duration.isNegative) {
-      emit(state.copyWith(totalPrice: 0.0));
+      emit(
+        state.copyWith(
+          totalPrice: 0,
+        ),
+      );
       return;
     }
-
-    // 1. Convert everything to hours, rounding up if there are extra minutes
-    // Example: 1 hour and 5 minutes becomes 2 hours.
-    int totalHours = duration.inHours;
+    var totalHours = duration.inHours;
     if (duration.inMinutes % 60 > 0) {
       totalHours += 1;
     }
 
-    // 2. Break down into Weeks, Days, and remaining Hours
-    int weeks = totalHours ~/ (24 * 7);
-    int remainingHoursAfterWeeks = totalHours % (24 * 7);
+    var weeks = totalHours ~/ (24 * 7);
+    final remainingHoursAfterWeeks = totalHours % (24 * 7);
 
-    int days = remainingHoursAfterWeeks ~/ 24;
-    int finalHours = remainingHoursAfterWeeks % 24;
+    var days = remainingHoursAfterWeeks ~/ 24;
+    final finalHours = remainingHoursAfterWeeks % 24;
 
-    // 3. Optimization Logic: Is it cheaper to pay for a full day?
-    double hourlyCost = finalHours * perHour;
+    var hourlyCost = finalHours * perHour;
     if (hourlyCost > perDay) {
       days += 1;
       hourlyCost = 0;
     }
 
-    // 4. Optimization Logic: Is it cheaper to pay for a full week?
-    double daysCost = days * perDay;
+    var daysCost = days * perDay;
     if ((daysCost + hourlyCost) > perWeek) {
       weeks += 1;
       daysCost = 0;
       hourlyCost = 0;
     }
-
-    // 5. Final Calculation
-    double totalTimeCost = (weeks * perWeek) + daysCost + hourlyCost;
+    
+    final totalTimeCost = (weeks * perWeek) + daysCost + hourlyCost;
 
     emit(
       state.copyWith(

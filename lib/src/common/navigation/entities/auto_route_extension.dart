@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
 
 extension AutoRouterContextExtension on BuildContext {
-  void navigateToRoute(CustomizedRoute route) {
+  Future<void> navigateToRoute(CustomizedRoute route) async {
     final router = AutoRouter.of(this);
 
     if (route.isPop()) {
@@ -12,7 +12,7 @@ extension AutoRouterContextExtension on BuildContext {
       final pageConfig = route.pageConfig;
       if (pageConfig != null) {
         if (route.shouldClearStack) {
-          router.replaceAll([pageConfig]);
+          await router.replaceAll([pageConfig]);
         } else {
           if (route.shouldReplace) {
             router.replace(pageConfig);

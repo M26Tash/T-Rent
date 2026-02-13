@@ -121,13 +121,6 @@ class AuthCubit extends Cubit<AuthState> {
         currentSession: session,
       ),
     );
-
-    if (session != null && state.userFullName != null) {
-      _navigateToUserDetails(
-        email: session.user.email ?? '',
-        fullName: state.userFullName ?? 'NOT FOUND',
-      );
-    }
   }
 
   void toggleAuthStep() {
@@ -163,24 +156,24 @@ class AuthCubit extends Cubit<AuthState> {
     _resetRoute();
   }
 
-  void _navigateToUserDetails({
-    required String email,
-    required String fullName,
-  }) {
-    emit(
-      state.copyWith(
-        route: CustomizedRoute(
-          TypeRoute.navigateTo,
-          UserDetailsRoute(
-            email: email,
-            fullName: fullName,
-          ),
-        ),
-      ),
-    );
+  // void _navigateToUserDetails({
+  //   required String email,
+  //   required String fullName,
+  // }) {
+  //   emit(
+  //     state.copyWith(
+  //       route: CustomizedRoute(
+  //         TypeRoute.navigateTo,
+  //         UserDetailsRoute(
+  //           email: email,
+  //           fullName: fullName,
+  //         ),
+  //       ),
+  //     ),
+  //   );
 
-    _resetRoute();
-  }
+  //   _resetRoute();
+  // }
 
   void _resetRoute() {
     emit(

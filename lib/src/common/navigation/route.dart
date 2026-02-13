@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:t_rent/src/common/navigation/guards/auth_guard.dart';
 import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 import 'package:t_rent/src/features/about_us_page/pages/about_us_page.dart';
 import 'package:t_rent/src/features/auth_page/page/auth_page.dart';
@@ -26,17 +25,13 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
         AutoRoute(
           page: SplashRoute.page,
-         initial: true,
+          initial: true,
         ),
         AutoRoute(
           page: AuthRoute.page,
-          guards: [
-            AuthGuard(),
-          ],
         ),
         AutoRoute(
           page: MainRoute.page,
-          // initial: true,
         ),
         AutoRoute(
           page: ForgotPasswordRoute.page,
@@ -49,7 +44,6 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: BookingRoute.page,
-          // initial: true,
         ),
         AutoRoute(
           page: MyAccountRoute.page,
@@ -62,7 +56,6 @@ class AppRouter extends RootStackRouter {
         ),
         AutoRoute(
           page: ConfirmationRoute.page,
-          // initial: true,
         ),
         AutoRoute(
           page: TestRoute.page,

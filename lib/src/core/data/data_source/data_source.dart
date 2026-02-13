@@ -116,18 +116,6 @@ class DataSource implements IDataSource {
 
         _profileSubject.add(profile.first);
       }
-
-      supabase
-          .channel('profiles_channel')
-          .onPostgresChanges(
-            event: PostgresChangeEvent.all,
-            schema: 'public',
-            table: 'profiles',
-            callback: (payload) {
-              getProfile();
-            },
-          )
-          .subscribe();
     } on PostgrestException catch (e) {
       CoreLogger.errorLog(
         'getProfile()',
@@ -186,7 +174,6 @@ class DataSource implements IDataSource {
       final response = await supabase.from('cars').select();
 
       if (response.isNotEmpty) {
-
         final cars =
             response.map((item) => CarMapper().fromJson(item)).toList();
 
@@ -194,18 +181,6 @@ class DataSource implements IDataSource {
 
         _carsSubject.add(cars);
       }
-
-      supabase
-          .channel('cars_channel')
-          .onPostgresChanges(
-            event: PostgresChangeEvent.all,
-            schema: 'public',
-            table: 'cars',
-            callback: (payload) {
-              getCars();
-            },
-          )
-          .subscribe();
     } on StorageException catch (e) {
       CoreLogger.errorLog(
         'getCars()',
@@ -213,6 +188,29 @@ class DataSource implements IDataSource {
           'Caught error': e.message,
         },
       );
+    }
+  }
+
+  @override
+  Future<void> updateFavoriteStatus({
+    required int carId,
+    required bool isFavorite,
+  }) async {
+    try {
+      await supabase
+          .from('cars')
+          .update({'is_favorite': isFavorite}).eq('id', carId);
+    } on PostgrestException catch (e) {
+      CoreLogger.errorLog(
+        'updateFavoriteStatus()',
+        params: {
+          'carId': carId,
+          'targetValue': isFavorite,
+          'error': e.message,
+        },
+      );
+
+      rethrow;
     }
   }
 

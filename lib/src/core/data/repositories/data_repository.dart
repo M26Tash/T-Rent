@@ -54,6 +54,17 @@ final class DataRepository implements IDataRepository {
   }
 
   @override
+  Future<void> updateFavoriteStatus({
+    required int carId,
+    required bool isFavorite,
+  }) async {
+    return _dataSource.updateFavoriteStatus(
+      carId: carId,
+      isFavorite: isFavorite,
+    );
+  }
+
+  @override
   Future<void> getCarRentHistory({
     int? carId,
   }) async {

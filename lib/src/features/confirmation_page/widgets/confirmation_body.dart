@@ -34,7 +34,6 @@ class ConfirmationBody extends StatelessWidget {
         CarItem(
           onCarTap: () {},
           car: car,
-          asset: car.carImage.sideView,
           header: [
             RichText(
               textAlign: TextAlign.center,

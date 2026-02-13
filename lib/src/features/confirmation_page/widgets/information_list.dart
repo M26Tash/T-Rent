@@ -32,7 +32,6 @@ class _InformationItem extends StatelessWidget {
 
   const _InformationItem({
     required this.item,
-    super.key,
   });
 
   @override
@@ -57,7 +56,7 @@ class _InformationItem extends StatelessWidget {
               color: context.theme.primaryTextColor,
               fontWeight: AppFonts.weightSemiBold,
             ),
-          )
+          ),
         ],
       ),
     );

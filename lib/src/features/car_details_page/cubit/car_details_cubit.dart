@@ -1,18 +1,13 @@
-// ignore_for_file: avoid_redundant_argument_values
-
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
 import 'package:t_rent/src/common/navigation/route.dart';
-import 'package:t_rent/src/common/utils/enums/rental_plan.dart';
 import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
 import 'package:t_rent/src/core/domain/entities/car_order_model/car_order_model.dart';
 import 'package:t_rent/src/core/domain/interactors/car_audio_interactor.dart';
 import 'package:t_rent/src/core/domain/interactors/data_interactor.dart';
+import 'package:t_rent/src/core/domain/utils/core_logger.dart';
 
 part 'car_details_state.dart';
 
@@ -29,29 +24,40 @@ class CarDetailsCubit extends Cubit<CarDetailsState> {
               null,
               null,
             ),
-            rentalPlan: null,
-            rangePicked: null,
-            totalPrice: 0,
-            bookedRanges: null,
+            isCarFavorite: null,
           ),
-        ) {
-    _subscribeAll();
+        );
+
+  Future<void> toggleFavorite({required int carId}) async {
+    final previousState = state.isCarFavorite ?? false;
+    final newState = !previousState;
+
+    emit(
+      state.copyWith(
+        isCarFavorite: newState,
+      ),
+    );
+
+    try {
+      await _dataInteractor.updateFavoriteStatus(
+        carId: carId,
+        isFavorite: newState,
+      );
+    } on Exception catch (e) {
+      CoreLogger.errorLog(
+        'updateFavoriteStatus() in CarDetailsCubit',
+        params: {
+          'Exception': e,
+        },
+      );
+    }
   }
 
-  StreamSubscription<List<CarOrderModel>?>? _carRentHistorySubscription;
-
-  @override
-  Future<void> close() {
-    _carRentHistorySubscription?.cancel();
-    _carRentHistorySubscription = null;
-
-    return super.close();
-  }
-
-  Future<void> _subscribeAll() async {
-    await _carRentHistorySubscription?.cancel();
-    _carRentHistorySubscription = _dataInteractor.carRentHistoryStream.listen(
-      _onNewCarRentHistory,
+  void initFavroiteState({required bool isFavoriteCar}) {
+    emit(
+      state.copyWith(
+        isCarFavorite: isFavoriteCar,
+      ),
     );
   }
 
@@ -63,14 +69,6 @@ class CarDetailsCubit extends Cubit<CarDetailsState> {
 
   Future<void> stopRev() async {
     return _audioInteractor.stopRev();
-  }
-
-  Future<void> getCarRentHistory({
-    required int carId,
-  }) async {
-    return _dataInteractor.getCarRentHistory(
-      carId: carId,
-    );
   }
 
   Future<void> uploadCarRent({
@@ -85,82 +83,9 @@ class CarDetailsCubit extends Cubit<CarDetailsState> {
     );
   }
 
-  void _onNewCarRentHistory(List<CarOrderModel>? carRentHistory) {
-    final bookedRanges = carRentHistory!
-        .where((order) => order.startDate != null && order.endDate != null)
-        .map(
-          (order) => DateTimeRange(
-            start: order.startDate!,
-            end: order.endDate!,
-          ),
-        )
-        .toList();
-
-    emit(
-      state.copyWith(
-        bookedRanges: bookedRanges,
-      ),
-    );
-  }
-
-  void onRangePicked(DateTimeRange<DateTime>? range) {
-    emit(
-      state.copyWith(
-        rangePicked: range,
-      ),
-    );
-  }
-
-  void chooseRentalPlan(RentalPlan? plan) {
-    log('${state.rentalPlan == plan}');
-    if (plan != state.rentalPlan) {
-      emit(
-        state.copyWith(rentalPlan: plan),
-      );
-    } else {
-      emit(
-        state.copyWith(
-          rentalPlan: null,
-        ),
-      );
-    }
-  }
-
-  void calculateTotalPrice({
-    required CarModel car,
-  }) {
-    final range = state.rangePicked;
-    final plan = state.rentalPlan;
-    final pricing = car.carPricing;
-    if (range == null || plan == null) return;
-
-    final duration = range.duration;
-
-    var total = 0.0;
-
-    switch (plan) {
-      case RentalPlan.hourly:
-        final hours = duration.inMinutes / 60.0;
-        total = (hours * pricing.perHour).ceilToDouble();
-
-      case RentalPlan.daily:
-        final days = (duration.inHours / 24).ceil();
-        total = days * pricing.perDay;
-
-      case RentalPlan.weekly:
-        final weeks = (duration.inDays / 7).ceil();
-        total = weeks * pricing.perWeek;
-    }
-
-    emit(
-      state.copyWith(totalPrice: total),
-    );
-  }
-
   void navigateToBooking({
     required CarModel car,
   }) {
-    print('$car');
     emit(
       state.copyWith(
         route: CustomizedRoute(

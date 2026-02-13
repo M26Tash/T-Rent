@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:t_rent/src/common/constants/app_dimensions.dart';
 import 'package:t_rent/src/common/constants/app_fonts.dart';
+import 'package:t_rent/src/common/localization/localizations_ext.dart';
 import 'package:t_rent/src/common/theme/theme_extension.dart';
 import 'package:t_rent/src/common/widgets/custom_button/custom_button.dart';
 import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
@@ -26,12 +27,11 @@ class TimePickerSelection extends StatelessWidget {
       children: [
         Row(
           children: [
-            // Left Side: Pick-up Time
             Expanded(
               child: Column(
                 children: [
                   Text(
-                    'Pick-up Time',
+                    context.locale.pickUp,
                     style: context.themeData.textTheme.headlineMedium?.copyWith(
                       color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightBold,
@@ -45,12 +45,11 @@ class TimePickerSelection extends StatelessWidget {
                 ],
               ),
             ),
-
             Expanded(
               child: Column(
                 children: [
                   Text(
-                    'Return Time',
+                    context.locale.returnTime,
                     style: context.themeData.textTheme.headlineMedium?.copyWith(
                       color: context.theme.primaryTextColor,
                       fontWeight: AppFonts.weightBold,
@@ -68,12 +67,8 @@ class TimePickerSelection extends StatelessWidget {
         ),
         const SizedBox(height: AppDimensions.large),
         CustomButton(
-          buttonText: 'Confirm',
-          onTap: () {
-            print('TAP');
-
-            cubit.navigateToConfirmationPage(car: car);
-          },
+          buttonText: context.locale.confirm,
+          onTap: () => cubit.navigateToConfirmationPage(car: car),
         ),
       ],
     );

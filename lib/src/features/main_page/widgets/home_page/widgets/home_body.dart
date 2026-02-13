@@ -160,7 +160,6 @@ class HomeBody extends StatelessWidget {
                       car: car,
                     ),
             car: car,
-            asset: car.carImage.sideView,
           ),
       ],
     );

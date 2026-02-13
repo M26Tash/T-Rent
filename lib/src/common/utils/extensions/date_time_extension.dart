@@ -8,5 +8,5 @@ extension DateTimeExtension on DateTime {
 
 String formatDateRange(DateTime? start, DateTime? end) {
   if (start == null || end == null) return '';
-  return '${start.formatFullDate()} - ${end.formatFullDate()} ';
+  return '${start.formatFullDate()}\n${end.formatFullDate()}';
 }

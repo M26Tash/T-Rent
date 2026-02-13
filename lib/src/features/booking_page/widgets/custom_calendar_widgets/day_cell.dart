@@ -9,12 +9,14 @@ class DayCell extends StatelessWidget {
   final DateTime? selectedStart;
   final DateTime? selectedEnd;
   final ValueChanged<DateTime> onTap;
+  final List<DateTimeRange> bookedRanges;
 
   const DayCell({
     required this.date,
     required this.month,
     required this.selectedStart,
     required this.selectedEnd,
+    required this.bookedRanges,
     required this.onTap,
     super.key,
   });
@@ -22,6 +24,14 @@ class DayCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isOutsideMonth = date.month != month.month || date.year != month.year;
+
+    final isBooked = !isOutsideMonth &&
+        bookedRanges.any((range) {
+          final day = DateTime(date.year, date.month, date.day);
+          return (day.isAtSameMomentAs(range.start) ||
+                  day.isAfter(range.start)) &&
+              (day.isAtSameMomentAs(range.end) || day.isBefore(range.end));
+        });
 
     final isStart = !isOutsideMonth && _isSameDay(date, selectedStart);
     final isEnd = !isOutsideMonth && _isSameDay(date, selectedEnd);
@@ -34,13 +44,13 @@ class DayCell extends StatelessWidget {
             : null;
 
     final textColor = (isStart || isEnd)
-        ? context.theme.tertiaryTextColor
-        : isOutsideMonth
+        ? context.theme.primaryTextColor
+        : (isOutsideMonth || isBooked)
             ? context.theme.primaryTextColor.withValues(alpha: 0.25)
             : context.theme.primaryTextColor;
 
     return GestureDetector(
-      onTap: isOutsideMonth ? null : () => onTap(date),
+      onTap: (isOutsideMonth || isBooked) ? null : () => onTap(date),
       child: Container(
         margin: const EdgeInsets.all(AppDimensions.small),
         decoration: BoxDecoration(

@@ -709,6 +709,60 @@ abstract class AppLocalization {
   /// In en, this message translates to:
   /// **'Totatl to pay'**
   String get totalToPay;
+
+  /// No description provided for @bookNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Book Now'**
+  String get bookNow;
+
+  /// No description provided for @selectTimes.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Pick-up & Return Time'**
+  String get selectTimes;
+
+  /// No description provided for @pickUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick-Up'**
+  String get pickUp;
+
+  /// No description provided for @returns.
+  ///
+  /// In en, this message translates to:
+  /// **'Return'**
+  String get returns;
+
+  /// No description provided for @notPickedYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not picked yet'**
+  String get notPickedYet;
+
+  /// No description provided for @noAvailableTime.
+  ///
+  /// In en, this message translates to:
+  /// **'No available time'**
+  String get noAvailableTime;
+
+  /// No description provided for @returnTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Return Time'**
+  String get returnTime;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @mileage.
+  ///
+  /// In en, this message translates to:
+  /// **'Mileage'**
+  String get mileage;
 }
 
 class _AppLocalizationDelegate extends LocalizationsDelegate<AppLocalization> {

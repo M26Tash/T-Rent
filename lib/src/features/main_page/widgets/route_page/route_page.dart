@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable
+// ignore_for_file: unused_local_variable, unused_import, unused_field
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,7 +25,7 @@ class _RoutePageState extends State<RoutePage> {
   final RouteCubit _routeCubit = i.get<RouteCubit>();
   // late MapboxMap? _mapboxMap;
   // late PointAnnotationManager? _annotationManager;
-  OverlayEntry? _currentOverlay;
+  late OverlayEntry? _currentOverlay;
 
   @override
   void initState() {
@@ -50,7 +50,7 @@ class _RoutePageState extends State<RoutePage> {
     }
   }
 
-  // Future<void> _onMapCreated(MapboxMap mapboxMap, List<CarModel> cars) async {
+  //Future<void> _onMapCreated(MapboxMap mapboxMap, List<CarModel> cars) async {
   //   _mapboxMap = mapboxMap;
 
   //   _mapboxMap
@@ -164,13 +164,14 @@ class _RoutePageState extends State<RoutePage> {
           final routeCubit = CubitScope.of<RouteCubit>(context);
 
           // if (state.cars == null) {
-            return Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(
-                  color: context.theme.primaryColor,
-                ),
+          return Scaffold(
+            backgroundColor: context.theme.backgroundColor,
+            body: Center(
+              child: CircularProgressIndicator(
+                color: context.theme.primaryColor,
               ),
-            );
+            ),
+          );
           // }
 
           // return MapWidget(

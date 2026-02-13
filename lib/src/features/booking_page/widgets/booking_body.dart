@@ -7,6 +7,7 @@ class BookingBody extends StatelessWidget {
   final List<DateTime> months;
   final DateTime? selectedStart;
   final DateTime? selectedEnd;
+  final List<DateTimeRange> bookedRanges;
   final ValueChanged<DateTime> onDayTap;
   final VoidCallback onHomePageTap;
 
@@ -14,6 +15,7 @@ class BookingBody extends StatelessWidget {
     required this.months,
     required this.selectedStart,
     required this.selectedEnd,
+    required this.bookedRanges,
     required this.onDayTap,
     required this.onHomePageTap,
     super.key,
@@ -38,6 +40,7 @@ class BookingBody extends StatelessWidget {
                 month: months[index],
                 selectedStart: selectedStart,
                 selectedEnd: selectedEnd,
+                bookedRanges: bookedRanges,
                 onDayTap: onDayTap,
               );
             },

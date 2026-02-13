@@ -32,6 +32,16 @@ final class DataInteractor {
     return _dataRepository.getCars();
   }
 
+  Future<void> updateFavoriteStatus({
+    required int carId,
+    required bool isFavorite,
+  }) async {
+    return _dataRepository.updateFavoriteStatus(
+      carId: carId,
+      isFavorite: isFavorite,
+    );
+  }
+
   Future<void> uploadCarRent({
     required CarOrderModel carOrder,
     required DateTime startDate,

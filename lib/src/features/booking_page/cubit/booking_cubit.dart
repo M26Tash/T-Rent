@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_redundant_argument_values
 
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +9,8 @@ import 'package:t_rent/src/common/navigation/entities/customized_route.dart';
 import 'package:t_rent/src/common/navigation/route.dart';
 import 'package:t_rent/src/common/utils/extensions/date_helper.dart';
 import 'package:t_rent/src/core/domain/entities/car_model/car_model.dart';
+import 'package:t_rent/src/core/domain/entities/car_order_model/car_order_model.dart';
+import 'package:t_rent/src/core/domain/interactors/data_interactor.dart';
 
 part 'booking_state.dart';
 
@@ -18,8 +22,11 @@ final DateTime dateEnd = DateTime.now().add(
 );
 
 class BookingCubit extends Cubit<BookingState> {
-  BookingCubit()
-      : super(
+  final DataInteractor _dataInteractor;
+
+  BookingCubit(
+    this._dataInteractor,
+  ) : super(
           const BookingState(
             route: CustomizedRoute(
               null,
@@ -31,9 +38,54 @@ class BookingCubit extends Cubit<BookingState> {
             startTime: null,
             endTime: null,
             car: null,
+            bookedRanges: null,
           ),
         ) {
     generateMonths(dateStart, dateEnd);
+    _subscribeAll();
+  }
+
+  StreamSubscription<List<CarOrderModel>?>? _carRentHistorySubscription;
+
+  @override
+  Future<void> close() {
+    _carRentHistorySubscription?.cancel();
+    _carRentHistorySubscription = null;
+
+    return super.close();
+  }
+
+  Future<void> _subscribeAll() async {
+    await _carRentHistorySubscription?.cancel();
+    _carRentHistorySubscription = _dataInteractor.carRentHistoryStream.listen(
+      _onNewCarRentHistory,
+    );
+  }
+
+  Future<void> getCarRentHistory({
+    required int carId,
+  }) async {
+    return _dataInteractor.getCarRentHistory(
+      carId: carId,
+    );
+  }
+
+  void _onNewCarRentHistory(List<CarOrderModel>? carRentHistory) {
+    final bookedRanges = carRentHistory!
+        .where((order) => order.startDate != null && order.endDate != null)
+        .map(
+          (order) => DateTimeRange(
+            start: order.startDate!,
+            end: order.endDate!,
+          ),
+        )
+        .toList();
+
+    emit(
+      state.copyWith(
+        bookedRanges: bookedRanges,
+      ),
+    );
   }
 
   void setCarModel(CarModel car) {
@@ -43,13 +95,6 @@ class BookingCubit extends Cubit<BookingState> {
       ),
     );
   }
-
-  // void updateTimes({TimeOfDay? start, TimeOfDay? end}) {
-  //   emit(state.copyWith(
-  //     startTime: start ?? state.startTime,
-  //     endTime: end ?? state.endTime,
-  //   ));
-  // }
 
   void updateTimes({TimeOfDay? start, TimeOfDay? end}) {
     var newStart = state.selectedStart;
@@ -88,6 +133,7 @@ class BookingCubit extends Cubit<BookingState> {
   void onDayTap(DateTime date) {
     final start = state.selectedStart;
     final end = state.selectedEnd;
+    final booked = state.bookedRanges ?? [];
 
     if (start != null && end != null) {
       emit(
@@ -107,7 +153,6 @@ class BookingCubit extends Cubit<BookingState> {
       );
       return;
     }
-
     if (date.isSameDay(start)) {
       emit(
         state.copyWith(
@@ -115,21 +160,79 @@ class BookingCubit extends Cubit<BookingState> {
           clearEnd: true,
         ),
       );
-    } else if (date.isBefore(start)) {
+      return;
+    }
+
+    if (date.isBefore(start)) {
       emit(
         state.copyWith(
           selectedStart: date,
           clearEnd: true,
         ),
       );
-    } else {
-      emit(
-        state.copyWith(
-          selectedEnd: date,
-        ),
-      );
+      return;
     }
+
+    final hasCollision = booked.any((range) {
+      return start.isBefore(range.end) && date.isAfter(range.start);
+    });
+
+    if (hasCollision) {
+      return;
+    }
+
+    emit(
+      state.copyWith(
+        selectedEnd: date,
+      ),
+    );
   }
+
+  // void onDayTap(DateTime date) {
+  //   final start = state.selectedStart;
+  //   final end = state.selectedEnd;
+
+  //   if (start != null && end != null) {
+  //     emit(
+  //       state.copyWith(
+  //         selectedStart: date,
+  //         clearEnd: true,
+  //       ),
+  //     );
+  //     return;
+  //   }
+
+  //   if (start == null) {
+  //     emit(
+  //       state.copyWith(
+  //         selectedStart: date,
+  //       ),
+  //     );
+  //     return;
+  //   }
+
+  //   if (date.isSameDay(start)) {
+  //     emit(
+  //       state.copyWith(
+  //         selectedStart: null,
+  //         clearEnd: true,
+  //       ),
+  //     );
+  //   } else if (date.isBefore(start)) {
+  //     emit(
+  //       state.copyWith(
+  //         selectedStart: date,
+  //         clearEnd: true,
+  //       ),
+  //     );
+  //   } else {
+  //     emit(
+  //       state.copyWith(
+  //         selectedEnd: date,
+  //       ),
+  //     );
+  //   }
+  // }
 
   void generateMonths(DateTime start, DateTime end) {
     final months = <DateTime>[];
@@ -183,7 +286,7 @@ class BookingCubit extends Cubit<BookingState> {
             selectedStart: state.selectedStart!,
             selectedEnd: state.selectedEnd!,
           ),
-          shouldClearStack: true,
+          shouldReplace: true,
         ),
       ),
     );

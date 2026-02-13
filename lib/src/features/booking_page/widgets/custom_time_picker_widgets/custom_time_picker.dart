@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:t_rent/src/common/localization/localizations_ext.dart';
+import 'package:t_rent/src/common/theme/theme_extension.dart';
 
 class VerticalTimePicker extends StatelessWidget {
   final DateTime selectedDate;
@@ -18,18 +20,23 @@ class VerticalTimePicker extends StatelessWidget {
     final slots = generateTimeSlots(selectedDate: selectedDate);
 
     if (slots.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
-          'No available time',
-          style: TextStyle(color: Colors.grey),
+          context.locale.noAvailableTime,
+          style: context.themeData.textTheme.headlineMedium?.copyWith(
+            color: context.theme.secondaryTextColor,
+          ),
         ),
       );
     }
 
     final initialIndex = selectedTime == null
         ? 0
-        : slots.indexWhere((t) =>
-            t.hour == selectedTime!.hour && t.minute == selectedTime!.minute,);
+        : slots.indexWhere(
+            (t) =>
+                t.hour == selectedTime!.hour &&
+                t.minute == selectedTime!.minute,
+          );
 
     return SizedBox(
       height: 200,
@@ -74,18 +81,16 @@ List<TimeOfDay> generateTimeSlots({
       selectedDate.month == now.month &&
       selectedDate.day == now.day;
 
-  const interval = 30; // minutes
-  const lastSlotMinutes = 23 * 60 + 30; // 23:30
+  const interval = 30;
+  const lastSlotMinutes = 23 * 60 + 30;
 
   var startMinutes = 0;
 
   if (isToday) {
     final currentMinutes = now.hour * 60 + now.minute;
 
-    // ⬆ Round UP to next 30-min slot
     startMinutes = ((currentMinutes + interval - 1) ~/ interval) * interval;
 
-    // ⛔ All slots passed
     if (startMinutes > lastSlotMinutes) {
       return [];
     }
@@ -97,7 +102,12 @@ List<TimeOfDay> generateTimeSlots({
     final hour = minutes ~/ 60;
     final minute = minutes % 60;
 
-    slots.add(TimeOfDay(hour: hour, minute: minute));
+    slots.add(
+      TimeOfDay(
+        hour: hour,
+        minute: minute,
+      ),
+    );
   }
 
   return slots;

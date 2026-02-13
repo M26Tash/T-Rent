@@ -4,7 +4,7 @@ import 'package:t_rent/src/core/domain/utils/core_logger.dart';
 
 class CarAudioDataSource implements ICarAudioDataSource {
   // final AudioPlayer _player = AudioPlayer();
-  bool _isRevving = false;
+  // bool _isRevving = false;
 
   @override
   Future<void> playRev({
@@ -22,7 +22,7 @@ class CarAudioDataSource implements ICarAudioDataSource {
       // await _player.play();
 
       // _player.playerStateStream.listen((state) async {
-      //   if (state.processingState == ProcessingState.completed && _isRevving) {
+      // if (state.processingState == ProcessingState.completed && _isRevving) {
       //     await _player.setLoopMode(LoopMode.one);
       //     await _player.seek(
       //       const Duration(
@@ -32,6 +32,7 @@ class CarAudioDataSource implements ICarAudioDataSource {
       //     await _player.play();
       //   }
       // });
+    // ignore: avoid_catches_without_on_clauses
     } catch (e) {
     // } on PlayerException catch (e) {
       CoreLogger.errorLog(
@@ -57,6 +58,7 @@ class CarAudioDataSource implements ICarAudioDataSource {
 
     //   await _player.stop();
     //   await _player.setVolume(1);
+    // ignore: avoid_catches_without_on_clauses
     } catch (e) {
     // } on PlayerException catch (e) {
       CoreLogger.errorLog(

@@ -19,6 +19,7 @@ analyzer:
     sort_constructors_first: ignore
     document_ignores: ignore
     asset_does_not_exist: ignore
+    discarded_futures: ignore
 
   exclude:
     - "build/**"

@@ -8,6 +8,7 @@ class BookingState extends Equatable {
   final TimeOfDay? startTime;
   final TimeOfDay? endTime;
   final CarModel? car;
+  final List<DateTimeRange>? bookedRanges;
 
   @override
   List<Object?> get props => [
@@ -18,6 +19,7 @@ class BookingState extends Equatable {
         startTime,
         endTime,
         car,
+        bookedRanges,
       ];
 
   const BookingState({
@@ -28,6 +30,7 @@ class BookingState extends Equatable {
     required this.startTime,
     required this.endTime,
     required this.car,
+    required this.bookedRanges,
   });
 
   BookingState copyWith({
@@ -39,6 +42,7 @@ class BookingState extends Equatable {
     TimeOfDay? startTime,
     TimeOfDay? endTime,
     CarModel? car,
+    List<DateTimeRange>? bookedRanges,
   }) {
     return BookingState(
       route: route ?? this.route,
@@ -48,6 +52,7 @@ class BookingState extends Equatable {
       startTime: startTime ?? this.startTime,
       endTime: endTime ?? this.endTime,
       car: car ?? this.car,
+      bookedRanges: bookedRanges ?? this.bookedRanges,
     );
   }
 }

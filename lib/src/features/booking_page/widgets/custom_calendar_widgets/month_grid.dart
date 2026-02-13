@@ -7,6 +7,7 @@ class MonthGrid extends StatelessWidget {
   final DateTime month;
   final DateTime? selectedStart;
   final DateTime? selectedEnd;
+  final List<DateTimeRange> bookedRanges;
   final ValueChanged<DateTime> onDayTap;
 
   const MonthGrid({
@@ -14,6 +15,7 @@ class MonthGrid extends StatelessWidget {
     required this.month,
     required this.selectedStart,
     required this.selectedEnd,
+    required this.bookedRanges,
     required this.onDayTap,
     super.key,
   });
@@ -36,6 +38,7 @@ class MonthGrid extends StatelessWidget {
           month: month,
           selectedStart: selectedStart,
           selectedEnd: selectedEnd,
+          bookedRanges: bookedRanges,
           onTap: onDayTap,
         );
       },

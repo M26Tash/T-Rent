@@ -29,5 +29,4 @@ abstract final class AppFonts {
   static const FontWeight weightBold = FontWeight.w700;
   static const FontWeight weightExtraBold = FontWeight.w800;
   static const FontWeight weightBlack = FontWeight.w900;
-  
 }

@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
       child: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
           final homeCubit = CubitScope.of<HomeCubit>(context);
-
+        
           if (state.profile == null || state.cars == null) {
             return Center(
               child: CircularProgressIndicator(

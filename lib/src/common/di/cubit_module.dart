@@ -32,7 +32,9 @@ void initSharedCubits() {
       ),
     )
     ..registerSingleton<NavigationPanelCubit>(
-      NavigationPanelCubit(),
+      NavigationPanelCubit(
+        i.get(),
+      ),
     );
 }
 
@@ -94,7 +96,9 @@ void initCubits() {
       ),
     )
     ..registerFactory<BookingCubit>(
-      BookingCubit.new,
+      () => BookingCubit(
+        i.get(),
+      ),
     )
     ..registerFactory<MyAccountCubit>(
       () => MyAccountCubit(

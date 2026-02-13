@@ -12,7 +12,7 @@ void main() async {
 
   final supabaseUrl = dotenv.get('SUPABASE_URL');
   final supabaseAnonKey = dotenv.get('SUPABASE_ANON_KEY');
-  final accessToken = dotenv.get('ACCESS_TOKEN');
+  // final accessToken = dotenv.get('ACCESS_TOKEN');
 
   await Supabase.initialize(
     url: supabaseUrl,
